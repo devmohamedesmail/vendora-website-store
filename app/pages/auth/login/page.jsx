@@ -1,17 +1,17 @@
 'use client'
-import Footer from '@/app/components/Footer'
-import Mobile_Dock from '@/app/components/Mobile_Dock'
-import Navbar from '@/app/components/Navbar'
-import { AuthContext } from '@/app/context/AuthContext'
-import Custom_button from '@/app/custom/Custom_button'
-import Custom_input from '@/app/custom/Custom_input'
-import Custom_spinner from '@/app/custom/Custom_spinner'
+import Navbar from '../../../components/Navbar'
+import Custom_input from '../../../custom/Custom_input'
+import Custom_button from '../../../custom/Custom_button'
+import Footer from '../../../components/Footer'
+
+
 import React, { useContext, useState } from 'react'
 import {  toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next'
 import {  useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/navigation'
+import BottomNavbar from '../../../components/BottomNavbar'
 
 
 export default function page() {
@@ -19,7 +19,7 @@ export default function page() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const { auth, setAuth, login, register, logout } = useContext(AuthContext)
+  // const { auth, setAuth, login, register, logout } = useContext(AuthContext)
   const [activeTab, setActiveTab] = useState('login')
   const { t, i18n } = useTranslation();
   const router = useRouter()
@@ -212,7 +212,7 @@ export default function page() {
 
       </div>
       <Footer />
-      <Mobile_Dock />
+      <BottomNavbar />
     </div>
   )
 }
