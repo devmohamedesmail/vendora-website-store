@@ -9,10 +9,7 @@ function ProductItem({ product }) {
       className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-gray-100 flex flex-col"
     >
       <Link
-        href={{
-          pathname: "/pages/front/product",
-          query: { id: product.id }
-        }}
+        href={`/pages/front/product/${product.id}`}
 
         className="h-48 w-full overflow-hidden rounded-t-xl bg-gray-50 flex items-center justify-center">
         <img
