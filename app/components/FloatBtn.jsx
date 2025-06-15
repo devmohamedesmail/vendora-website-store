@@ -15,7 +15,7 @@ function FloatBtn() {
             angle: 180,
         },
         {
-            href: "/cart",
+            href: "/pages/front/cart",
             icon: <FiShoppingCart size={22} />,
             color: "bg-indigo-500 text-white border-indigo-200",
             label: "Cart",

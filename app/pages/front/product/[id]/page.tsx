@@ -6,6 +6,7 @@ import Navbar from '../../../../components/Navbar'
 import Footer from '../../../../components/Footer'
 import BottomNavbar from '../../../../components/BottomNavbar'
 import Loader from '../../../../components/Loader'
+import Link from 'next/link'
 
 function ProductDetails({ params }) {
     const [product, setProduct] = useState(null)
@@ -109,9 +110,9 @@ function ProductDetails({ params }) {
                               <button className="mt-4 w-full md:w-auto bg-main hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow transition text-lg">
                                 Add to Cart
                               </button>
-                              <button className="mt-4 w-full md:w-auto bg-second hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow transition text-lg">
+                              <Link href={`/pages/front/checkout`} className="mt-4 w-full md:w-auto bg-second hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow transition text-lg">
                                 Buy Now
-                              </button>
+                              </Link>
                             </div>
                           </div>
                         </div>

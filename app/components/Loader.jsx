@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    RingLoader
+    MoonLoader
 } from "react-spinners";
 
 
@@ -13,7 +13,7 @@ const override = {
 export default function Loader() {
     return (
        <div className='flex justify-center items-center h-screen'>
-         <RingLoader
+         <MoonLoader
 
             color={'green'}
             loading={true}
