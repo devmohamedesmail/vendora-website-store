@@ -11,6 +11,7 @@ import CategoryItemSkeleton from './items/CategoryItemSkeleton';
 import ProductItemSkeleton from './items/ProductItemSkeleton';
 import BottomNavbar from './components/BottomNavbar';
 import CustomSectionTitle from './custom/CustomSectionTitle';
+import FloatBtn from './components/FloatBtn';
 
 
 
@@ -134,9 +135,9 @@ export default function Home() {
 
 
       </div>
-
+<FloatBtn />
       <Footer />
-      <BottomNavbar />
+      {/* <BottomNavbar /> */}
     </>
   );
 }
