@@ -3,35 +3,29 @@ import Navbar from '../../../components/Navbar'
 import Custom_input from '../../../custom/Custom_input'
 import Custom_button from '../../../custom/Custom_button'
 import Footer from '../../../components/Footer'
-
-
-import React, { useContext, useState } from 'react'
-import {  toast } from 'react-toastify';
+import BottomNavbar from '../../../components/BottomNavbar'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import {  useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/navigation'
-import BottomNavbar from '../../../components/BottomNavbar'
+import { FcGoogle } from "react-icons/fc"
+import { FaApple } from "react-icons/fa"
+import Link from 'next/link'
 
-
-export default function page() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+export default function Page() {
   const [loading, setLoading] = useState(false)
-  // const { auth, setAuth, login, register, logout } = useContext(AuthContext)
   const [activeTab, setActiveTab] = useState('login')
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation()
   const router = useRouter()
 
-
-
+  // Dummy login/register functions for demo
+  const login = async (email, password) => ({ status: 200, user: { user: { role: 'subscriber' } } })
+  const register = async (name, email, password) => ({ status: 201 })
 
   const loginFormik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
+    initialValues: { email: '', password: '' },
     validationSchema: Yup.object({
       email: Yup.string().email(t('invalid-email')).required(t('required')),
       password: Yup.string().required(t('required')),
@@ -40,176 +34,152 @@ export default function page() {
       try {
         setLoading(true)
         const res = await login(values.email, values.password)
-      
         if (res.status === 200) {
-          toast.success(t('login-success'));
-          setEmail('')
-          setPassword('')
+          toast.success(t('login-success'))
         }
-
-        const role = res.user.user.user.role
-        if (role === 'admin') {
-
-          router.push('/pages/admin')
-        } else if (role === 'subscriber') {
-          router.push('/pages/subscriber')
-        } else {
-      
-          router.push('/')
-        }
-        setLoading(false)
+        const role = res.user.user.role
+        if (role === 'admin') router.push('/pages/admin')
+        else if (role === 'subscriber') router.push('/pages/subscriber')
+        else router.push('/')
       } catch (err) {
-        toast.log(t('login-failed'));
+        toast.error(t('login-failed'))
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     },
-  });
-
-
-
-
-
+  })
 
   const registerFormik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-
-    },
+    initialValues: { name: '', email: '', password: '' },
     validationSchema: Yup.object({
       name: Yup.string().required(t('required')),
       email: Yup.string().email(t('invalid-email')).required(t('required')),
       password: Yup.string().min(6, t('min-6')).required(t('required')),
-
     }),
     onSubmit: async (values) => {
       try {
-        setLoading(true);
+        setLoading(true)
         const res = await register(values.name, values.email, values.password)
-        if (res.status === 201) {
-          toast.success('✅ Registration successful');
-          setName('')
-          setEmail('')
-          setPassword('')
-        }
-
-        setLoading(false)
+        if (res.status === 201) toast.success('✅ Registration successful')
       } catch (err) {
-        toast.error(t('register-failed'));
+        toast.error(t('register-failed'))
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     },
-  });
+  })
 
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
+  // Dummy social login handlers
+  const handleGoogleLogin = () => toast.info('Google login coming soon!')
+  const handleAppleLogin = () => toast.info('Apple login coming soon!')
 
   return (
     <div>
       <Navbar />
-      <div className='container m-auto px-5'>
+      <div className="container mx-auto px-5">
+        <div className="w-full md:w-2/3 lg:w-1/3 mx-auto mt-12 p-8 bg-white/90 shadow-2xl rounded-3xl my-12">
+          <div className="flex justify-center gap-5 mb-10 bg-gray-100 py-2 px-2 rounded-xl">
+            <button
+              className={`px-5 py-2 flex-1 transition-all duration-300 rounded-xl text-lg font-semibold ${activeTab === 'login' ? 'bg-indigo-600 text-white shadow' : 'bg-white text-indigo-700'}`}
+              onClick={() => setActiveTab('login')}
+            >
+              {t('login')}
+            </button>
+            <button
+              className={`px-5 py-2 flex-1 transition-all duration-300 rounded-xl text-lg font-semibold ${activeTab === 'register' ? 'bg-indigo-600 text-white shadow' : 'bg-white text-indigo-700'}`}
+              onClick={() => setActiveTab('register')}
+            >
+              {t('register')}
+            </button>
+          </div>
 
+          {/* Social Login */}
+          <div className="flex flex-col gap-3 mb-8">
+            <Link href="https://ecommerce-strapi-ex18.onrender.com/api/connect/google"
+              
+              className="flex items-center justify-center gap-3 w-full py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition font-semibold text-gray-700 shadow-sm"
+            >
+              <FcGoogle size={22} /> {t('login-with-google') || "Login with Google"}
+            </Link>
+            <button
+              onClick={handleAppleLogin}
+              className="flex items-center justify-center gap-3 w-full py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition font-semibold text-gray-700 shadow-sm"
+            >
+              <FaApple size={22} /> {t('login-with-apple') || "Login with Apple"}
+            </button>
+          </div>
 
-
-        <div className='w-full md:1/2 lg:w-1/3 m-auto mt-10 p-5  shadow-lg rounded-lg my-10'>
-          <div className='flex justify-center gap-5 my-10 bg-gray-200 py-2 px-2 rounded-lg'>
-            <button className={`px-5 py-2 flex-1 transition-colors ease-in-out duration-500 rounded-lg ${activeTab === 'login' ? 'bg-black text-white' : 'bg-white text-black'}`} onClick={() => setActiveTab('login')}>{t('login')}</button>
-            <button className={`px-5 py-2 flex-1 transition-colors ease-in-out duration-500 rounded-lg ${activeTab === 'register' ? 'bg-black text-white' : 'bg-white text-black'}`} onClick={() => setActiveTab('register')}>{t('register')}</button>
+          <div className="relative flex items-center mb-8">
+            <div className="flex-grow border-t border-gray-200"></div>
+            <span className="mx-4 text-gray-400 font-semibold">{t('or') || "or"}</span>
+            <div className="flex-grow border-t border-gray-200"></div>
           </div>
 
           <div className="text-center text-2xl font-semibold">
-            {activeTab === 'login' &&
-              (
-                <form onSubmit={loginFormik.handleSubmit}>
-                  <div className='  '>
-                    <h1 className='text-xl font-bold text-center mb-3'>{t('login')}</h1>
-                    <Custom_input
-                      type={"email"}
-                      name="email"
-                      value={loginFormik.values.email}
-                      onChange={loginFormik.handleChange}
-                      label={t('email')}
-                      error={loginFormik.touched.email && loginFormik.errors.email}
-                    />
-                    <Custom_input
-                      type={"password"}
-                      name="password"
-                      value={loginFormik.values.password}
-                      onChange={loginFormik.handleChange}
-                      label={t('password')}
-                      error={loginFormik.touched.password && loginFormik.errors.password}
-                    />
+            {activeTab === 'login' && (
+              <form onSubmit={loginFormik.handleSubmit}>
+                <h1 className="text-xl font-bold text-center mb-5 text-indigo-700">{t('login')}</h1>
+                <Custom_input
+                  type="email"
+                  name="email"
+                  value={loginFormik.values.email}
+                  onChange={loginFormik.handleChange}
+                  label={t('email')}
+                  error={loginFormik.touched.email && loginFormik.errors.email}
+                />
+                <Custom_input
+                  type="password"
+                  name="password"
+                  value={loginFormik.values.password}
+                  onChange={loginFormik.handleChange}
+                  label={t('password')}
+                  error={loginFormik.touched.password && loginFormik.errors.password}
+                />
+                <div className="flex justify-end mb-4">
+                  <a href="#" className="text-indigo-600 hover:underline text-sm">{t('forgot-password') || "Forgot password?"}</a>
+                </div>
+                {loading
+                  ? <span className="loading loading-spinner loading-xs"></span>
+                  : <Custom_button type="submit" title={t('login')} />
+                }
+              </form>
+            )}
 
-                    {loading ? <Custom_spinner /> : <Custom_button type='submit' title={t('login')} />}
-
-                  </div>
-                </form>
-              )
-
-            }
-            {activeTab === 'register' &&
-
-              (
-                <form onSubmit={registerFormik.handleSubmit}>
-                  <div>
-                    <h1 className='text-xl font-bold text-center mb-3'>{t('register')}</h1>
-                    <Custom_input
-                      type={"text"}
-                      name="name"
-                      value={registerFormik.values.name}
-                      onChange={registerFormik.handleChange} label={t('name')}
-                      error={registerFormik.touched.name && registerFormik.errors.name}
-                    />
-                    <Custom_input
-                      type={"email"}
-                      name="email"
-                      value={registerFormik.values.email}
-                      onChange={registerFormik.handleChange}
-                      label={t('email')}
-                      error={registerFormik.touched.email && registerFormik.errors.email}
-                    />
-                    <Custom_input
-                      type={"password"}
-                      name="password"
-                      value={registerFormik.values.password} onChange={registerFormik.handleChange}
-                      label={t('password')}
-                      error={registerFormik.touched.password && registerFormik.errors.password}
-                    />
-
-
-                    {loading ? <span className="loading loading-spinner loading-xs"></span> : <Custom_button title={t('register')} type='submit' />}
-                  </div>
-                </form>
-              )
-
-
-            }
+            {activeTab === 'register' && (
+              <form onSubmit={registerFormik.handleSubmit}>
+                <h1 className="text-xl font-bold text-center mb-5 text-indigo-700">{t('register')}</h1>
+                <Custom_input
+                  type="text"
+                  name="name"
+                  value={registerFormik.values.name}
+                  onChange={registerFormik.handleChange}
+                  label={t('name')}
+                  error={registerFormik.touched.name && registerFormik.errors.name}
+                />
+                <Custom_input
+                  type="email"
+                  name="email"
+                  value={registerFormik.values.email}
+                  onChange={registerFormik.handleChange}
+                  label={t('email')}
+                  error={registerFormik.touched.email && registerFormik.errors.email}
+                />
+                <Custom_input
+                  type="password"
+                  name="password"
+                  value={registerFormik.values.password}
+                  onChange={registerFormik.handleChange}
+                  label={t('password')}
+                  error={registerFormik.touched.password && registerFormik.errors.password}
+                />
+                {loading
+                  ? <span className="loading loading-spinner loading-xs"></span>
+                  : <Custom_button type="submit" title={t('register')} />
+                }
+              </form>
+            )}
           </div>
-
         </div>
-
-
-
-
-
-
-
-
       </div>
       <Footer />
       <BottomNavbar />

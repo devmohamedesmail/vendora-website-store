@@ -2,6 +2,7 @@
 import axios from "axios";
 
 import React, { createContext, useState, useEffect } from 'react';
+import { config } from "../config/api";
 
 
 const DataContext = createContext()
@@ -12,22 +13,20 @@ const DataProvider = ({ children }) => {
     const fetch_pages_content = async () => {
 
         try {
-            const res = await axios.get(`${api.baseUrl}api/v1/pages`)
+            const res = await axios.get(`${config.url}/api/pages`, {
+                headers: {
+                    Authorization: `Bearer ${config.token}`,
+                }
+            })
             setPages(res.data.data)
-            
+            console.log(res.data.data)
+
         } catch (error) {
             console.log("error fetch page", error)
         }
     }
 
 
-    const fetch_settings = async ()=>{
-        try {
-            
-        } catch (error) {
-            
-        }
-    }
 
 
     useEffect(() => {
@@ -36,7 +35,7 @@ const DataProvider = ({ children }) => {
 
 
     return (
-        <DataContext.Provider value={{ pages ,fetch_pages_content }}>
+        <DataContext.Provider value={{ pages }}>
             {children}
         </DataContext.Provider>
     )

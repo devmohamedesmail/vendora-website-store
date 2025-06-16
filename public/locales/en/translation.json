@@ -128,7 +128,9 @@
 	"no-employees":" No Employees ",
 	"reply-success":"Reply Successfully",
 	"reply-failed":"Reply Failed",
-	"scan-qrcode":"Scan Qr"
+	"scan-qrcode":"Scan Qr",
+	"login-with-google":"Login With Google",
+	"login-with-apple":"Login With Apple"
 
 	
 	

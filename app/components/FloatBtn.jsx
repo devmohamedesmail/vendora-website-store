@@ -22,7 +22,7 @@ function FloatBtn() {
             angle: 135,
         },
         {
-            href: "/wishlist",
+            href: "/pages/front/wishlist",
             icon: <FiHeart size={22} />,
             color: "bg-pink-500 text-white border-pink-200",
             label: "Wishlist",
