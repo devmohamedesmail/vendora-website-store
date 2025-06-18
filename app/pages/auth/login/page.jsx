@@ -13,19 +13,23 @@ import { useRouter } from 'next/navigation'
 import { FcGoogle } from "react-icons/fc"
 import { FaApple } from "react-icons/fa"
 import Link from 'next/link'
+import { useContext } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 
 export default function Page() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('login')
   const { t } = useTranslation()
   const router = useRouter()
-
+  const { handle_login , handle_register } = useContext(AuthContext)
   // Dummy login/register functions for demo
-  const login = async (email, password) => ({ status: 200, user: { user: { role: 'subscriber' } } })
-  const register = async (name, email, password) => ({ status: 201 })
+
 
   const loginFormik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { 
+      identifier: '', 
+      password: '' 
+    },
     validationSchema: Yup.object({
       email: Yup.string().email(t('invalid-email')).required(t('required')),
       password: Yup.string().required(t('required')),
@@ -33,14 +37,12 @@ export default function Page() {
     onSubmit: async (values) => {
       try {
         setLoading(true)
-        const res = await login(values.email, values.password)
-        if (res.status === 200) {
+        const res = await handle_login(values.email, values.password)
+       console.log(res.user)
+        if (res.user) {
           toast.success(t('login-success'))
         }
-        const role = res.user.user.role
-        if (role === 'admin') router.push('/pages/admin')
-        else if (role === 'subscriber') router.push('/pages/subscriber')
-        else router.push('/')
+       
       } catch (err) {
         toast.error(t('login-failed'))
       } finally {
@@ -59,8 +61,9 @@ export default function Page() {
     onSubmit: async (values) => {
       try {
         setLoading(true)
-        const res = await register(values.name, values.email, values.password)
-        if (res.status === 201) toast.success('✅ Registration successful')
+        const res = await handle_register(values.name, values.email, values.password)
+       
+        if (res.user) toast.success('✅ Registration successful')
       } catch (err) {
         toast.error(t('register-failed'))
       } finally {
@@ -95,8 +98,8 @@ export default function Page() {
 
           {/* Social Login */}
           <div className="flex flex-col gap-3 mb-8">
-            <Link href="https://ecommerce-strapi-ex18.onrender.com/api/connect/google"
-              
+            <Link href="http://localhost:1337/api/connect/google"
+
               className="flex items-center justify-center gap-3 w-full py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition font-semibold text-gray-700 shadow-sm"
             >
               <FcGoogle size={22} /> {t('login-with-google') || "Login with Google"}

@@ -2,7 +2,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-
+import { config } from '../config/api';
 
 
 // Create InfoContext using the Context API
@@ -10,10 +10,7 @@ const AuthContext = createContext();
 
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState(null);
-
-
-    // Load auth from storage on app start
+    const [auth, setAuth] = useState(null);// Load auth from storage on app start
     useEffect(() => {
         const loadUser = async () => {
             try {
@@ -30,61 +27,66 @@ const AuthProvider = ({ children }) => {
 
 
 
-    // 🔐 Login function
-    const login = async (email, password) => {
+
+
+    const handle_login = async (identifier, password) => {
         try {
-
-            const res = await axios.post('https://queue-app-express-js.onrender.com/api/v1/auth/login', {
-                email,
-                password,
-            });
-
-            const user = res.data;
-            setAuth(user);
-            localStorage.setItem('user', JSON.stringify(user));
-            return { success: true, status: res.status , user: user };
+            const response = await axios.post(`https://ecommerce-strapi-ex18.onrender.com/api/auth/local`,
+                {
+                    identifier: identifier,
+                    password: password
+                },
+                {
+                    Headers: {
+                        Authorization: `Bearer ${config.token}`,
+                    }
+                })
+            const user = response.data
+            await localStorage.setItem('user', JSON.stringify(user));
+            setAuth(user)
+            return user;
         } catch (error) {
-
-            return { success: false, error: error.response?.data?.message || 'Login failed' };
+            console.log('Error logging in', error.response?.data || error.message);
         }
-    };
+    }
 
-    // 🧾 Register function
-    const register = async (name, email, password) => {
-        console.log('Registering user:', { name, email, password });
+
+
+    const handle_register = async (username, email, password) => {
         try {
-            const res = await axios.post(`https://queue-app-express-js.onrender.com/api/v1/auth/login`, {
-                name,
-                email,
-                password,
-            });
-
-            const user = res.data;
+            const response = await axios.post(`https://ecommerce-strapi-ex18.onrender.com/api/auth/local/register`,
+                {
+                    username: username,
+                    email: email,
+                    password: password
+                },
+                {
+                    Headers: {
+                        Authorization: `Bearer ${config.token}`,
+                    }
+                })
+            const user = response.data;
+            await localStorage.setItem('user', JSON.stringify(user));
             setAuth(user);
-            localStorage.setItem('user', JSON.stringify(user));
-            return { success: true, status: res.status , user: user };
+            return user;
         } catch (error) {
-            console.log('Register error:', error.response?.data || error.message);
-            return { success: false, error: error.response?.data?.message || 'Registration failed' };
+            console.log('Error registering', error.response?.data || error.message);
         }
-    };
+    }
 
-    // 🚪 Logout function
-    const logout = async () => {
+
+    const handle_logout = async () => {
         try {
+            await AsyncStorage.removeItem('user');
             setAuth(null);
-            localStorage.removeItem('user');
-
-            return { success: true };
         } catch (error) {
-            console.error('Logout error:', error.message);
-            return { success: false, error: 'Logout failed' };
+            console.log('Error logging out', error.message);
         }
     };
 
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth, login, register, logout }}>
+        <AuthContext.Provider value={{ auth, setAuth, handle_login, handle_register, handle_logout }}>
             {children}
         </AuthContext.Provider>
     );

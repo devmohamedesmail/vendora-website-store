@@ -38,7 +38,7 @@ export default function Home() {
         }
       );
       setProducts(response.data.data);
-      
+
     } catch (error) {
       console.log("error fetching products data", error);
     }
@@ -135,9 +135,9 @@ export default function Home() {
 
 
       </div>
-<FloatBtn />
+      {/* <FloatBtn /> */}
       <Footer />
-      {/* <BottomNavbar /> */}
+      <BottomNavbar />
     </>
   );
 }

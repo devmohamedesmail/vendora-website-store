@@ -1,0 +1,187 @@
+import React from 'react'
+import { FiBox, FiClipboard, FiPlus, FiSettings, FiX, FiHome, FiBarChart, FiTrendingUp } from 'react-icons/fi';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+function Vendor_Sidebar({setSidebarOpen, sidebarOpen}: {setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean}) {
+    const pathname = usePathname();
+    
+    const navItems = [
+        {
+            key: 'dashboard',
+            label: 'Dashboard',
+            link: '/vendor',
+            icon: <FiHome className="w-5 h-5" />,
+            badge: null
+        },
+        {
+            key: 'products',
+            label: 'Products',
+            link: '/vendor/products',
+            icon: <FiBox className="w-5 h-5" />,
+            badge: '24'
+        },
+        {
+            key: 'orders',
+            label: 'Orders',
+            link: '/vendor/orders',
+            icon: <FiClipboard className="w-5 h-5" />,
+            badge: '12'
+        },
+        {
+            key: 'add-product',
+            label: 'Add Product',
+            link: '/vendor/add-product',
+            icon: <FiPlus className="w-5 h-5" />,
+            badge: null
+        },
+        {
+            key: 'analytics',
+            label: 'Analytics',
+            link: '/vendor/analytics',
+            icon: <FiBarChart className="w-5 h-5" />,
+            badge: null
+        },
+        {
+            key: 'settings',
+            label: 'Store Settings',
+            link: '/vendor/settings',
+            icon: <FiSettings className="w-5 h-5" />,
+            badge: null
+        }
+    ];
+
+    const isActiveLink = (link: string) => {
+        return pathname === link;
+    };
+
+    return (
+        <aside className={`fixed z-30 top-0 left-0 h-screen w-72 bg-white shadow-2xl border-r border-gray-100 flex flex-col transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            {/* Header - Fixed */}
+            <div className="flex-shrink-0 px-6 py-8 border-b border-gray-100 bg-gradient-to-r from-indigo-600 to-purple-600">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
+                            <span className="text-white font-bold text-lg">V</span>
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-white">VapeHub</h2>
+                            <p className="text-indigo-100 text-sm font-medium">Vendor Portal</p>
+                        </div>
+                    </div>
+                    <button 
+                        className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors duration-200" 
+                        onClick={() => setSidebarOpen(false)}
+                    >
+                        <FiX className="w-5 h-5 text-white" />
+                        <span className="sr-only">Close sidebar</span>
+                    </button>
+                </div>
+            </div>
+
+            {/* User Profile Section - Fixed */}
+            <div className="flex-shrink-0 px-6 py-4 bg-gray-50 border-b border-gray-100">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-semibold text-sm">JD</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-gray-900 truncate">John's Vape Store</p>
+                        <p className="text-sm text-gray-500 truncate">Premium Vendor</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Active
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Navigation - Scrollable */}
+            <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+                <div className="mb-6">
+                    <h3 className="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                        Store Management
+                    </h3>
+                </div>
+                {navItems.map(item => {
+                    const isActive = isActiveLink(item.link);
+                    return (
+                        <Link
+                            key={item.key}
+                            href={item.link}
+                            className={`relative flex items-center gap-4 px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200 group ${
+                                isActive 
+                                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25 transform scale-[1.02]' 
+                                    : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 hover:shadow-md'
+                            }`}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            {/* Active indicator */}
+                            {isActive && (
+                                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-white rounded-r-full" />
+                            )}
+                            
+                            <span className={`transition-all duration-200 ${
+                                isActive ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500'
+                            }`}>
+                                {item.icon}
+                            </span>
+                            
+                            <span className={`font-semibold flex-1 ${
+                                isActive ? 'text-white' : 'group-hover:text-indigo-600'
+                            }`}>
+                                {item.label}
+                            </span>
+                            
+                            {/* Badge */}
+                            {item.badge && (
+                                <span className={`inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full min-w-[20px] ${
+                                    isActive 
+                                        ? 'bg-white/20 text-white' 
+                                        : 'bg-indigo-100 text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white'
+                                }`}>
+                                    {item.badge}
+                                </span>
+                            )}
+                            
+                            {/* Chevron for active state */}
+                            {isActive && (
+                                <div className="w-2 h-2 bg-white rounded-full opacity-80" />
+                            )}
+                        </Link>
+                    );
+                })}
+            </nav>
+
+            {/* Stats Section - Fixed at bottom */}
+            <div className="flex-shrink-0 px-6 py-4 border-t border-gray-100 bg-gray-50">
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="text-center">
+                        <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-lg mx-auto mb-1">
+                            <FiTrendingUp className="w-4 h-4 text-green-600" />
+                        </div>
+                        <p className="text-xs font-semibold text-gray-900">$12.5K</p>
+                        <p className="text-xs text-gray-500">This Month</p>
+                    </div>
+                    <div className="text-center">
+                        <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg mx-auto mb-1">
+                            <FiBox className="w-4 h-4 text-blue-600" />
+                        </div>
+                        <p className="text-xs font-semibold text-gray-900">24</p>
+                        <p className="text-xs text-gray-500">Products</p>
+                    </div>
+                </div>
+                <div className="text-center">
+                    <p className="text-xs text-gray-500 mb-1">Store Performance</p>
+                    <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
+                        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" style={{width: '78%'}}></div>
+                    </div>
+                    <p className="text-xs font-semibold text-gray-700">78% Complete</p>
+                </div>
+            </div>
+        </aside>
+    )
+}
+
+export default Vendor_Sidebar
