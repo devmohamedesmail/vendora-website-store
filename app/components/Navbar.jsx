@@ -40,16 +40,16 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="flex items-center space-x-4">
-            <Link href={auth ? "/pages/front/account" : "/pages/auth/login"} className="p-2 rounded-full hover:bg-gray-100 transition">
+            <Link href={auth ? "/front/account" : "/auth/login"} className="p-2 rounded-full hover:bg-gray-100 transition">
               <FiUser size={22} className="text-gray-600" />
             </Link>
 
 
-            <Link href="/pages/front/wishlist" className="p-2 rounded-full hover:bg-gray-100 transition">
+            <Link href="/front/wishlist" className="p-2 rounded-full hover:bg-gray-100 transition">
               <FiHeart size={22} className="text-gray-600" />
             </Link>
 
-            <Link href="/pages/front/cart" className="p-2 rounded-full hover:bg-gray-100 transition">
+            <Link href="/front/cart" className="p-2 rounded-full hover:bg-gray-100 transition">
               <FiShoppingCart size={22} className="text-gray-600" />
             </Link>
             {/* Mobile menu button */}

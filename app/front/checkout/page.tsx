@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from "react";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
-import FloatBtn from "../../../components/FloatBtn"
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import FloatBtn from "../../components/FloatBtn"
 
 function Checkout() {
     const [payment, setPayment] = useState("cod");

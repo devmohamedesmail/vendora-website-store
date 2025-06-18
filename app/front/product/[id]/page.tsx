@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { config } from '../../../../config/api'
-import Navbar from '../../../../components/Navbar'
-import Footer from '../../../../components/Footer'
-import BottomNavbar from '../../../../components/BottomNavbar'
-import Loader from '../../../../components/Loader'
+import { config } from '../../../config/api'
+import Navbar from '../../../components/Navbar'
+import Footer from '../../../components/Footer'
+import BottomNavbar from '../../../components/BottomNavbar'
+import Loader from '../../../components/Loader'
 import Link from 'next/link'
 
 function ProductDetails({ params }) {
@@ -110,7 +110,7 @@ function ProductDetails({ params }) {
                               <button className="mt-4 w-full md:w-auto bg-main hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow transition text-lg">
                                 Add to Cart
                               </button>
-                              <Link href={`/pages/front/checkout`} className="mt-4 w-full md:w-auto bg-second hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow transition text-lg">
+                              <Link href={`/front/checkout`} className="mt-4 w-full md:w-auto bg-second hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow transition text-lg">
                                 Buy Now
                               </Link>
                             </div>

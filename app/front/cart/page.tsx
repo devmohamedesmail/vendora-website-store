@@ -1,9 +1,9 @@
 'use client'
 import React, { useState } from 'react'
-import Navbar from '../../../components/Navbar';
-import Footer from '../../../components/Footer';
-import FloatBtn from '../../../components/FloatBtn';
-import ProductItem from "../../../items/ProductItem.jsx"
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import FloatBtn from '../../components/FloatBtn';
+import ProductItem from "../../items/ProductItem.jsx"
 
 function Cart() {
     const [cartItems, setCartItems] = useState([

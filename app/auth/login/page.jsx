@@ -1,9 +1,9 @@
 'use client'
-import Navbar from '../../../components/Navbar'
-import Custom_input from '../../../custom/Custom_input'
-import Custom_button from '../../../custom/Custom_button'
-import Footer from '../../../components/Footer'
-import BottomNavbar from '../../../components/BottomNavbar'
+import Navbar from '../../components/Navbar'
+import Custom_input from '../../custom/Custom_input'
+import Custom_button from '../../custom/Custom_button'
+import Footer from '../../components/Footer'
+import BottomNavbar from '../../components/BottomNavbar'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ import { FcGoogle } from "react-icons/fc"
 import { FaApple } from "react-icons/fa"
 import Link from 'next/link'
 import { useContext } from 'react'
-import { AuthContext } from '../../../context/AuthContext'
+import { AuthContext } from '../../context/AuthContext'
 
 export default function Page() {
   const [loading, setLoading] = useState(false)

@@ -1,9 +1,9 @@
 'use client'
 import React, { useContext } from 'react'
-import { DataContext } from '../../../../context/DataContext'
-import Navbar from '../../../../components/Navbar';
-// import Footer from '../../../../components/Footer';
-// import BottomNavbar from '../../../../components/BottomNavbar';
+import { DataContext } from '../../../context/DataContext'
+import Navbar from '../../../components/Navbar';
+// import Footer from '../../../components/Footer';
+// import BottomNavbar from '../../../components/BottomNavbar';
 
 function usefullPages({ params }: any) {
   const { pages } = useContext(DataContext)

@@ -15,14 +15,14 @@ function FloatBtn() {
             angle: 180,
         },
         {
-            href: "/pages/front/cart",
+            href: "/front/cart",
             icon: <FiShoppingCart size={22} />,
             color: "bg-indigo-500 text-white border-indigo-200",
             label: "Cart",
             angle: 135,
         },
         {
-            href: "/pages/front/wishlist",
+            href: "/front/wishlist",
             icon: <FiHeart size={22} />,
             color: "bg-pink-500 text-white border-pink-200",
             label: "Wishlist",
