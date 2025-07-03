@@ -1,16 +1,35 @@
 'use client'
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
 import { config } from '../config/api';
 
+// Define types for the auth context
+interface User {
+    id: number;
+    username: string;
+    email: string;
+    jwt?: string;
+}
 
-// Create InfoContext using the Context API
-const AuthContext = createContext();
+interface AuthContextType {
+    auth: User | null;
+    setAuth: (user: User | null) => void;
+    handle_login: (identifier: string, password: string) => Promise<User | undefined>;
+    handle_register: (username: string, email: string, password: string) => Promise<User | undefined>;
+    handle_logout: () => Promise<void>;
+}
 
+interface AuthProviderProps {
+    children: ReactNode;
+}
 
-const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState(null);// Load auth from storage on app start
+// Create AuthContext using the Context API
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const AuthProvider = ({ children }: AuthProviderProps) => {
+    const [auth, setAuth] = useState<User | null>(null);
+    
     useEffect(() => {
         const loadUser = async () => {
             try {
@@ -29,20 +48,20 @@ const AuthProvider = ({ children }) => {
 
 
 
-    const handle_login = async (identifier, password) => {
+    const handle_login = async (identifier: string, password: string) => {
         try {
-            const response = await axios.post(`https://ecommerce-strapi-ex18.onrender.com/api/auth/local`,
+            const response = await axios.post(`${config.url}/api/auth/local`,
                 {
                     identifier: identifier,
                     password: password
                 },
                 {
-                    Headers: {
+                    headers: {
                         Authorization: `Bearer ${config.token}`,
                     }
                 })
             const user = response.data
-            await localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user));
             setAuth(user)
             return user;
         } catch (error) {
@@ -52,21 +71,21 @@ const AuthProvider = ({ children }) => {
 
 
 
-    const handle_register = async (username, email, password) => {
+    const handle_register = async (username: string, email: string, password: string) => {
         try {
-            const response = await axios.post(`https://ecommerce-strapi-ex18.onrender.com/api/auth/local/register`,
+            const response = await axios.post(`${config.url}/api/auth/local/register`,
                 {
                     username: username,
                     email: email,
                     password: password
                 },
                 {
-                    Headers: {
+                    headers: {
                         Authorization: `Bearer ${config.token}`,
                     }
                 })
             const user = response.data;
-            await localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user));
             setAuth(user);
             return user;
         } catch (error) {
@@ -77,7 +96,7 @@ const AuthProvider = ({ children }) => {
 
     const handle_logout = async () => {
         try {
-            await AsyncStorage.removeItem('user');
+            localStorage.removeItem('user');
             setAuth(null);
         } catch (error) {
             console.log('Error logging out', error.message);

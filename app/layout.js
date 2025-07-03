@@ -3,18 +3,18 @@
 
 import "./globals.css";
 
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/auth_context";
 import { ToastContainer } from "react-toastify";
 import ClientWrapper from "./components/ClientWrapper";
 import { DataProvider } from "./context/data_context";
-
+import { ReduxProvider } from "./redux/ReduxProvider";
 
 
 
 
 export const metadata = {
-  title: "Queue App",
-  description: "Queue App",
+  title: "Vape Website",
+  description: "Multi-vendor vape e-commerce platform",
 };
 
 export default function RootLayout({ children }) {
@@ -24,10 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={` antialiased`}
       >
-        <AuthProvider>
-          <DataProvider>
-     
-            <ClientWrapper>
+        <ReduxProvider>
+          <AuthProvider>
+            <DataProvider>
+       
+              <ClientWrapper>
               {children}
               <ToastContainer
                 position="top-right"
@@ -44,8 +45,9 @@ export default function RootLayout({ children }) {
               />
             </ClientWrapper>
          
-          </DataProvider>
-        </AuthProvider>
+            </DataProvider>
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

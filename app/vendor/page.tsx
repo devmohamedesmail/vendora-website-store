@@ -37,7 +37,7 @@ function VendorDashboard() {
   ];
 
   return (
-    <VendorLayout>
+
       <div className="space-y-8">
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white">
@@ -140,7 +140,7 @@ function VendorDashboard() {
           </div>
         </div>
       </div>
-    </VendorLayout>
+  
   );
 }
 

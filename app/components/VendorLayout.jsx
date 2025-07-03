@@ -7,7 +7,7 @@ import Vendor_Sidebar from './vendor_components/vendor_sidebar';
 
 function VendorLayout({ children }) {
    
-    const [language, setLanguage] = useState('en');
+        const [language, setLanguage] = useState('en');
 
        const [sidebarOpen, setSidebarOpen] = useState(false);
 

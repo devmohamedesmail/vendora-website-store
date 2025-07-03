@@ -82,6 +82,218 @@
 		"save": "وفر",
 		"description": "الوصف",
 		"productDescription": "وصف المنتج",
-		"noDescriptionAvailable": "لا يوجد وصف متاح."
+		"noDescriptionAvailable": "لا يوجد وصف متاح.",
+		"quantity": "الكمية",
+		"inCart": "في السلة",
+		"totalPrice": "السعر الإجمالي",
+		"removeFromWishlist": "إزالة من المفضلة"
+	},
+	"cart": {
+		"yourCart": "سلة التسوق",
+		"clearAll": "مسح الكل",
+		"emptyCart": "سلة التسوق فارغة.",
+		"continueShopping": "متابعة التسوق",
+		"soldBy": "بائع:",
+		"each": "للقطعة",
+		"remove": "إزالة",
+		"total": "المجموع",
+		"proceedToCheckout": "المتابعة للدفع"
+	},
+	"wishlist": {
+		"myWishlist": "قائمة أمنياتي",
+		"item": "عنصر",
+		"items": "عناصر",
+		"totalValue": "القيمة الإجمالية",
+		"clearAll": "مسح الكل",
+		"addAllToCart": "أضف الكل للسلة",
+		"emptyWishlist": "قائمة أمنياتك فارغة",
+		"emptyWishlistDesc": "احفظ العناصر التي تحبها لوقت لاحق. تصفح منتجاتنا وأضفها إلى قائمة أمنياتك.",
+		"startShopping": "ابدأ التسوق",
+		"removeFromWishlist": "إزالة من قائمة الأمنيات",
+		"by": "بواسطة",
+		"inStock": "متوفر في المخزون",
+		"outOfStock": "غير متوفر",
+		"addedOn": "تمت الإضافة في",
+		"addToCart": "أضف إلى السلة"
+	},
+	"nav": {
+		"home": "الرئيسية",
+		"shop": "المتجر",
+		"cart": "السلة",
+		"wishlist": "الأمنيات",
+		"account": "الحساب"
+	},
+	"banner": {
+		"slides": {
+			"premium": {
+				"title": "تجربة فيبنج متميزة",
+				"subtitle": "اكتشف مجموعتنا المختارة من منتجات الفيبنج عالية الجودة من بائعين موثوقين حول العالم.",
+				"cta": "تسوق المتميز"
+			},
+			"newArrivals": {
+				"title": "أحدث الوافدات",
+				"subtitle": "كن في المقدمة مع أحدث منتجات الفيبنج والنكهات الحصرية.",
+				"cta": "استكشف الجديد"
+			},
+			"deals": {
+				"title": "عروض حصرية",
+				"subtitle": "وفر كثيراً على منتجات الفيبنج المفضلة لديك مع عروضنا محدودة الوقت والخصومات الخاصة.",
+				"cta": "تسوق العروض"
+			}
+		},
+		"features": {
+			"quality": "جودة متميزة",
+			"variety": "تشكيلة واسعة",
+			"support": "دعم 24/7",
+			"fresh": "مخزون طازج",
+			"trending": "العناصر الرائجة",
+			"exclusive": "منتجات حصرية",
+			"savings": "أفضل توفير",
+			"limited": "وقت محدود",
+			"authentic": "أصلي 100%"
+		},
+		"viewWishlist": "عرض قائمة الأمنيات",
+		"visual": {
+			"title": "عروض خاصة",
+			"subtitle": "صفقات حصرية لك"
+		},
+		"stats": {
+			"products": "+5000",
+			"productsLabel": "منتج متاح",
+			"customers": "+50 ألف",
+			"customersLabel": "عميل سعيد",
+			"vendors": "+200",
+			"vendorsLabel": "بائع موثوق",
+			"satisfaction": "99%",
+			"satisfactionLabel": "معدل الرضا"
+		}
+	},
+	"auth": {
+		"login": "تسجيل الدخول",
+		"register": "إنشاء حساب",
+		"email": "البريد الإلكتروني",
+		"password": "كلمة المرور",
+		"name": "الاسم",
+		"username": "اسم المستخدم",
+		"forgotPassword": "نسيت كلمة المرور؟",
+		"loginWithGoogle": "تسجيل الدخول مع جوجل",
+		"loginWithApple": "تسجيل الدخول مع آبل",
+		"or": "أو",
+		"required": "هذا الحقل مطلوب",
+		"invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح",
+		"min6": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+		"loginSuccess": "تم تسجيل الدخول بنجاح! مرحباً بعودتك.",
+		"loginFailed": "فشل في تسجيل الدخول. يرجى التحقق من بيانات الاعتماد.",
+		"registerSuccess": "تم التسجيل بنجاح! مرحباً بك في متجر الفيب.",
+		"registerFailed": "فشل في التسجيل. يرجى المحاولة مرة أخرى.",
+		"loading": "جاري التحميل...",
+		"googleLoginSoon": "تسجيل الدخول مع جوجل قريباً!",
+		"appleLoginSoon": "تسجيل الدخول مع آبل قريباً!"
+	},
+	"vendor": {
+		"sidebar": {
+			"dashboard": "لوحة التحكم",
+			"products": "المنتجات",
+			"orders": "الطلبات",
+			"addProduct": "إضافة منتج",
+			"analytics": "التحليلات",
+			"storeSettings": "إعدادات المتجر",
+			"brandName": "فيب هاب",
+			"vendorPortal": "بوابة البائع",
+			"closeSidebar": "إغلاق الشريط الجانبي",
+			"storeName": "متجر أحمد للفيب",
+			"premiumVendor": "بائع مميز",
+			"active": "نشط",
+			"storeManagement": "إدارة المتجر",
+			"thisMonth": "هذا الشهر",
+			"storePerformance": "أداء المتجر",
+			"complete": "مكتمل 78%"
+		},
+		"addProduct": {
+			"title": "إضافة منتج جديد",
+			"subtitle": "إنشاء قائمة منتجات جديدة لمتجرك",
+			"sections": {
+				"productImages": "صور المنتج",
+				"productDetails": "تفاصيل المنتج"
+			},
+			"fields": {
+				"category": "الفئة",
+				"productTitle": "عنوان المنتج",
+				"price": "السعر",
+				"stockQuantity": "كمية المخزون",
+				"salePrice": "سعر التخفيض",
+				"productDescription": "وصف المنتج"
+			},
+			"placeholders": {
+				"selectCategory": "اختر الفئة",
+				"productTitle": "أدخل عنوان المنتج",
+				"description": "اوصف منتجك بالتفصيل..."
+			},
+			"imageAlt": "المنتج",
+			"addImage": "إضافة صورة",
+			"imageInstructions": "ارفع حتى 10 صور. الصورة الأولى ستكون الصورة الرئيسية للمنتج.",
+			"optional": "اختياري",
+			"buttons": {
+				"cancel": "إلغاء",
+				"addProduct": "إضافة منتج",
+				"adding": "جاري إضافة المنتج..."
+			},
+			"validation": {
+				"titleRequired": "عنوان المنتج مطلوب",
+				"descriptionRequired": "الوصف مطلوب",
+				"priceRequired": "السعر مطلوب",
+				"pricePositive": "يجب أن يكون السعر موجباً",
+				"stockRequired": "المخزون مطلوب",
+				"stockInteger": "يجب أن يكون المخزون رقماً صحيحاً",
+				"stockMin": "لا يمكن أن يكون المخزون سالباً",
+				"categoryRequired": "الفئة مطلوبة"
+			},
+			"errors": {
+				"noImages": "يرجى إضافة صورة واحدة على الأقل للمنتج",
+				"generalError": "فشل في إضافة المنتج. يرجى المحاولة مرة أخرى."
+			},
+			"success": "تم إضافة المنتج بنجاح!"
+		},
+		"products": {
+			"title": "منتجاتي",
+			"subtitle": "إدارة مخزون المنتجات",
+			"items": "عناصر",
+			"addProduct": "إضافة منتج",
+			"loading": "جاري تحميل المنتجات...",
+			"tryAgain": "حاول مرة أخرى",
+			"searchPlaceholder": "البحث في المنتجات...",
+			"allCategories": "جميع الفئات",
+			"noProducts": "لم يتم العثور على منتجات",
+			"noSearchResults": "لا توجد منتجات تطابق معايير البحث الخاصة بك",
+			"getStarted": "ابدأ بإضافة منتجك الأول",
+			"addFirstProduct": "أضف منتجك الأول",
+			"view": "عرض",
+			"edit": "تعديل",
+			"delete": "حذف",
+			"stock": "المخزون",
+			"inStock": "متوفر",
+			"outOfStock": "غير متوفر",
+			"lowStock": "مخزون منخفض",
+			"confirmDelete": "هل أنت متأكد من أنك تريد حذف هذا المنتج؟",
+			"untitled": "منتج بدون عنوان",
+			"noDescription": "لا يوجد وصف متاح.",
+			"stats": {
+				"totalProducts": "إجمالي المنتجات",
+				"inStock": "متوفر",
+				"outOfStock": "غير متوفر",
+				"totalValue": "القيمة الإجمالية"
+			},
+			"sort": {
+				"newest": "الأحدث أولاً",
+				"oldest": "الأقدم أولاً",
+				"name": "الاسم أ-ي",
+				"priceLow": "السعر منخفض-عالي",
+				"priceHigh": "السعر عالي-منخفض"
+			},
+			"errors": {
+				"fetchFailed": "فشل في جلب المنتجات",
+				"deleteFailed": "فشل في حذف المنتج"
+			}
+		}
 	}
 }

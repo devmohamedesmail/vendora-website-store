@@ -29,7 +29,7 @@ export const uploadImagesToStrapi = async (images) => {
 
       try {
         const res = await axios.post(
-          `${config.baseURL}/api/upload`,
+          `${config.url}/api/upload`,
           formData,
           {
             headers: {

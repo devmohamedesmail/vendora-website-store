@@ -8,14 +8,15 @@ import { DataContext } from '../../context/data_context';
 import axios from 'axios';
 import {uploadImagesToStrapi} from '../../ultilites/uploadImagesToStrapi.js'
 import { config } from '../../config/api';
+import { useTranslation } from 'react-i18next';
 function AddProduct() {
+  const { t } = useTranslation();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [notification, setNotification] = useState<{type: 'success' | 'error', message: string} | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {categories}=useContext(DataContext);
-  // Mock categories - replace with actual data from context
  
 
   const showNotification = (type: 'success' | 'error', message: string) => {
@@ -24,11 +25,11 @@ function AddProduct() {
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Product title is required'),
-    description: Yup.string().required('Description is required'),
-    price: Yup.number().required('Price is required').positive('Price must be positive'),
-    stock: Yup.number().required('Stock is required').integer('Stock must be an integer').min(0, 'Stock cannot be negative'),
-    category: Yup.string().required('Category is required'),
+    title: Yup.string().required(t('vendor.addProduct.validation.titleRequired', 'Product title is required')),
+    description: Yup.string().required(t('vendor.addProduct.validation.descriptionRequired', 'Description is required')),
+    price: Yup.number().required(t('vendor.addProduct.validation.priceRequired', 'Price is required')).positive(t('vendor.addProduct.validation.pricePositive', 'Price must be positive')),
+    stock: Yup.number().required(t('vendor.addProduct.validation.stockRequired', 'Stock is required')).integer(t('vendor.addProduct.validation.stockInteger', 'Stock must be an integer')).min(0, t('vendor.addProduct.validation.stockMin', 'Stock cannot be negative')),
+    category: Yup.string().required(t('vendor.addProduct.validation.categoryRequired', 'Category is required')),
   });
 
   const formik = useFormik({
@@ -44,9 +45,9 @@ function AddProduct() {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        console.log('images', images);
+        
         if (images.length === 0) {
-          showNotification('error', 'Please add at least one product image');
+          showNotification('error', t('vendor.addProduct.errors.noImages', 'Please add at least one product image'));
           return;
         }
 
@@ -59,13 +60,9 @@ function AddProduct() {
             price: Number(values.price),
             stock: Number(values.stock),
             sale: values.sale ? Number(values.sale) : null,
-            // vendor: vendorId,
-            // vendor_id : vendorId,
             images: imageIds,
           },
         };
-
-        console.log("Payload:", payload);
 
         const response = await axios.post(`${config.url}/api/products`, payload, {
           headers: {
@@ -74,17 +71,12 @@ function AddProduct() {
           },
         });
         
-        console.log('Product created successfully:', response.data);
-
-        console.log('Product data:', { ...values, images });
-        
-        showNotification('success', 'Product added successfully!');
+        showNotification('success', t('vendor.addProduct.success', 'Product added successfully!'));
         formik.resetForm();
         setImages([]);
         setSelectedCategory('');
       } catch (error) {
-        console.error('Error adding product:', error);
-        let errorMessage = 'Failed to add product. Please try again.';
+        let errorMessage = t('vendor.addProduct.errors.generalError', 'Failed to add product. Please try again.');
         
         if (error.response?.data?.error?.message) {
           errorMessage = error.response.data.error.message;
@@ -121,7 +113,7 @@ function AddProduct() {
   };
 
   return (
-    <VendorLayout>
+
       <div className="max-w-4xl mx-auto">
         {/* Notification */}
         {notification && (
@@ -142,8 +134,8 @@ function AddProduct() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Add New Product</h1>
-          <p className="text-gray-600">Create a new product listing for your store</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('vendor.addProduct.title', 'Add New Product')}</h1>
+          <p className="text-gray-600">{t('vendor.addProduct.subtitle', 'Create a new product listing for your store')}</p>
         </div>
 
         <form onSubmit={formik.handleSubmit} className="space-y-8">
@@ -151,7 +143,7 @@ function AddProduct() {
           <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <FiImage className="text-indigo-600" />
-              Product Images
+              {t('vendor.addProduct.sections.productImages', 'Product Images')}
             </h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
@@ -159,7 +151,7 @@ function AddProduct() {
                 <div key={image.id} className="relative group">
                   <img
                     src={image.url}
-                    alt="Product"
+                    alt={t('vendor.addProduct.imageAlt', 'Product')}
                     className="w-full h-32 object-cover rounded-lg border border-gray-200"
                   />
                   <button
@@ -178,7 +170,7 @@ function AddProduct() {
                 className="w-full h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:border-indigo-400 hover:text-indigo-600 transition-colors duration-200"
               >
                 <FiUpload className="w-6 h-6 mb-2" />
-                <span className="text-sm font-medium">Add Image</span>
+                <span className="text-sm font-medium">{t('vendor.addProduct.addImage', 'Add Image')}</span>
               </button>
             </div>
             
@@ -191,21 +183,21 @@ function AddProduct() {
               className="hidden"
             />
             
-            <p className="text-sm text-gray-500">Upload up to 10 images. First image will be the main product image.</p>
+            <p className="text-sm text-gray-500">{t('vendor.addProduct.imageInstructions', 'Upload up to 10 images. First image will be the main product image.')}</p>
           </div>
 
           {/* Product Details */}
           <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
             <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
               <FiFileText className="text-indigo-600" />
-              Product Details
+              {t('vendor.addProduct.sections.productDetails', 'Product Details')}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Category *
+                  {t('vendor.addProduct.fields.category', 'Category')} *
                 </label>
                 <select
                   name="category"
@@ -219,7 +211,7 @@ function AddProduct() {
                     formik.errors.category && formik.touched.category ? 'border-red-300' : 'border-gray-300'
                   }`}
                 >
-                  <option value="">Select Category</option>
+                  <option value="">{t('vendor.addProduct.placeholders.selectCategory', 'Select Category')}</option>
                   {categories && categories.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.title}
@@ -234,14 +226,14 @@ function AddProduct() {
               {/* Product Title */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Product Title *
+                  {t('vendor.addProduct.fields.productTitle', 'Product Title')} *
                 </label>
                 <div className="relative">
                   <FiTag className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="text"
                     name="title"
-                    placeholder="Enter product title"
+                    placeholder={t('vendor.addProduct.placeholders.productTitle', 'Enter product title')}
                     value={formik.values.title}
                     onChange={formik.handleChange}
                     className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 ${
@@ -257,7 +249,7 @@ function AddProduct() {
               {/* Price */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Price ($) *
+                  {t('vendor.addProduct.fields.price', 'Price')} ($) *
                 </label>
                 <div className="relative">
                   <FiDollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -281,7 +273,7 @@ function AddProduct() {
               {/* Stock */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Stock Quantity *
+                  {t('vendor.addProduct.fields.stockQuantity', 'Stock Quantity')} *
                 </label>
                 <div className="relative">
                   <FiPackage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -304,7 +296,7 @@ function AddProduct() {
               {/* Sale Price */}
               <div className="md:col-span-1">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sale Price ($) <span className="text-gray-500">(Optional)</span>
+                  {t('vendor.addProduct.fields.salePrice', 'Sale Price')} ($) <span className="text-gray-500">({t('vendor.addProduct.optional', 'Optional')})</span>
                 </label>
                 <div className="relative">
                   <FiPercent className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -324,12 +316,12 @@ function AddProduct() {
             {/* Description */}
             <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product Description *
+                {t('vendor.addProduct.fields.productDescription', 'Product Description')} *
               </label>
               <textarea
                 name="description"
                 rows={5}
-                placeholder="Describe your product in detail..."
+                placeholder={t('vendor.addProduct.placeholders.description', 'Describe your product in detail...')}
                 value={formik.values.description}
                 onChange={formik.handleChange}
                 className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 resize-none ${
@@ -353,7 +345,7 @@ function AddProduct() {
               }}
               className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200"
             >
-              Cancel
+              {t('vendor.addProduct.buttons.cancel', 'Cancel')}
             </button>
             <button
               type="submit"
@@ -364,12 +356,12 @@ function AddProduct() {
                   : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl'
               }`}
             >
-              {loading ? 'Adding Product...' : 'Add Product'}
+              {loading ? t('vendor.addProduct.buttons.adding', 'Adding Product...') : t('vendor.addProduct.buttons.addProduct', 'Add Product')}
             </button>
           </div>
         </form>
       </div>
-    </VendorLayout>
+    
   )
 }
 

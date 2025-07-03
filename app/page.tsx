@@ -10,6 +10,8 @@ import ProductItemSkeleton from './items/ProductItemSkeleton';
 import BottomNavbar from './components/user_components/bottom_navbar';
 import CustomSectionTitle from './custom/CustomSectionTitle';
 import { DataContext } from './context/data_context';
+import Banner from './components/user_components/banner';
+import { AuthContext } from './context/auth_context';
 
 
 
@@ -20,9 +22,9 @@ export default function Home() {
   
  const {categories , products}=useContext(DataContext)
 
+const {auth}=useContext(AuthContext)
 
-
-
+console.log("auth",auth)
 
 
 
@@ -33,29 +35,10 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <Banner />
       <div className="container mx-auto px-4 py-8">
 
-        <div className="relative w-full mb-10 rounded-2xl overflow-hidden shadow-lg">
-          <img
-            src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80"
-            alt="Vape Store Banner"
-            className="w-full h-[220px] md:h-[350px] object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex flex-col justify-center pl-6 md:pl-16">
-            <h1 className="text-2xl md:text-4xl font-extrabold text-white drop-shadow-lg mb-2">
-              Discover the Best Vendora Products
-            </h1>
-            <p className="text-white text-base md:text-lg mb-4 max-w-md">
-              Shop premium devices, e-liquids, and accessories from top brands. Fast delivery & exclusive offers!
-            </p>
-            <a
-              href="#categories"
-              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-full shadow transition"
-            >
-              Shop Now
-            </a>
-          </div>
-        </div>
+        
 
 
         <CustomSectionTitle title={"Shop by Categories"} />
