@@ -160,11 +160,11 @@ export const {
 export default cartSlice.reducer;
 
 // Selectors
-export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
-export const selectCartTotalItems = (state: { cart: CartState }) => state.cart.totalItems;
-export const selectCartTotalPrice = (state: { cart: CartState }) => state.cart.totalPrice;
-export const selectCartIsOpen = (state: { cart: CartState }) => state.cart.isOpen;
-export const selectCartItemById = (state: { cart: CartState }, id: string) => 
-  state.cart.items.find(item => item.id === id);
-export const selectCartItemQuantity = (state: { cart: CartState }, id: string) => 
-  state.cart.items.find(item => item.id === id)?.quantity || 0;
+export const selectCartItems = (state: any) => state.cart?.items || [];
+export const selectCartTotalItems = (state: any) => state.cart?.totalItems || 0;
+export const selectCartTotalPrice = (state: any) => state.cart?.totalPrice || 0;
+export const selectCartIsOpen = (state: any) => state.cart?.isOpen || false;
+export const selectCartItemById = (state: any, id: string) => 
+  state.cart?.items?.find((item: CartItem) => item.id === id);
+export const selectCartItemQuantity = (state: any, id: string) => 
+  state.cart?.items?.find((item: CartItem) => item.id === id)?.quantity || 0;
