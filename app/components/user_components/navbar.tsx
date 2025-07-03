@@ -2,8 +2,9 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
-import FloatBtn from "./FloatBtn";
-import { AuthContext } from "../context/AuthContext"
+import FloatBtn from "../FloatBtn";
+import { AuthContext } from "../../context/AuthContext"
+import Search from "./search";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -28,14 +29,7 @@ export default function Navbar() {
 
           {/* Desktop Search */}
           <div className="hidden md:flex flex-1 mx-8">
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-              />
-              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            </div>
+            <Search />
           </div>
 
           {/* Icons */}

@@ -1,7 +1,7 @@
 'use client'
 import React, { useContext } from 'react'
-import { DataContext } from '../../../context/DataContext'
-import Navbar from '../../../components/Navbar';
+import { DataContext } from '../../../context/data_context'
+import Navbar from '../../../components/user_components/Navbar';
 // import Footer from '../../../components/Footer';
 // import BottomNavbar from '../../../components/BottomNavbar';
 

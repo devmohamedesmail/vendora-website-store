@@ -4,7 +4,7 @@ import VendorLayout from '../../components/VendorLayout'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FiUpload, FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiFileText } from 'react-icons/fi'
-import { DataContext } from '../../context/DataContext';
+import { DataContext } from '../../context/data_context';
 import axios from 'axios';
 import {uploadImagesToStrapi} from '../../ultilites/uploadImagesToStrapi.js'
 import { config } from '../../config/api';

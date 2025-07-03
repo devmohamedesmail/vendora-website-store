@@ -1,25 +1,24 @@
 'use client';
-import React, { useState, useEffect } from 'react'
-import { config } from './config/api';
-import axios from 'axios';
-import Footer from './components/Footer';
+import React, { useState, useEffect, useContext } from 'react'
+import Footer from './components/user_components/footer';
 import ProductItem from './items/ProductItem';
 import CategoryItem from './items/CategoryItem';
 import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
-import Navbar from './components/Navbar';
+import Navbar from './components/user_components/navbar';
 import CategoryItemSkeleton from './items/CategoryItemSkeleton';
 import ProductItemSkeleton from './items/ProductItemSkeleton';
-import BottomNavbar from './components/BottomNavbar';
+import BottomNavbar from './components/user_components/bottom_navbar';
 import CustomSectionTitle from './custom/CustomSectionTitle';
-import FloatBtn from './components/FloatBtn';
+import { DataContext } from './context/data_context';
+
 
 
 
 
 export default function Home() {
 
-  const [products, setProducts] = useState(null);
-  const [categories, setCategories] = useState(null);
+  
+ const {categories , products}=useContext(DataContext)
 
 
 
@@ -27,44 +26,10 @@ export default function Home() {
 
 
 
-  const fetch_products_data = async () => {
-    try {
-      const response = await axios.get(
-        `https://ecommerce-strapi-ex18.onrender.com/api/products?populate=*`,
-        {
-          headers: {
-            Authorization: `Bearer ${config.token}`,
-          },
-        }
-      );
-      setProducts(response.data.data);
-
-    } catch (error) {
-      console.log("error fetching products data", error);
-    }
-  };
 
 
-  const fetch_categories_data = async () => {
-    try {
-      const response = await axios.get(
-        `https://ecommerce-strapi-ex18.onrender.com/api/categories?populate=image`,
-        {
-          headers: {
-            Authorization: `Bearer ${config.token}`,
-          }
-        }
-      );
-      setCategories(response.data.data);
-    } catch (error) {
-      console.log("error fetching categories data", error);
-    }
-  };
 
-  useEffect(() => {
-    fetch_products_data();
-    fetch_categories_data();
-  }, []);
+
   return (
     <>
       <Navbar />

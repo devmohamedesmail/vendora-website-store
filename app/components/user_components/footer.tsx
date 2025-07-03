@@ -1,0 +1,62 @@
+'use client'
+import React, { useContext } from 'react'
+
+import { MdOutlineMailOutline } from "react-icons/md";
+import { FaPhone } from "react-icons/fa6";
+import { IoLocationOutline } from "react-icons/io5";
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+
+
+export default function Footer() {
+  const { t, i18n } = useTranslation();
+
+  return (
+    <footer className="bg-gray-900 text-white py-12">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-5">
+        {/* Useful Pages Section */}
+        <div>
+          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Useful Pages')}</h3>
+          <ul className="space-y-4">
+            <li><Link href="/front/home" className="hover:text-gray-400 transition-colors">{t('Home')}</Link></li>
+            <li><Link href="/front/account" className="hover:text-gray-400 transition-colors">{t('Account')}</Link></li>
+            <li><Link href="/front/cart" className="hover:text-gray-400 transition-colors">{t('Cart')}</Link></li>
+            <li><Link href="/front/wishlist" className="hover:text-gray-400 transition-colors">{t('Wishlist')}</Link></li>
+          </ul>
+        </div>
+
+        {/* Contact Section */}
+        <div>
+          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Contact')}</h3>
+          <ul className="space-y-4">
+            <li className="flex items-center gap-3">
+              <MdOutlineMailOutline className="text-lg" />
+              <span className="text-gray-300">support@vapewebsite.com</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <FaPhone className="text-lg" />
+              <span className="text-gray-300">+1 234 567 890</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <IoLocationOutline className="text-lg" />
+              <span className="text-gray-300">123 Vape Street, Vapor City</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Support Section */}
+        <div>
+          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Support')}</h3>
+          <ul className="space-y-4">
+            <li><Link href="/front/usefullPages" className="hover:text-gray-400 transition-colors">{t('FAQs')}</Link></li>
+            <li><Link href="/front/product" className="hover:text-gray-400 transition-colors">{t('Products')}</Link></li>
+            <li><Link href="/front/privacy" className="hover:text-gray-400 transition-colors">{t('Checkout')}</Link></li>
+          </ul>
+        </div>
+      </div>
+      <div className="text-center mt-12 text-sm text-gray-500 border-t border-gray-700 pt-6">
+        &copy; 2025 Vape Website. All rights reserved. | <Link href="/privacy-policy" className="hover:text-gray-400 transition-colors">{t('Privacy Policy')}</Link>
+      </div>
+    </footer>
+  );
+}

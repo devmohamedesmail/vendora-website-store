@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
-import Navbar from "../../components/Navbar"
+import Navbar from "../../components/user_components/Navbar"
 import Footer from "../../components/Footer"
-import BottomNavbar from "../../components/BottomNavbar"
+import BottomNavbar from "../../components/user_components/bottom_navbar"
 
 
 

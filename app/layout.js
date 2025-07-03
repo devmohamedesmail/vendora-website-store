@@ -6,7 +6,7 @@ import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import ClientWrapper from "./components/ClientWrapper";
-import { DataProvider } from "./context/DataContext";
+import { DataProvider } from "./context/data_context";
 
 
 

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/user_components/Navbar";
 import Footer from "../../components/Footer";
 import FloatBtn from "../../components/FloatBtn"
 
