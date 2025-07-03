@@ -38,7 +38,7 @@ export default function Login_Page() {
     onSubmit: async (values) => {
       try {
         setLoading(true)
-        const res = await handle_login(values.email, values.password)
+        const res = await handle_login(values.identifier, values.password)
        console.log(res.user)
         if (res.user) {
           toast.success(t('login-success'))
@@ -126,10 +126,10 @@ export default function Login_Page() {
                 <Custom_input
                   type="email"
                   name="email"
-                  value={loginFormik.values.email}
+                  value={loginFormik.values.identifier}
                   onChange={loginFormik.handleChange}
                   label={t('email')}
-                  error={loginFormik.touched.email && loginFormik.errors.email}
+                  error={loginFormik.touched.identifier && loginFormik.errors.identifier}
                 />
                 <Custom_input
                   type="password"
