@@ -1,8 +1,8 @@
 'use client'
-import Navbar from '../../components/user_components/Navbar'
-import Custom_input from '../../custom/Custom_input'
-import Custom_button from '../../custom/Custom_button'
-import Footer from '../../components/Footer'
+import Navbar from '../../components/user_components/navbar'
+import Custom_input from '../../custom/custom_input'
+import Custom_button from '../../custom/custom_button'
+import Footer from '../../components/user_components/footer'
 import BottomNavbar from '../../components/user_components/bottom_navbar'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -16,7 +16,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 
-export default function Page() {
+export default function Login_Page() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('login')
   const { t } = useTranslation()
@@ -28,7 +28,8 @@ export default function Page() {
   const loginFormik = useFormik({
     initialValues: { 
       identifier: '', 
-      password: '' 
+      password: '' ,
+      
     },
     validationSchema: Yup.object({
       email: Yup.string().email(t('invalid-email')).required(t('required')),

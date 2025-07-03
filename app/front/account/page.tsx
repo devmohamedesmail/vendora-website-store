@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 import { FiEdit, FiLogOut, FiPlus, FiGlobe } from "react-icons/fi";
-import Navbar from '../../components/user_components/Navbar';
-import Footer from '../../components/Footer';
+import Navbar from '../../components/user_components/navbar';
+import Footer from '../../components/user_components/footer';
 import FloatBtn from '../../components/FloatBtn';
 
 const mockUser = {

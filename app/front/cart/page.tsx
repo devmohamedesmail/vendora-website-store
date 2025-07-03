@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import Navbar from '../../components/user_components/Navbar';
-import Footer from '../../components/Footer';
+import Navbar from '../../components/user_components/navbar';
+import Footer from '../../components/user_components/footer';
 import FloatBtn from '../../components/FloatBtn';
 import ProductItem from "../../items/ProductItem.jsx"
 
