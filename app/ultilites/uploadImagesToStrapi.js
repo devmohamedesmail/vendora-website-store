@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { api } from '../config/api';
+import { config } from '../config/api';
 
 export const uploadImagesToStrapi = async (images) => {
     const uploadedImageIds = [];
@@ -29,12 +29,12 @@ export const uploadImagesToStrapi = async (images) => {
 
       try {
         const res = await axios.post(
-          `${api.baseURL}/api/upload`,
+          `${config.baseURL}/api/upload`,
           formData,
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${api.token}`, 
+              Authorization: `Bearer ${config.token}`, 
             },
           }
         );
