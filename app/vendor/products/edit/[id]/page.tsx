@@ -441,7 +441,7 @@ export default function EditProduct({ params }: any) {
                                         : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl'
                                     }`}
                             >
-                                {loading ? t('vendor.products.updating', ) : t('vendor.products.updateProduct')}
+                                {loading ? t('vendor.editProduct.buttons.updating', 'Updating Product...') : t('vendor.editProduct.buttons.updateProduct', 'Update Product')}
                             </button>
                         </div>
                     </form>
