@@ -277,6 +277,8 @@
 			"confirmDelete": "هل أنت متأكد من أنك تريد حذف هذا المنتج؟",
 			"untitled": "منتج بدون عنوان",
 			"noDescription": "لا يوجد وصف متاح.",
+			"updateProduct": "  تحديث المنتج",
+			"updating": " جاري تحديث المنتج...",
 			"stats": {
 				"totalProducts": "إجمالي المنتجات",
 				"inStock": "متوفر",

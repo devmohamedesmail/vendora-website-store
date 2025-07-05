@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import VendorLayout from '../../../components/VendorLayout';
 import axios from 'axios';
 import { config } from '../../../config/api';
+import Link from 'next/link';
 
 interface Product {
   id: number;
@@ -413,10 +414,11 @@ export default function Show_Product() {
                           <FiEye size={16} />
                           {t('vendor.products.view', 'View')}
                         </button>
-                        <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 text-sm">
+                        <Link href={`/vendor/products/edit/${product.id}`} className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 text-sm">
                           <FiEdit size={16} />
                           {t('vendor.products.edit', 'Edit')}
-                        </button>
+                        </Link>
+                        
                         <button 
                           onClick={() => handleDeleteProduct(product.id)}
                           className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 text-sm"

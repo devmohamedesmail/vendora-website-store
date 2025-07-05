@@ -277,6 +277,8 @@
 			"confirmDelete": "Are you sure you want to delete this product?",
 			"untitled": "Untitled Product",
 			"noDescription": "No description available.",
+			"updateProduct": "Update Product",
+			"updating": "Updating Product...",
 			"stats": {
 				"totalProducts": "Total Products",
 				"inStock": "In Stock",
@@ -294,6 +296,7 @@
 				"fetchFailed": "Failed to fetch products",
 				"deleteFailed": "Failed to delete product"
 			}
+			
 		}
 	}
 }

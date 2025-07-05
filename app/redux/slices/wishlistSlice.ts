@@ -172,13 +172,13 @@ export const {
 export default wishlistSlice.reducer;
 
 // Selectors
-export const selectWishlistItems = (state: any) => state.wishlist?.items || [];
-export const selectWishlistTotalItems = (state: any) => state.wishlist?.totalItems || 0;
-export const selectWishlistIsOpen = (state: any) => state.wishlist?.isOpen || false;
-export const selectWishlistItemById = (state: any, id: string) => 
-  state.wishlist?.items?.find((item: any) => item.id === id);
-export const selectIsInWishlist = (state: any, id: string) => 
-  state.wishlist?.items?.some((item: any) => item.id === id) || false;
-export const selectWishlistLastAdded = (state: any) => state.wishlist?.lastAdded;
-export const selectWishlistByVendor = (state: any, vendorName: string) => 
-  state.wishlist?.items?.filter((item: any) => item.vendor?.vendor_name === vendorName) || [];
+export const selectWishlistItems = (state: { wishlist: WishlistState }) => state.wishlist.items;
+export const selectWishlistTotalItems = (state: { wishlist: WishlistState }) => state.wishlist.totalItems;
+export const selectWishlistIsOpen = (state: { wishlist: WishlistState }) => state.wishlist.isOpen;
+export const selectWishlistItemById = (state: { wishlist: WishlistState }, id: string) => 
+  state.wishlist.items.find(item => item.id === id);
+export const selectIsInWishlist = (state: { wishlist: WishlistState }, id: string) => 
+  state.wishlist.items.some(item => item.id === id);
+export const selectWishlistLastAdded = (state: { wishlist: WishlistState }) => state.wishlist.lastAdded;
+export const selectWishlistByVendor = (state: { wishlist: WishlistState }, vendorName: string) => 
+  state.wishlist.items.filter(item => item.vendor?.vendor_name === vendorName);
