@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ProductItemSkeleton() {
-  return (
-   <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 animate-pulse">
+function CategoryItemSkeleton() {
+    return (
+        <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 animate-pulse">
             {/* Background Pattern Skeleton */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute inset-0 bg-gray-100"></div>
@@ -56,7 +56,7 @@ function ProductItemSkeleton() {
             {/* Corner Accent Skeleton */}
             <div className="absolute top-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-t-[20px] border-t-gray-200"></div>
         </div>
-  )
+    )
 }
 
-export default ProductItemSkeleton
+export default CategoryItemSkeleton

@@ -40,7 +40,7 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
     }, [unwrappedParams.id])
     return (
         <div>
-            <Navbar />
+          
             {product ? (<>
             
                     <div className="container mx-auto px-4 py-10">
@@ -119,8 +119,7 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
             
             
                   </>) : (<Loader />)}
-            <Footer />
-            <BottomNavbar />
+           
         </div>
     )
 }

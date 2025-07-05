@@ -12,6 +12,8 @@ import CustomSectionTitle from './custom/CustomSectionTitle';
 import { DataContext } from './context/data_context';
 import Banner from './components/user_components/banner';
 import { AuthContext } from './context/auth_context';
+import Categories_Section from './sections/categories_section';
+import Products_Section from './sections/products_section';
 
 
 
@@ -24,7 +26,7 @@ export default function Home() {
 
 const {auth}=useContext(AuthContext)
 
-console.log("auth",auth)
+
 
 
 
@@ -36,54 +38,8 @@ console.log("auth",auth)
     <>
       <Navbar />
       <Banner />
-      <div className="container mx-auto px-4 py-8">
-
-        
-
-
-        <CustomSectionTitle title={"Shop by Categories"} />
-
-
-        {categories ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-10">
-            {categories.map((category, index) => (
-              <CategoryItem category={category} key={index} />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-10">
-            <CategoryItemSkeleton />
-            <CategoryItemSkeleton />
-            <CategoryItemSkeleton />
-            <CategoryItemSkeleton />
-          </div>
-        )}
-
-
-
-
-
-        <CustomSectionTitle title={"New Arrivals"} />
-
-
-        {products ? (
-          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-2">
-            {products.map((product, index) => (
-              <ProductItem product={product} key={index} />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-2">
-            <ProductItemSkeleton />
-            <ProductItemSkeleton />
-            <ProductItemSkeleton />
-            <ProductItemSkeleton />
-          </div>
-        )}
-
-
-      </div>
-      {/* <FloatBtn /> */}
+      <Categories_Section />
+      <Products_Section />
       <Footer />
       <BottomNavbar />
     </>

@@ -39,10 +39,15 @@ export default function Login_Page() {
       try {
         setLoading(true)
         const res = await handle_login(values.email, values.password)
-        console.log(res)
         if (res) {
           toast.success(t('auth.loginSuccess'))
-          router.push('/front/account')
+          // Check user type from response and redirect accordingly
+          // If type is not available, default to user dashboard
+          if(res.type === 'vendor') {
+            router.push('/vendor/')
+          } else {
+            router.push('/front/account')
+          }
         }
        
       } catch (err) {
@@ -63,9 +68,17 @@ export default function Login_Page() {
     onSubmit: async (values) => {
       try {
         setLoading(true)
-        const res = await handle_register(values.name, values.email, values.password)
-          router.push('/front/account')
-        if (res) toast.success(t('auth.registerSuccess'))
+        const res = await handle_register(values.name, values.email, values.password)    
+        if (res) {
+          toast.success(t('auth.registerSuccess'))
+          // Check user type from response and redirect accordingly
+          // If type is not available, default to user dashboard
+          if(res.type === 'vendor') {
+            router.push('/vendor/')
+          } else {
+            router.push('/front/account')
+          }
+        }
       } catch (err) {
         toast.error(t('auth.registerFailed'))
       } finally {
@@ -85,13 +98,13 @@ export default function Login_Page() {
         <div className="w-full md:w-2/3 lg:w-1/3 mx-auto mt-12 p-8 bg-white/90 shadow-2xl rounded-3xl my-12">
           <div className="flex justify-center gap-5 mb-10 bg-gray-100 py-2 px-2 rounded-xl">
             <button
-              className={`px-5 py-2 flex-1 transition-all duration-300 rounded-xl text-lg font-semibold ${activeTab === 'login' ? 'bg-indigo-600 text-white shadow' : 'bg-white text-indigo-700'}`}
+              className={`px-5 py-2 flex-1 transition-all duration-300 rounded-xl text-lg font-semibold ${activeTab === 'login' ? 'bg-main text-white shadow' : 'bg-white text-main'}`}
               onClick={() => setActiveTab('login')}
             >
               {t('auth.login')}
             </button>
             <button
-              className={`px-5 py-2 flex-1 transition-all duration-300 rounded-xl text-lg font-semibold ${activeTab === 'register' ? 'bg-indigo-600 text-white shadow' : 'bg-white text-indigo-700'}`}
+              className={`px-5 py-2 flex-1 transition-all duration-300 rounded-xl text-lg font-semibold ${activeTab === 'register' ? 'bg-main text-white shadow' : 'bg-white text-main'}`}
               onClick={() => setActiveTab('register')}
             >
               {t('auth.register')}

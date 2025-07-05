@@ -15,7 +15,7 @@ export default function Navbar() {
   // Redux hooks for cart and wishlist counts
   const { totalItems: cartItemsCount } = useCart();
   const { totalItems: wishlistItemsCount } = useWishlist();
-console.log("auth", auth)
+
   return (
 
 
@@ -24,14 +24,14 @@ console.log("auth", auth)
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+          <Link href="/" className="flex-shrink-0 flex items-center">
             <img
               className="h-10 w-auto"
               src="/images/logo.png"
               alt="Logo"
             />
             <span className="ml-2 font-bold text-xl text-indigo-700 tracking-tight">VapeStore</span>
-          </div>
+          </Link>
 
           {/* Desktop Search */}
           <div className="hidden md:flex flex-1 mx-8">

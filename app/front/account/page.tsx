@@ -1,6 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FiEdit, FiLogOut, FiPlus, FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiSave, FiPackage, FiPhone, FiMail } from "react-icons/fi";
+import Address_User_Tab from '../../components/user_components/address_user_tab';
+import { AuthContext } from '../../context/auth_context';
+import Profile_User_Tab from '../../components/user_components/profile_user_tab';
+import Setting_User_Tab from '../../components/user_components/setting_user_tab';
 
 const mockUser = {
   name: "Ahmed Hassan",
@@ -44,9 +48,10 @@ export default function Account() {
   const [user, setUser] = useState(mockUser);
   const [activeTab, setActiveTab] = useState('profile');
   const [editProfile, setEditProfile] = useState(false);
-  const [newAddress, setNewAddress] = useState({ label: "", address: "" });
+
   const [showAddAddress, setShowAddAddress] = useState(false);
   const [orderFilter, setOrderFilter] = useState('all');
+  const {auth}=useContext(AuthContext)
 
   const handleUpdateProfile = (e) => {
     e.preventDefault();
@@ -54,34 +59,9 @@ export default function Account() {
     // Here you would typically make an API call to update the profile
   };
 
-  const handleAddAddress = () => {
-    if (newAddress.label.trim() && newAddress.address.trim()) {
-      setUser({
-        ...user,
-        addresses: [
-          ...user.addresses,
-          { 
-            id: Date.now(), 
-            label: newAddress.label, 
-            address: newAddress.address, 
-            isDefault: user.addresses.length === 0 
-          },
-        ],
-      });
-      setNewAddress({ label: "", address: "" });
-      setShowAddAddress(false);
-    }
-  };
+ 
 
-  const toggleDefault = (addressId) => {
-    setUser({
-      ...user,
-      addresses: user.addresses.map(addr => ({
-        ...addr,
-        isDefault: addr.id === addressId
-      }))
-    });
-  };
+ 
 
   const handleLogout = () => {
     alert("Logged out successfully!");
@@ -114,186 +94,12 @@ export default function Account() {
     switch (activeTab) {
       case 'profile':
         return (
-          <div className="space-y-6">
-            {/* Profile Header */}
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white">
-              <div className="flex flex-col sm:flex-row items-center gap-6">
-                <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
-                  <FiUser size={32} />
-                </div>
-                <div className="text-center sm:text-left">
-                  <h2 className="text-2xl font-bold">{user.name}</h2>
-                  <p className="opacity-90">{user.email}</p>
-                  <p className="text-sm opacity-75">Member since {new Date(user.joinDate).getFullYear()}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Profile Form */}
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-gray-800">Personal Information</h3>
-                <button
-                  onClick={() => setEditProfile(!editProfile)}
-                  className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-semibold"
-                >
-                  <FiEdit size={16} />
-                  {editProfile ? 'Cancel' : 'Edit'}
-                </button>
-              </div>
-
-              <form onSubmit={handleUpdateProfile} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <FiUser className="inline mr-2" size={16} />
-                      Full Name
-                    </label>
-                    {editProfile ? (
-                      <input
-                        type="text"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        value={user.name}
-                        onChange={(e) => setUser({ ...user, name: e.target.value })}
-                      />
-                    ) : (
-                      <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-800">{user.name}</div>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <FiMail className="inline mr-2" size={16} />
-                      Email Address
-                    </label>
-                    {editProfile ? (
-                      <input
-                        type="email"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                      />
-                    ) : (
-                      <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-800">{user.email}</div>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <FiPhone className="inline mr-2" size={16} />
-                      Phone Number
-                    </label>
-                    {editProfile ? (
-                      <input
-                        type="tel"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        value={user.phone}
-                        onChange={(e) => setUser({ ...user, phone: e.target.value })}
-                      />
-                    ) : (
-                      <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-800">{user.phone}</div>
-                    )}
-                  </div>
-                </div>
-
-                {editProfile && (
-                  <div className="flex gap-4 pt-4">
-                    <button
-                      type="submit"
-                      className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold"
-                    >
-                      <FiSave size={16} />
-                      Save Changes
-                    </button>
-                  </div>
-                )}
-              </form>
-            </div>
-          </div>
+         <Profile_User_Tab auth={auth} />
         );
 
       case 'addresses':
         return (
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <h2 className="text-2xl font-bold text-gray-800">Saved Addresses</h2>
-              <button
-                onClick={() => setShowAddAddress(true)}
-                className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-semibold"
-              >
-                <FiPlus size={16} />
-                Add Address
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {user.addresses.map((address) => (
-                <div key={address.id} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition">
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-semibold text-gray-800">{address.label}</h3>
-                        {address.isDefault && (
-                          <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium">Default</span>
-                        )}
-                      </div>
-                      <p className="text-gray-600 text-sm leading-relaxed">{address.address}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 pt-3 border-t">
-                    <button
-                      onClick={() => toggleDefault(address.id)}
-                      className={`text-xs font-medium px-3 py-2 rounded-lg ${
-                        address.isDefault 
-                          ? 'bg-green-100 text-green-800 cursor-not-allowed' 
-                          : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600'
-                      }`}
-                      disabled={address.isDefault}
-                    >
-                      {address.isDefault ? 'Default' : 'Set Default'}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {showAddAddress && (
-              <div className="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Add New Address</h3>
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Address Label (e.g., Home, Work, Office)"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    value={newAddress.label}
-                    onChange={(e) => setNewAddress({ ...newAddress, label: e.target.value })}
-                  />
-                  <textarea
-                    placeholder="Complete Address"
-                    rows={3}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
-                    value={newAddress.address}
-                    onChange={(e) => setNewAddress({ ...newAddress, address: e.target.value })}
-                  />
-                  <div className="flex gap-4">
-                    <button
-                      onClick={handleAddAddress}
-                      className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold"
-                    >
-                      <FiSave size={16} />
-                      Save Address
-                    </button>
-                    <button
-                      onClick={() => setShowAddAddress(false)}
-                      className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-semibold"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <Address_User_Tab showAddAddress={showAddAddress} setShowAddAddress={setShowAddAddress} />
         );
 
       case 'orders':
@@ -438,103 +244,7 @@ export default function Account() {
 
       case 'settings':
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Account Settings</h2>
-
-            {/* Language & Currency Settings */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Language & Currency</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Language</label>
-                  <div className="space-y-2">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="language"
-                        className="text-indigo-600 mr-3"
-                        defaultChecked={user.preferences.language === 'en'}
-                      />
-                      <span className="text-gray-700">English</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="language"
-                        className="text-indigo-600 mr-3"
-                        defaultChecked={user.preferences.language === 'ar'}
-                      />
-                      <span className="text-gray-700">العربية</span>
-                    </label>
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Currency</label>
-                  <select 
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    value={user.preferences.currency}
-                    onChange={(e) => updatePreference('currency', e.target.value)}
-                  >
-                    <option value="AED">AED (Dirham)</option>
-                    <option value="USD">USD (Dollar)</option>
-                    <option value="EUR">EUR (Euro)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Notification Settings */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Notifications</h3>
-              <div className="space-y-4">
-                <label className="flex items-center justify-between">
-                  <div>
-                    <span className="text-gray-700 font-medium">Order Updates</span>
-                    <p className="text-sm text-gray-500">Get notified about your order status</p>
-                  </div>
-                  <input
-                    type="checkbox"
-                    className="text-indigo-600 w-5 h-5"
-                    checked={user.preferences.notifications}
-                    onChange={(e) => updatePreference('notifications', e.target.checked)}
-                  />
-                </label>
-                <label className="flex items-center justify-between">
-                  <div>
-                    <span className="text-gray-700 font-medium">Newsletter</span>
-                    <p className="text-sm text-gray-500">Receive updates about new products and offers</p>
-                  </div>
-                  <input
-                    type="checkbox"
-                    className="text-indigo-600 w-5 h-5"
-                    checked={user.preferences.newsletter}
-                    onChange={(e) => updatePreference('newsletter', e.target.checked)}
-                  />
-                </label>
-              </div>
-            </div>
-
-            {/* Account Actions */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Management</h3>
-              <div className="space-y-3">
-                <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition text-gray-700 font-medium">
-                  Change Password
-                </button>
-                <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition text-gray-700 font-medium">
-                  Download Account Data
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-3 bg-red-50 hover:bg-red-100 rounded-lg transition text-red-600 font-medium"
-                >
-                  <FiLogOut className="inline mr-3" size={20} />
-                  Sign Out
-                </button>
-              </div>
-            </div>
-          </div>
+        <Setting_User_Tab />
         );
 
       default:

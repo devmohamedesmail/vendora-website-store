@@ -9,6 +9,7 @@ interface User {
     id: number;
     username: string;
     email: string;
+    type?: string;
     jwt?: string;
 }
 
@@ -60,12 +61,19 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
                         Authorization: `Bearer ${config.token}`,
                     }
                 })
-            const user = response.data
-            localStorage.setItem('user', JSON.stringify(user));
-            setAuth(user)
-            return user;
+            const authData = response.data
+            console.log('Login response:', authData); // Debug log
+            
+            // Strapi returns { user: {...}, jwt: "..." }
+            const user = authData.user || authData
+            const userWithJWT = { ...user, jwt: authData.jwt }
+            
+            localStorage.setItem('user', JSON.stringify(userWithJWT));
+            setAuth(userWithJWT)
+            return userWithJWT;
         } catch (error) {
             console.log('Error logging in', error.response?.data || error.message);
+            throw error;
         }
     }
 
@@ -84,12 +92,19 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
                         Authorization: `Bearer ${config.token}`,
                     }
                 })
-            const user = response.data;
-            localStorage.setItem('user', JSON.stringify(user));
-            setAuth(user);
-            return user;
+            const authData = response.data;
+            console.log('Register response:', authData); // Debug log
+            
+            // Strapi returns { user: {...}, jwt: "..." }
+            const user = authData.user || authData
+            const userWithJWT = { ...user, jwt: authData.jwt }
+            
+            localStorage.setItem('user', JSON.stringify(userWithJWT));
+            setAuth(userWithJWT);
+            return userWithJWT;
         } catch (error) {
             console.log('Error registering', error.response?.data || error.message);
+            throw error;
         }
     }
 

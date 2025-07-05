@@ -1,15 +1,13 @@
 'use client'
 import React from 'react'
-import Navbar from '../../components/user_components/navbar';
-import Footer from '../../components/user_components/footer';
-import FloatBtn from '../../components/FloatBtn';
 import { useCart } from '../../redux/hooks/useCart';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
-import BottomNavbar from '../../components/user_components/bottom_navbar';
+import { config } from '../../config/api';
+
 
 function Cart() {
-  const { t } = useTranslation();
+  const { t , i18n } = useTranslation();
   const {
     items: cartItems,
     totalPrice: total,
@@ -27,7 +25,7 @@ function Cart() {
 
   return (
     <>
-      <Navbar />
+  
       <div className="min-h-screen bg-gray-50 py-10">
         <div className="container mx-auto bg-white rounded-2xl shadow-lg p-8">
           <div className="flex justify-between items-center mb-8">
@@ -92,8 +90,8 @@ function Cart() {
                       <div className="text-sm text-gray-500">
                         ${(item.sale || item.price).toFixed(2)} {t('cart.each')}
                       </div>
-                      <div className="font-bold text-indigo-600 text-lg">
-                        ${((item.sale || item.price) * item.quantity).toFixed(2)}
+                      <div className="font-bold text-second text-lg">
+                        { i18n.language === 'en' ? config.currency_en : config.currency_ar} {((item.sale || item.price) * item.quantity).toFixed(2)}
                       </div>
                       <button
                         onClick={() => removeItem(item.id)}
@@ -108,11 +106,11 @@ function Cart() {
               </div>
               <div className="border-t mt-8 pt-6 flex justify-between items-center">
                 <span className="font-semibold text-gray-700 text-xl">{t('cart.total')}</span>
-                <span className="text-2xl font-bold text-indigo-700">${total.toFixed(2)}</span>
+                <span className="text-2xl font-bold text-second"> { i18n.language === 'en' ? config.currency_en : config.currency_ar} {total.toFixed(2)}</span>
               </div>
               <Link
                 href="/front/checkout"
-                className="mt-8 w-full bg-gradient-to-tr from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transition text-lg tracking-wide uppercase text-center block"
+                className="mt-8 w-full bg-gradient-to-tr from-main to-main/80 hover:from-indigo-700 hover:to-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transition text-lg tracking-wide uppercase text-center block"
               >
                 {t('cart.proceedToCheckout')}
               </Link>
@@ -123,8 +121,7 @@ function Cart() {
 
 
      
-      <Footer />
-      <BottomNavbar />
+
     </>
   )
 }
