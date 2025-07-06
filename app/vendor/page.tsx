@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { FiBox, FiPlus, FiSettings, FiDollarSign, FiTrendingUp, FiUsers, FiShoppingCart } from 'react-icons/fi';
-import VendorLayout from '../components/VendorLayout';
+
 
 function VendorDashboard() {
 
