@@ -395,5 +395,58 @@
 		"inStock": "In Stock",
 		"reviews": "reviews",
 		"soldBy": "Sold by"
+	},
+	"vendorSettings": {
+		"settings": {
+			"title": "Store Settings",
+			"subtitle": "Manage your store information and appearance",
+			"verificationStatus": "Verification Status",
+			"verified": "Verified",
+			"pendingVerification": "Pending Verification",
+			"storeStatus": "Store Status",
+			"active": "Active",
+			"inactive": "Inactive",
+			"storeId": "Store ID",
+			"storeImages": "Store Images",
+			"storeLogo": "Store Logo",
+			"chooseLogo": "Choose logo",
+			"logoFormat": "PNG, JPG up to 2MB",
+			"storeBanner": "Store Banner",
+			"chooseBanner": "Choose banner",
+			"bannerFormat": "PNG, JPG up to 2MB (Recommended: 1200x400px)",
+			"storeInformation": "Store Information",
+			"storeName": "Store Name",
+			"storeNamePlaceholder": "Enter your store name",
+			"phoneNumber": "Phone Number",
+			"phonePlaceholder": "Enter your phone number",
+			"storeDescription": "Store Description",
+			"descriptionPlaceholder": "Describe your store and what you sell...",
+			"updating": "Updating...",
+			"saveChanges": "Save Changes",
+			"storeMetadata": "Store Metadata",
+			"createdAt": "Created At",
+			"lastUpdated": "Last Updated",
+			"publishedAt": "Published At",
+			"userId": "User ID",
+			"notAvailable": "N/A"
+		},
+		"validation": {
+			"storeNameMin": "Store name must be at least 2 characters",
+			"storeNameMax": "Store name must be less than 50 characters",
+			"storeNameRequired": "Store name is required",
+			"phoneInvalid": "Please enter a valid phone number",
+			"phoneRequired": "Phone number is required",
+			"descriptionMin": "Description must be at least 10 characters",
+			"descriptionMax": "Description must be less than 500 characters",
+			"descriptionRequired": "Description is required"
+		},
+		"alerts": {
+			"updateSuccess": "Store settings updated successfully!",
+			"updateError": "Failed to update store settings. Please try again.",
+			"logoSuccess": "Logo updated successfully!",
+			"logoError": "Failed to upload logo. Please try again.",
+			"bannerSuccess": "Banner updated successfully!",
+			"bannerError": "Failed to upload banner. Please try again."
+		}
 	}
 }

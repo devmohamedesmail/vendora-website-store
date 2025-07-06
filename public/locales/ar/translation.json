@@ -394,5 +394,58 @@
 		"inStock": "متوفر",
 		"reviews": "تقييمات",
 		"soldBy": "يباع من قبل"
+	},
+	"vendorSettings": {
+		"settings": {
+			"title": "إعدادات المتجر",
+			"subtitle": "إدارة معلومات متجرك ومظهره",
+			"verificationStatus": "حالة التحقق",
+			"verified": "محقق",
+			"pendingVerification": "في انتظار التحقق",
+			"storeStatus": "حالة المتجر",
+			"active": "نشط",
+			"inactive": "غير نشط",
+			"storeId": "معرف المتجر",
+			"storeImages": "صور المتجر",
+			"storeLogo": "شعار المتجر",
+			"chooseLogo": "اختر الشعار",
+			"logoFormat": "PNG, JPG حتى 2 ميجابايت",
+			"storeBanner": "بانر المتجر",
+			"chooseBanner": "اختر البانر",
+			"bannerFormat": "PNG, JPG حتى 2 ميجابايت (موصى: 1200x400 بكسل)",
+			"storeInformation": "معلومات المتجر",
+			"storeName": "اسم المتجر",
+			"storeNamePlaceholder": "أدخل اسم متجرك",
+			"phoneNumber": "رقم الهاتف",
+			"phonePlaceholder": "أدخل رقم هاتفك",
+			"storeDescription": "وصف المتجر",
+			"descriptionPlaceholder": "اوصف متجرك وما تبيعه...",
+			"updating": "جاري التحديث...",
+			"saveChanges": "حفظ التغييرات",
+			"storeMetadata": "بيانات المتجر الوصفية",
+			"createdAt": "تاريخ الإنشاء",
+			"lastUpdated": "آخر تحديث",
+			"publishedAt": "تاريخ النشر",
+			"userId": "معرف المستخدم",
+			"notAvailable": "غير متاح"
+		},
+		"validation": {
+			"storeNameMin": "يجب أن يكون اسم المتجر على الأقل حرفين",
+			"storeNameMax": "يجب أن يكون اسم المتجر أقل من 50 حرفاً",
+			"storeNameRequired": "اسم المتجر مطلوب",
+			"phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
+			"phoneRequired": "رقم الهاتف مطلوب",
+			"descriptionMin": "يجب أن يكون الوصف على الأقل 10 أحرف",
+			"descriptionMax": "يجب أن يكون الوصف أقل من 500 حرف",
+			"descriptionRequired": "الوصف مطلوب"
+		},
+		"alerts": {
+			"updateSuccess": "تم تحديث إعدادات المتجر بنجاح!",
+			"updateError": "فشل في تحديث إعدادات المتجر. يرجى المحاولة مرة أخرى.",
+			"logoSuccess": "تم تحديث الشعار بنجاح!",
+			"logoError": "فشل في تحميل الشعار. يرجى المحاولة مرة أخرى.",
+			"bannerSuccess": "تم تحديث البانر بنجاح!",
+			"bannerError": "فشل في تحميل البانر. يرجى المحاولة مرة أخرى."
+		}
 	}
 }

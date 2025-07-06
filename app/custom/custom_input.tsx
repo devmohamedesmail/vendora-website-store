@@ -1,25 +1,24 @@
 
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
-type CustomInputProps = {
-  label?: React.ReactNode;
+interface CustomInputProps {
+  label?: string;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   placeholder?: string;
   value?: string | number;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  error?: React.ReactNode;
+  error?: string | false | undefined;
   name?: string;
   className?: string;
   disabled?: boolean;
-  icon?: string | IconComponent;
+  icon?: IconComponent;
   required?: boolean;
-};
+}
 
-export default function Custom_Input({
+export default function CustomInput({
   label,
   type = 'text',
   placeholder = '',
@@ -43,15 +42,9 @@ export default function Custom_Input({
         </label>
       )}
       <div className="relative">
-        {icon && (
-          typeof icon === 'string' ? (
-            <i className={`${icon} absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5`} />
-          ) : (
-            React.createElement(icon, {
-              className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
-            })
-          )
-        )}
+        {icon && React.createElement(icon, {
+          className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+        })}
         <input
           type={type}
           name={name}
@@ -66,7 +59,7 @@ export default function Custom_Input({
         />
       </div>
       {error && (
-        <p className={`text-red-500 text-xs mt-1 ${i18n.language === 'en' ? 'text-left' : 'text-right'}`}>
+        <p className={`text-red-500 text-xs mt-1 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
           {error}
         </p>
       )}
