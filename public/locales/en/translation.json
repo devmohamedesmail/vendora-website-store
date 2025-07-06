@@ -188,7 +188,40 @@
 		"registerFailed": "Registration failed. Please try again.",
 		"loading": "Loading...",
 		"googleLoginSoon": "Google login coming soon!",
-		"appleLoginSoon": "Apple login coming soon!"
+		"appleLoginSoon": "Apple login coming soon!",
+		"welcomeMessage": "Discover premium vaping products from trusted vendors worldwide. Join our community today!",
+		"feature1": "Premium Quality Products",
+		"feature2": "Trusted Vendors",
+		"feature3": "Fast Delivery",
+		"feature4": "Secure Payment",
+		"welcomeBack": "Welcome back!",
+		"loginSubtitle": "Sign in to your account to continue",
+		"emailAddress": "Email Address",
+		"emailPlaceholder": "Enter your email",
+		"passwordPlaceholder": "Enter your password",
+		"rememberMe": "Remember me",
+		"signingIn": "Signing in...",
+		"signIn": "Sign In",
+		"noAccount": "Don't have an account?",
+		"signUpHere": "Sign up here",
+		"createAccount": "Create Account",
+		"registerSubtitle": "Join our community and start shopping",
+		"fullName": "Full Name",
+		"namePlaceholder": "Enter your full name",
+		"agreeToTerms": "I agree to the",
+		"termsOfService": "Terms of Service",
+		"and": "and",
+		"privacyPolicy": "Privacy Policy",
+		"creatingAccount": "Creating account...",
+		"alreadyHaveAccount": "Already have an account?",
+		"signInHere": "Sign in here",
+		"secureLogin": "Your information is protected with enterprise-grade security",
+		"continueWithGoogle": "Continue with Google",
+		"continueWithApple": "Continue with Apple",
+		"orContinueWith": "Or continue with email",
+		"siteName": "VapeHub",
+		"welcomeTo": "Welcome to",
+		"logout": "Logout"
 	},
 	"vendor": {
 		"sidebar": {
@@ -448,5 +481,11 @@
 			"bannerSuccess": "Banner updated successfully!",
 			"bannerError": "Failed to upload banner. Please try again."
 		}
+	},
+	"language": {
+		"english": "English",
+		"arabic": "Arabic",
+		"changeLanguage": "Change Language",
+		"selectLanguage": "Select Language"
 	}
 }

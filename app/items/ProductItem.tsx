@@ -2,9 +2,11 @@ import React from 'react'
 import { config } from '../config/api'
 import Link from 'next/link'
 import { FiHeart, FiShoppingCart, FiEye, FiStar } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 
 function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggleWishlist }:any) {
   const isListView = viewMode === 'list';
+  const { t } = useTranslation();
   
   return (
     <div
@@ -138,7 +140,7 @@ function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggl
               disabled={product.stock === 0}
             >
               <FiShoppingCart className="w-4 h-4" />
-              <span>{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+              <span>{product.stock === 0 ? t('product.outOfStock', 'Out of Stock') : t('product.addToCart', 'Add to Cart')}</span>
             </button>
           )}
         </div>

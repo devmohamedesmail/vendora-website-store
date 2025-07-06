@@ -5,7 +5,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-function Vendor_Sidebar({setSidebarOpen, sidebarOpen}: {setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean}) {
+function Vendor_Sidebar(
+    {setSidebarOpen,
+     sidebarOpen,
+     store,
+     auth
+    }: {setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean , store: any , auth: any}) {
     const { t } = useTranslation();
     const pathname = usePathname();
     
@@ -65,11 +70,11 @@ function Vendor_Sidebar({setSidebarOpen, sidebarOpen}: {setSidebarOpen: (open: b
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
-                            <span className="text-white font-bold text-lg">V</span>
+                            <span className="text-white font-bold text-lg">{store?.store_name[0]}</span>
                         </div>
                         <div>
-                            <h2 className="text-xl font-bold text-white">{t('vendor.sidebar.brandName', 'VapeHub')}</h2>
-                            <p className="text-indigo-100 text-sm font-medium">{t('vendor.sidebar.vendorPortal', 'Vendor Portal')}</p>
+                            <h2 className="text-lg font-bold text-white">{store?.store_name}</h2>
+                            <p className="text-indigo-100 text-sm font-medium">{t('vendor.sidebar.vendorPortal')}</p>
                         </div>
                     </div>
                     <button 
@@ -86,10 +91,10 @@ function Vendor_Sidebar({setSidebarOpen, sidebarOpen}: {setSidebarOpen: (open: b
             <div className="flex-shrink-0 px-6 py-4 bg-gray-50 border-b border-gray-100">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">JD</span>
+                        <span className="text-white font-semibold text-sm">{auth?.username[0]}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 truncate">{t('vendor.sidebar.storeName', "John's Vape Store")}</p>
+                        <p className="font-semibold text-gray-900 truncate">{auth?.username}</p>
                         <p className="text-sm text-gray-500 truncate">{t('vendor.sidebar.premiumVendor', 'Premium Vendor')}</p>
                     </div>
                     <div className="flex-shrink-0">

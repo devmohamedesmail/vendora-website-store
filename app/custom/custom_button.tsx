@@ -14,7 +14,7 @@ export default function Custom_Button({
   title,
   onClick,
   type = 'submit',
-  className = 'btn btn-neutral bg-main text-white w-full',
+  className = 'btn btn-neutral bg-gradient-to-r from-main  to-main/50  text-white w-full h-13 rounded-xl hover:bg-main/80 transition-colors',
   disabled = false,
   children,
 }: CustomButtonProps = {}) {

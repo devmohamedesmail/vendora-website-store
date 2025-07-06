@@ -1,6 +1,12 @@
 import React from 'react'
 
+'use client'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
 export default function Loader() {
+    const { t } = useTranslation();
+    
     return (
         <div className='flex justify-center items-center h-screen bg-gray-900'>
             <div className="relative">
@@ -23,7 +29,7 @@ export default function Loader() {
                 
                 {/* Loading Text */}
                 <div className="mt-8 text-center">
-                    <p className="text-white text-lg font-semibold animate-pulse">Loading...</p>
+                    <p className="text-white text-lg font-semibold animate-pulse">{t('common.loading', 'Loading...')}</p>
                 </div>
             </div>
             

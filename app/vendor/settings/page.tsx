@@ -11,6 +11,7 @@ import CustomInput from '../../custom/custom_input';
 import Custom_Spinner from '../../custom/custom_spinner';
 import { uploadImagesToStrapi } from '../../ultilites/uploadImagesToStrapi';
 import { toast } from 'react-toastify';
+import Custom_Textarea from '../../custom/custom_textarea';
 
 interface StoreData {
     id: number;
@@ -355,7 +356,7 @@ export default function Store_Settings() {
                                 required
                             />
 
-                            <div className="mb-4">
+                            {/* <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     {t('vendorSettings.settings.storeDescription')}
                                     <span className="text-red-500 ml-1">*</span>
@@ -377,7 +378,17 @@ export default function Store_Settings() {
                                 {formik.touched.description && formik.errors.description && (
                                     <p className="text-red-500 text-xs mt-1">{formik.errors.description}</p>
                                 )}
-                            </div>
+                            </div> */}
+                            <Custom_Textarea 
+                            label={t('vendorSettings.settings.storeDescription')}
+                            name="description"
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                            placeholder={t('vendorSettings.settings.descriptionPlaceholder')}
+                            error={formik.touched.description && formik.errors.description}
+                            rows={4}
+
+                            />
 
                             <button
                                 type="submit"

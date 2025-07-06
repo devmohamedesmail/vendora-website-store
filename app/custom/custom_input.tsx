@@ -36,10 +36,10 @@ export default function CustomInput({
   return (
     <div className="mb-4">
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <p className={`block text-sm font-medium text-gray-700 mb-2   ${i18n.language === 'ar' ? 'text-right' : 'text-left'}  `}>
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
+        </p>
       )}
       <div className="relative">
         {icon && React.createElement(icon, {
@@ -53,7 +53,7 @@ export default function CustomInput({
           placeholder={placeholder}
           disabled={disabled}
           required={required}
-          className={`w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${className} ${
+          className={`w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 border border-gray-300 rounded-xl  focus:border-second outline-none  transition-colors ${className} ${
             error ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : ''
           } ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
         />

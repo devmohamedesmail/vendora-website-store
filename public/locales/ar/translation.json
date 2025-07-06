@@ -188,7 +188,40 @@
 		"registerFailed": "فشل في التسجيل. يرجى المحاولة مرة أخرى.",
 		"loading": "جاري التحميل...",
 		"googleLoginSoon": "تسجيل الدخول مع جوجل قريباً!",
-		"appleLoginSoon": "تسجيل الدخول مع آبل قريباً!"
+		"appleLoginSoon": "تسجيل الدخول مع آبل قريباً!",
+		"welcomeMessage": "اكتشف منتجات الفيب المميزة من بائعين موثوقين حول العالم. انضم إلى مجتمعنا اليوم!",
+		"feature1": "منتجات عالية الجودة",
+		"feature2": "بائعون موثوقون",
+		"feature3": "توصيل سريع",
+		"feature4": "دفع آمن",
+		"welcomeBack": "مرحباً بعودتك!",
+		"loginSubtitle": "سجل دخولك إلى حسابك للمتابعة",
+		"emailAddress": "عنوان البريد الإلكتروني",
+		"emailPlaceholder": "أدخل بريدك الإلكتروني",
+		"passwordPlaceholder": "أدخل كلمة المرور",
+		"rememberMe": "تذكرني",
+		"signingIn": "جاري تسجيل الدخول...",
+		"signIn": "تسجيل الدخول",
+		"noAccount": "لا تملك حساباً؟",
+		"signUpHere": "سجل هنا",
+		"createAccount": "إنشاء حساب",
+		"registerSubtitle": "انضم إلى مجتمعنا وابدأ التسوق",
+		"fullName": "الاسم الكامل",
+		"namePlaceholder": "أدخل اسمك الكامل",
+		"agreeToTerms": "أوافق على",
+		"termsOfService": "شروط الخدمة",
+		"and": "و",
+		"privacyPolicy": "سياسة الخصوصية",
+		"creatingAccount": "جاري إنشاء الحساب...",
+		"alreadyHaveAccount": "لديك حساب بالفعل؟",
+		"signInHere": "سجل دخولك هنا",
+		"secureLogin": "معلوماتك محمية بأمان على مستوى المؤسسات",
+		"continueWithGoogle": "المتابعة مع جوجل",
+		"continueWithApple": "المتابعة مع آبل",
+		"orContinueWith": "أو تابع باستخدام البريد الإلكتروني",
+		"siteName": "فيب هاب",
+		"welcomeTo": "مرحباً بك في",
+		"logout": " تسجيل الخروج "
 	},
 	"vendor": {
 		"sidebar": {
@@ -447,5 +480,11 @@
 			"bannerSuccess": "تم تحديث البانر بنجاح!",
 			"bannerError": "فشل في تحميل البانر. يرجى المحاولة مرة أخرى."
 		}
+	},
+	"language": {
+		"english": "English",
+		"arabic": " العربية ",
+		"changeLanguage": " تغيير اللغة ",
+		"selectLanguage": " اختر اللغة "
 	}
 }
