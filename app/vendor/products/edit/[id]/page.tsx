@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useRef, useContext, useEffect } from 'react'
-import VendorLayout from '../../../../components/VendorLayout'
+
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FiUpload, FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiFileText } from 'react-icons/fi'

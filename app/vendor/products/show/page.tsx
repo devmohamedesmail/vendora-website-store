@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiSearch, FiEdit, FiTrash2, FiEye, FiPlus, FiFilter, FiGrid, FiList, FiPackage, FiDollarSign, FiShoppingCart } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
-import VendorLayout from '../../../components/VendorLayout';
+
 import axios from 'axios';
 import { config } from '../../../config/api';
 import Link from 'next/link';
