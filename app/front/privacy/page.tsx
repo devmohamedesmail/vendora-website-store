@@ -10,7 +10,7 @@ export default function Privacy() {
 
   return (
     <>
-    <Navbar />
+  
       <div className="container mx-auto py-12 px-6 text-gray-800">
         <h1 className="text-3xl font-bold mb-6">{t('privacy.title')}</h1>
         <p className="mb-4">
@@ -48,8 +48,7 @@ export default function Privacy() {
           {t('privacy.lastUpdated')}
         </p>
       </div>
-    <Footer />
-    <BottomNavbar />
+ 
     </>
 
   );

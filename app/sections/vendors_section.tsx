@@ -126,7 +126,7 @@ useEffect(()=>{
         <div className="text-center mt-12">
           <Link
             href="/vendors"
-            className="inline-flex items-center gap-2 bg-indigo-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-main text-white px-8 py-3 rounded-xl font-medium hover:bg-second transition-colors"
           >
             {t('vendors.viewAll', 'View All Vendors')}
             <FiExternalLink className="w-4 h-4" />

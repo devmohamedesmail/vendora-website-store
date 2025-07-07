@@ -50,9 +50,9 @@ export default function Footer() {
         <div>
           <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Support')}</h3>
           <ul className="space-y-4">
-            <li><Link href="/front/usefullPages" className="hover:text-gray-400 transition-colors">{t('FAQs')}</Link></li>
-            <li><Link href="/front/product" className="hover:text-gray-400 transition-colors">{t('Products')}</Link></li>
-            <li><Link href="/front/privacy" className="hover:text-gray-400 transition-colors">{t('Checkout')}</Link></li>
+            <li><Link href="/front/fqa" className="hover:text-gray-400 transition-colors">{t('FAQs')}</Link></li>
+            <li><Link href="/front/support" className="hover:text-gray-400 transition-colors">{t('Support')}</Link></li>
+            <li><Link href="/front/privacy" className="hover:text-gray-400 transition-colors">{t('pricacy policy')}</Link></li>
           </ul>
         </div>
       </div>

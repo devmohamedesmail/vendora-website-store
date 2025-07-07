@@ -4,10 +4,43 @@ import Link from 'next/link'
 import { FiHeart, FiShoppingCart, FiEye, FiStar } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { getLimitedWords } from '../ultilites/ultitites'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { addToCart } from '../redux/slices/cartSlice'
+import { toggleWishlistItem, selectIsInWishlist } from '../redux/slices/wishlistSlice'
 
-function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggleWishlist }:any) {
+function ProductItem({ product, viewMode = 'grid' }:any) {
   const isListView = viewMode === 'list';
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const isWishlisted = useAppSelector((state) => selectIsInWishlist(state, product.id));
+
+  const handleAddToCart = () => {
+    if (product.stock > 0) {
+      dispatch(addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        sale: product.sale,
+        images: product.images,
+        vendor: product.vendor,
+        stock: product.stock,
+        maxQuantity: product.maxQuantity || product.stock
+      }));
+    }
+  };
+
+  const handleToggleWishlist = () => {
+    dispatch(toggleWishlistItem({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      sale: product.sale,
+      images: product.images,
+      vendor: product.vendor,
+      stock: product.stock,
+      description: product.description
+    }));
+  };
   
   return (
     <div
@@ -29,7 +62,7 @@ function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggl
         {/* Action Buttons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
-            onClick={onToggleWishlist}
+            onClick={handleToggleWishlist}
             className={`p-2 rounded-full shadow-lg transition-colors ${
               isWishlisted 
                 ? 'bg-red-500 text-white' 
@@ -100,17 +133,19 @@ function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggl
             
             {isListView && (
               <button
+                onClick={handleAddToCart}
                 className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2"
                 disabled={product.stock === 0}
               >
                 <FiShoppingCart className="w-4 h-4" />
-                <span>Add to Cart</span>
+                <span>{t('product.addToCart', 'Add to Cart')}</span>
               </button>
             )}
           </div>
           
           {!isListView && (
             <button
+              onClick={handleAddToCart}
               className="w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={product.stock === 0}
             >

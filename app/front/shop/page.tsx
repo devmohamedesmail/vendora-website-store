@@ -427,8 +427,6 @@ export default function Shop() {
                                         key={product.id}
                                         product={product}
                                         viewMode={viewMode}
-                                        isWishlisted={wishlist.includes(product.id)}
-                                        onToggleWishlist={() => toggleWishlist(product.id)}
                                     />
                                 ))}
                             </div>

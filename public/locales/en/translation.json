@@ -521,5 +521,24 @@
 		"visitStore": "Visit Store",
 		"viewProducts": "View Products",
 		"viewAll": "View All Vendors"
+	},
+	"faq": {
+		"title": "Frequently Asked Questions",
+		"subtitle": "Find answers to common questions about our platform, orders, and services",
+		"searchPlaceholder": "Search for answers...",
+		"popular": "Popular Questions",
+		"popularDesc": "Most frequently asked questions by our users",
+		"categories": "Categories",
+		"allQuestions": "All Questions",
+		"questionsFound": "questions found",
+		"noResults": "No questions found",
+		"noResultsDesc": "Try adjusting your search terms or browsing different categories",
+		"showAll": "Show All Questions",
+		"wasHelpful": "Was this helpful?",
+		"yes": "Yes",
+		"no": "No",
+		"contactSupport": "Contact Support",
+		"stillNeedHelp": "Still need help?",
+		"contactDesc": "Can't find what you're looking for? Our support team is here to help you."
 	}
 }

@@ -23,7 +23,7 @@ export default function Vendor_Products_Section({products , setViewMode , viewMo
    
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
-       products : {products?.length}
+ 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <h3 className="text-lg font-semibold">{t('vendor.store.ourProducts', 'Our Products')}</h3>
 
