@@ -2,11 +2,8 @@
 import React, { useEffect, useState, use } from 'react'
 import axios from 'axios'
 import { config } from '../../../config/api'
-import Navbar from '../../../components/user_components/navbar'
-import Footer from '../../../components/user_components/footer'
-import BottomNavbar from '../../../components/user_components/bottom_navbar'
 import Loader from '../../../components/Loader'
-import Link from 'next/link'
+
 import Product_Review from '../../../components/user_components/product_review'
 import { useTranslation } from 'react-i18next'
 import Product_Details from '../../../components/user_components/product_details'
@@ -19,7 +16,7 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
     
     // Unwrap params using React.use()
     const unwrappedParams = use(params);
-
+console.log("id",unwrappedParams.id)
     const fetch_product_details = async () => {
         try {
             const response = await axios.get(`${config.url}/api/products?filters[id][$eq]=${unwrappedParams.id}&populate[category]=true&populate[vendor]=true&populate[images]=true&populate[attributes][populate][values][populate]=image`, {

@@ -33,7 +33,8 @@ const DataProvider = ({ children }) => {
      const fetch_products_data = async () => {
     try {
       const response = await axios.get(
-        `${config.url}/api/products?populate=*`,
+        // `${config.url}/api/products?populate=*`,
+        `${config.url}/api/products?populate=images`,
         {
           headers: {
             Authorization: `Bearer ${config.token}`,

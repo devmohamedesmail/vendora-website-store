@@ -329,7 +329,29 @@
 				"fetchFailed": "Failed to fetch products",
 				"deleteFailed": "Failed to delete product"
 			}
-			
+		},
+		"store": {
+			"verified": "Verified",
+			"reviews": "reviews",
+			"products": "Products",
+			"orders": "Orders",
+			"since": "Since",
+			"follow": "Follow",
+			"share": "Share",
+			"storeInfo": "Store Information",
+			"phone": "Phone",
+			"email": "Email",
+			"hours": "Working Hours",
+			"followUs": "Follow Us",
+			"storeFeatures": "Store Features",
+			"aboutStore": "About This Store",
+			"ourProducts": "Our Products",
+			"allProducts": "All Products",
+			"new": "New",
+			"sale": "Sale",
+			"inStock": "In Stock",
+			"outOfStock": "Out of Stock",
+			"addToCart": "Add to Cart"
 		}
 	},
 	"checkout": {
@@ -487,5 +509,17 @@
 		"arabic": "Arabic",
 		"changeLanguage": "Change Language",
 		"selectLanguage": "Select Language"
+	},
+	"vendors": {
+		"title": "Our Trusted Vendors",
+		"subtitle": "Discover amazing products from our verified vendor partners",
+		"verified": "Verified",
+		"more": "more",
+		"products": "Products",
+		"callVendor": "Call Vendor",
+		"emailVendor": "Email Vendor",
+		"visitStore": "Visit Store",
+		"viewProducts": "View Products",
+		"viewAll": "View All Vendors"
 	}
 }

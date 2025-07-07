@@ -329,6 +329,29 @@
 				"fetchFailed": "فشل في جلب المنتجات",
 				"deleteFailed": "فشل في حذف المنتج"
 			}
+		},
+		"store": {
+			"verified": "معتمد",
+			"reviews": "مراجعات",
+			"products": "المنتجات",
+			"orders": "الطلبات",
+			"since": "منذ",
+			"follow": "متابعة",
+			"share": "مشاركة",
+			"storeInfo": "معلومات المتجر",
+			"phone": "الهاتف",
+			"email": "البريد الإلكتروني",
+			"hours": "ساعات العمل",
+			"followUs": "تابعنا",
+			"storeFeatures": "مميزات المتجر",
+			"aboutStore": "حول هذا المتجر",
+			"ourProducts": "منتجاتنا",
+			"allProducts": "جميع المنتجات",
+			"new": "جديد",
+			"sale": "تخفيض",
+			"inStock": "متوفر",
+			"outOfStock": "غير متوفر",
+			"addToCart": "أضف إلى السلة"
 		}
 	},
 	"checkout": {
@@ -486,5 +509,17 @@
 		"arabic": " العربية ",
 		"changeLanguage": " تغيير اللغة ",
 		"selectLanguage": " اختر اللغة "
+	},
+	"vendors": {
+		"title": "الموردين الموثوقين",
+		"subtitle": "اكتشف منتجات رائعة من شركائنا الموردين المعتمدين",
+		"verified": "معتمد",
+		"more": "المزيد",
+		"products": "المنتجات",
+		"callVendor": "اتصال بالمورد",
+		"emailVendor": "إرسال بريد إلكتروني للمورد",
+		"visitStore": "زيارة المتجر",
+		"viewProducts": "عرض المنتجات",
+		"viewAll": "عرض جميع الموردين"
 	}
 }

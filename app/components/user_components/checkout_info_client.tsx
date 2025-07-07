@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { FiCreditCard, FiTruck, FiShoppingBag, FiMapPin, FiUser, FiMail, FiPhone, FiHome, FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
 import Custom_Input from '../../custom/custom_input';
+import Custom_Textarea from '../../custom/custom_textarea';
 
 
 export default function Checkout_Info_Client({ formData, handleInputChange, payment, setPayment }: any) {
@@ -34,69 +35,39 @@ export default function Checkout_Info_Client({ formData, handleInputChange, paym
                         placeholder={t('checkout.enterEmail')}
 
                     />
+
+
+                    <Custom_Input
+                        label={t('checkout.phone')}
+                        icon={FiPhone}
+                        name="fullName"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder={t('checkout.enterEmail')}
+
+                    />
+
+                    <Custom_Input
+                        label={t('checkout.city')}
+                        icon={FiMapPin}
+                        name="fullName"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder={t('checkout.enterEmail')}
+
+                    />
                    
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('checkout.phone', 'Phone Number')} *
-                        </label>
-                        <div className="relative">
-                            <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                            <input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                placeholder={t('checkout.enterPhone', 'Enter your phone number')}
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('checkout.city', 'City')} *
-                        </label>
-                        <div className="relative">
-                            <FiMapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                            <input
-                                type="text"
-                                name="city"
-                                value={formData.city}
-                                onChange={handleInputChange}
-                                placeholder={t('checkout.enterCity', 'Enter your city')}
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                                required
-                            />
-                        </div>
-                    </div>
+                    
+               
+                   
                     <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('checkout.address', 'Address')} *
-                        </label>
-                        <div className="relative">
-                            <FiHome className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
-                            <input
-                                type="text"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleInputChange}
-                                placeholder={t('checkout.enterAddress', 'Enter your full address')}
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('checkout.notes', 'Order Notes')} ({t('checkout.optional', 'Optional')})
-                        </label>
-                        <textarea
-                            name="notes"
-                            value={formData.notes}
-                            onChange={handleInputChange}
-                            placeholder={t('checkout.enterNotes', 'Any special instructions for your order')}
-                            rows={3}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors resize-none"
+                       
+                        <Custom_Textarea 
+                        name='notes'
+                        value={formData.notes}
+                        onChange={handleInputChange}
+                        placeholder={t('checkout.enterNotes', 'Any special instructions for your order')}
+                        rows={3}
                         />
                     </div>
                 </div>

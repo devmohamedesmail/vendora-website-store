@@ -14,6 +14,7 @@ import Banner from './components/user_components/banner';
 import { AuthContext } from './context/auth_context';
 import Categories_Section from './sections/categories_section';
 import Products_Section from './sections/products_section';
+import Vendors_Section from './sections/vendors_section';
 
 
 
@@ -39,6 +40,7 @@ const {auth}=useContext(AuthContext)
       <Navbar />
       <Banner />
       <Categories_Section />
+      <Vendors_Section />
       <Products_Section />
       <Footer />
       <BottomNavbar />

@@ -3,6 +3,7 @@ import { config } from '../config/api'
 import Link from 'next/link'
 import { FiHeart, FiShoppingCart, FiEye, FiStar } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
+import { getLimitedWords } from '../ultilites/ultitites'
 
 function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggleWishlist }:any) {
   const isListView = viewMode === 'list';
@@ -67,46 +68,20 @@ function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggl
       </div>
 
       {/* Content Section */}
-      <div className={`p-5 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
+      <div className={`p-2 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
         <div>
           <Link href={`/front/product/${product.id}`}>
             <h3 className="text-lg font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
-              {product.title}
+              {/* {product.title} */}
+              {getLimitedWords(product.title, 5)}
             </h3>
           </Link>
           
           {!isListView && (
-            <p className="text-gray-500 text-sm mb-3 line-clamp-2">{product.description}</p>
+            <p className="text-gray-500 text-sm mb-3 line-clamp-2">{getLimitedWords(product.description, 10)}</p>
           )}
 
-          {/* Rating */}
-          {product.rating && (
-            <div className="flex items-center mb-3">
-              <div className="flex items-center space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <FiStar
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i < Math.floor(product.rating) 
-                        ? 'text-yellow-400 fill-current' 
-                        : 'text-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm text-gray-600 ml-2">({product.rating.toFixed(1)})</span>
-              {product.reviewCount && (
-                <span className="text-sm text-gray-400 ml-1">• {product.reviewCount} reviews</span>
-              )}
-            </div>
-          )}
-
-          <div className="text-xs text-gray-400 mb-1">
-            Vendor: <span className="font-medium text-gray-700">{product.vendor?.vendor_name || "N/A"}</span>
-          </div>
-          <div className="text-xs text-gray-400 mb-3">
-            Category: <span className="font-medium text-gray-700">{product.category?.title || "N/A"}</span>
-          </div>
+      
         </div>
 
         {/* Price and Actions */}
@@ -118,7 +93,7 @@ function ProductItem({ product, viewMode = 'grid', isWishlisted = false, onToggl
                   {product.originalPrice} {config.currency_en}
                 </span>
               )}
-              <span className="text-xl font-bold text-indigo-600">
+              <span className="text-md font-bold text-second">
                 {product.price} {config.currency_en}
               </span>
             </div>

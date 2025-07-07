@@ -3,24 +3,14 @@ import React, { useContext } from 'react'
 import { FiEdit, FiLogOut, FiPlus, FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiSave, FiPackage, FiPhone, FiMail } from "react-icons/fi";
 import { AuthContext } from '../../context/auth_context';
 import { toast } from 'react-toastify';
+import Logout_Btn from '../common/logout_btn';
 export default function Setting_User_Tab() {
 
     const { auth, handle_logout } = useContext(AuthContext)
 
 
 
-    const handleLogout = async () => {
-        try {
-            await handle_logout();
-            // Optionally, redirect to home or login page after logout
-            toast.success('Logout successful');
-            window.location.href = '/';
-        } catch (error) {
-            console.error('Logout failed:', error);
-            // Handle error (e.g., show a notification)
-            toast.error('Logout failed. Please try again.');
-        }
-    }
+   
     return (
         <div className="space-y-6">
             <h2 className="text-2xl font-bold text-gray-800">Account Settings</h2>
@@ -103,19 +93,10 @@ export default function Setting_User_Tab() {
             <div className="bg-white border border-gray-200 rounded-xl p-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Management</h3>
                 <div className="space-y-3">
-                    <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition text-gray-700 font-medium">
-                        Change Password
-                    </button>
-                    <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition text-gray-700 font-medium">
-                        Download Account Data
-                    </button>
-                    <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-3 bg-red-50 hover:bg-red-100 rounded-lg transition text-red-600 font-medium"
-                    >
-                        <FiLogOut className="inline mr-3" size={20} />
-                        Sign Out
-                    </button>
+                  
+                   
+                   
+                    <Logout_Btn />
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { FiHome, FiShoppingCart, FiHeart, FiUser, FiShoppingBag } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../redux/hooks";
@@ -8,14 +8,26 @@ import { selectCartTotalItems } from "../../redux/slices/cartSlice";
 import { selectWishlistTotalItems } from "../../redux/slices/wishlistSlice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AuthContext } from "../../context/auth_context";
 
 export default function BottomNavbar() {
   const { t } = useTranslation();
   const pathname = usePathname();
   const cartItemCount = useAppSelector((state) => state.cart?.totalItems || 0);
   const wishlistItemCount = useAppSelector((state) => state.wishlist?.totalItems || 0);
-
   const isActive = (path: string) => pathname === path;
+  const {auth }=useContext(AuthContext)
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg md:hidden">
@@ -27,8 +39,8 @@ export default function BottomNavbar() {
           <span className="text-xs mt-1 font-medium">{t("nav.home")}</span>
         </Link>
         
-        <Link href="/front" className={`flex flex-col items-center transition-colors ${
-          isActive("/front") ? "text-indigo-600" : "text-gray-500 hover:text-indigo-600"
+        <Link href="/front/shop" className={`flex flex-col items-center transition-colors ${
+          isActive("/front/shop") ? "text-indigo-600" : "text-gray-500 hover:text-indigo-600"
         }`}>
           <FiShoppingBag size={22} />
           <span className="text-xs mt-1 font-medium">{t("nav.shop")}</span>
@@ -62,7 +74,7 @@ export default function BottomNavbar() {
           <span className="text-xs mt-1 font-medium">{t("nav.wishlist")}</span>
         </Link>
         
-        <Link href="/front/account" className={`flex flex-col items-center transition-colors ${
+        <Link href={`${auth ? "/front/account" : "/auth/login"}`} className={`flex flex-col items-center transition-colors ${
           isActive("/front/account") ? "text-indigo-600" : "text-gray-500 hover:text-indigo-600"
         }`}>
           <FiUser size={22} />

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { useCart } from "../../redux/hooks/useCart";
 import { FiCreditCard, FiTruck, FiShoppingBag, FiMapPin, FiUser, FiMail, FiPhone, FiHome, FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
@@ -8,12 +8,14 @@ import Checkout_Header from "../../components/user_components/checkout_header";
 import Checkout_Summery_Order from "../../components/user_components/checkout_summery_order";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import { fetchUserAddress } from "../../ultilites/ultitites";
+import { AuthContext } from "../../context/auth_context";
 
 function Checkout() {
     const { t } = useTranslation();
     const { items, totalPrice, totalItems, updateItemQuantity, removeItem, increaseItemQuantity, decreaseItemQuantity } = useCart();
     const [payment, setPayment] = useState("cod");
-
+    const {auth}=useContext(AuthContext)
 
 
 
@@ -57,7 +59,20 @@ function Checkout() {
 
 
 
+useEffect(() => {
+  const fetchAddress = async () => {
+    if (auth?.id) {
+      try {
+        const result = await fetchUserAddress(auth.id);
+        console.log('Fetched address:', result);
+      } catch (error) {
+        console.error('Error fetching user address:', error);
+      }
+    }
+  };
 
+  fetchAddress();
+}, [auth]);
 
 
 
