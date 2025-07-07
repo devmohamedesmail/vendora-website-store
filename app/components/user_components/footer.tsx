@@ -6,10 +6,12 @@ import { FaPhone } from "react-icons/fa6";
 import { IoLocationOutline } from "react-icons/io5";
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '../../context/auth_context';
 
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
+  const {auth} = useContext(AuthContext);
 
   return (
     <footer className="bg-gray-900 text-white py-12">
@@ -18,8 +20,8 @@ export default function Footer() {
         <div>
           <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Useful Pages')}</h3>
           <ul className="space-y-4">
-            <li><Link href="/front/home" className="hover:text-gray-400 transition-colors">{t('Home')}</Link></li>
-            <li><Link href="/front/account" className="hover:text-gray-400 transition-colors">{t('Account')}</Link></li>
+            <li><Link href="/" className="hover:text-gray-400 transition-colors">{t('Home')}</Link></li>
+            <li><Link href={auth ? "/front/account" : "/auth/login"} className="hover:text-gray-400 transition-colors">{t('Account')}</Link></li>
             <li><Link href="/front/cart" className="hover:text-gray-400 transition-colors">{t('Cart')}</Link></li>
             <li><Link href="/front/wishlist" className="hover:text-gray-400 transition-colors">{t('Wishlist')}</Link></li>
           </ul>

@@ -113,8 +113,8 @@ const renderStars = (rating: number) => {
                 {/* Action Buttons */}
                 <div className="flex gap-2">
                   <Link
-                    href='/front/vendor'
-                    className="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-xl text-center font-medium hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
+                    href={`/front/vendor/${vendor.id}`}
+                    className="flex-1 bg-main text-white py-2 px-4 rounded-xl text-center font-medium hover:bg-second transition-colors flex items-center justify-center gap-2"
                   >
                     <FaStore className="w-4 h-4" />
                     {t('vendors.visitStore', 'Visit Store')}

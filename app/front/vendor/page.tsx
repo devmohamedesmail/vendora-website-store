@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { 
   FiStar, 
@@ -36,6 +36,11 @@ export default function Vendor_Store() {
   const { t } = useTranslation()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Static vendor data
   const vendor = {
@@ -158,11 +163,15 @@ export default function Vendor_Store() {
     ? products 
     : products.filter(product => product.category === selectedCategory)
 
+  if (!isClient) {
+    return null // or a loading skeleton
+  }
+
   return (
     <>
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <div className="relative h-80 overflow-hidden">
+        <div className="relative h-64 sm:h-80 overflow-hidden">
           <Image
             src={vendor.image}
             alt={vendor.name}
@@ -177,10 +186,10 @@ export default function Vendor_Store() {
           
           {/* Vendor Info Overlay */}
           <div className="absolute inset-0 flex items-end">
-            <div className="container mx-auto px-4 pb-8">
-              <div className="flex items-end gap-6">
+            <div className="container mx-auto px-4 pb-4 sm:pb-8">
+              <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
                 {/* Vendor Logo */}
-                <div className="w-24 h-24 rounded-2xl bg-white p-3 shadow-lg">
+                <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl bg-white p-2 sm:p-3 shadow-lg">
                   <Image
                     src={vendor.logo}
                     alt={vendor.name}
@@ -196,17 +205,17 @@ export default function Vendor_Store() {
                 
                 {/* Vendor Details */}
                 <div className="flex-1 text-white">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-3xl font-bold">{vendor.name}</h1>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">{vendor.name}</h1>
                     {vendor.isVerified && (
-                      <div className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                      <div className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 self-start">
                         <FiShield className="w-3 h-3" />
                         {t('vendor.store.verified', 'Verified')}
                       </div>
                     )}
                   </div>
                   
-                  <div className="flex items-center gap-4 mb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
                     <div className="flex items-center gap-1">
                       {renderStars(vendor.rating)}
                       <span className="ml-2 text-sm">
@@ -219,7 +228,7 @@ export default function Vendor_Store() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-6 text-sm">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm">
                     <div className="flex items-center gap-1">
                       <FiShoppingBag className="w-4 h-4" />
                       {vendor.productsCount} {t('vendor.store.products', 'Products')}
@@ -236,14 +245,14 @@ export default function Vendor_Store() {
                 </div>
                 
                 {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <button className="bg-white text-gray-700 px-4 py-2 rounded-xl font-medium hover:bg-gray-100 transition-colors flex items-center gap-2">
+                <div className="flex gap-2 sm:gap-3 mt-4 sm:mt-0">
+                  <button className="bg-white text-gray-700 px-3 py-2 sm:px-4 rounded-xl text-sm font-medium hover:bg-gray-100 transition-colors flex items-center gap-2">
                     <FiHeart className="w-4 h-4" />
-                    {t('vendor.store.follow', 'Follow')}
+                    <span className="hidden sm:inline">{t('vendor.store.follow', 'Follow')}</span>
                   </button>
-                  <button className="bg-white text-gray-700 px-4 py-2 rounded-xl font-medium hover:bg-gray-100 transition-colors flex items-center gap-2">
+                  <button className="bg-white text-gray-700 px-3 py-2 sm:px-4 rounded-xl text-sm font-medium hover:bg-gray-100 transition-colors flex items-center gap-2">
                     <FiShare2 className="w-4 h-4" />
-                    {t('vendor.store.share', 'Share')}
+                    <span className="hidden sm:inline">{t('vendor.store.share', 'Share')}</span>
                   </button>
                 </div>
               </div>
@@ -251,33 +260,33 @@ export default function Vendor_Store() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="container mx-auto px-4 py-6 sm:py-8">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
             {/* Sidebar */}
-            <div className="lg:col-span-1">
+            <div className="xl:col-span-1 order-2 xl:order-1">
               {/* Store Information */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 mb-6">
                 <h3 className="text-lg font-semibold mb-4">{t('vendor.store.storeInfo', 'Store Information')}</h3>
                 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <FiPhone className="w-5 h-5 text-gray-400" />
-                    <div>
+                    <FiPhone className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                    <div className="min-w-0">
                       <p className="text-sm text-gray-600">{t('vendor.store.phone', 'Phone')}</p>
-                      <p className="font-medium">{vendor.phone}</p>
+                      <p className="font-medium text-sm sm:text-base truncate">{vendor.phone}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-3">
-                    <FiMail className="w-5 h-5 text-gray-400" />
-                    <div>
+                    <FiMail className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                    <div className="min-w-0">
                       <p className="text-sm text-gray-600">{t('vendor.store.email', 'Email')}</p>
-                      <p className="font-medium">{vendor.email}</p>
+                      <p className="font-medium text-sm sm:text-base truncate">{vendor.email}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <FiClock className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-start gap-3">
+                    <FiClock className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-sm text-gray-600">{t('vendor.store.hours', 'Working Hours')}</p>
                       <p className="font-medium text-sm">{vendor.workingHours.weekdays}</p>
@@ -304,14 +313,14 @@ export default function Vendor_Store() {
               </div>
 
               {/* Store Features */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                 <h3 className="text-lg font-semibold mb-4">{t('vendor.store.storeFeatures', 'Store Features')}</h3>
                 
                 <div className="space-y-3">
                   {vendor.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-sm text-gray-700">{feature}</span>
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0 mt-2"></div>
+                      <span className="text-sm text-gray-700 leading-relaxed">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -319,17 +328,17 @@ export default function Vendor_Store() {
             </div>
 
             {/* Main Content */}
-            <div className="lg:col-span-3">
+            <div className="xl:col-span-3 order-1 xl:order-2">
               {/* Store Description */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 mb-6">
                 <h3 className="text-lg font-semibold mb-4">{t('vendor.store.aboutStore', 'About This Store')}</h3>
-                <p className="text-gray-600 leading-relaxed">{vendor.description}</p>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{vendor.description}</p>
               </div>
 
               {/* Products Section */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                 {/* Products Header */}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                   <h3 className="text-lg font-semibold">{t('vendor.store.ourProducts', 'Our Products')}</h3>
                   
                   <div className="flex items-center gap-3">
@@ -360,10 +369,10 @@ export default function Vendor_Store() {
                 </div>
 
                 {/* Category Filter */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-6 overflow-x-auto pb-2">
                   <button
                     onClick={() => setSelectedCategory('all')}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                    className={`px-3 py-2 sm:px-4 rounded-xl text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
                       selectedCategory === 'all'
                         ? 'bg-indigo-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -375,7 +384,7 @@ export default function Vendor_Store() {
                     <button
                       key={category}
                       onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                      className={`px-3 py-2 sm:px-4 rounded-xl text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
                         selectedCategory === category
                           ? 'bg-indigo-600 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -387,9 +396,9 @@ export default function Vendor_Store() {
                 </div>
 
                 {/* Products Grid */}
-                <div className={`grid gap-6 ${
+                <div className={`grid gap-4 sm:gap-6 ${
                   viewMode === 'grid' 
-                    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' 
+                    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3' 
                     : 'grid-cols-1'
                 }`}>
                   {filteredProducts.map((product) => (
@@ -401,7 +410,7 @@ export default function Vendor_Store() {
                     >
                       {/* Product Image */}
                       <div className={`relative ${
-                        viewMode === 'list' ? 'w-32 h-32' : 'h-48'
+                        viewMode === 'list' ? 'w-24 h-24 sm:w-32 sm:h-32' : 'h-40 sm:h-48'
                       } overflow-hidden`}>
                         <Image
                           src={product.image}
@@ -415,54 +424,54 @@ export default function Vendor_Store() {
                         />
                         
                         {/* Badges */}
-                        <div className="absolute top-3 left-3 flex flex-col gap-1">
+                        <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex flex-col gap-1">
                           {product.isNew && (
-                            <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                            <span className="bg-green-500 text-white px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium">
                               {t('vendor.store.new', 'New')}
                             </span>
                           )}
                           {product.isSale && (
-                            <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                            <span className="bg-red-500 text-white px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium">
                               {t('vendor.store.sale', 'Sale')}
                             </span>
                           )}
                         </div>
                         
                         {/* Wishlist Button */}
-                        <button className="absolute top-3 right-3 bg-white text-gray-400 hover:text-red-500 p-2 rounded-full shadow-sm transition-colors">
-                          <FiHeart className="w-4 h-4" />
+                        <button className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-white text-gray-400 hover:text-red-500 p-1.5 sm:p-2 rounded-full shadow-sm transition-colors">
+                          <FiHeart className="w-3 h-3 sm:w-4 sm:h-4" />
                         </button>
                       </div>
 
                       {/* Product Info */}
-                      <div className="p-4 flex-1">
+                      <div className="p-3 sm:p-4 flex-1">
                         <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-medium text-gray-800 line-clamp-1">{product.name}</h4>
-                          <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
+                          <h4 className="font-medium text-gray-800 text-sm sm:text-base line-clamp-2 pr-2">{product.name}</h4>
+                          <span className="text-xs text-gray-500 bg-gray-200 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded whitespace-nowrap">
                             {product.category}
                           </span>
                         </div>
                         
-                        <div className="flex items-center gap-1 mb-3">
+                        <div className="flex items-center gap-1 mb-2 sm:mb-3">
                           {renderStars(product.rating)}
-                          <span className="text-sm text-gray-600 ml-1">
+                          <span className="text-xs sm:text-sm text-gray-600 ml-1">
                             ({product.reviewCount})
                           </span>
                         </div>
                         
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className="text-lg font-bold text-gray-800">
+                        <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                          <span className="text-base sm:text-lg font-bold text-gray-800">
                             ${product.price.toFixed(2)}
                           </span>
                           {product.originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">
+                            <span className="text-xs sm:text-sm text-gray-500 line-through">
                               ${product.originalPrice.toFixed(2)}
                             </span>
                           )}
                         </div>
                         
-                        <div className="flex items-center justify-between">
-                          <span className={`text-sm font-medium ${
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <span className={`text-xs sm:text-sm font-medium ${
                             product.inStock ? 'text-green-600' : 'text-red-600'
                           }`}>
                             {product.inStock 
@@ -473,7 +482,7 @@ export default function Vendor_Store() {
                           
                           <button
                             disabled={!product.inStock}
-                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors ${
                               product.inStock
                                 ? 'bg-indigo-600 text-white hover:bg-indigo-700'
                                 : 'bg-gray-200 text-gray-500 cursor-not-allowed'
