@@ -388,7 +388,21 @@
 		"tax": "الضريبة",
 		"total": "المجموع الكلي",
 		"placeOrder": "تأكيد الطلب",
-		"securityNotice": "معلومات الدفع الخاصة بك آمنة ومشفرة"
+		"securityNotice": "معلومات الدفع الخاصة بك آمنة ومشفرة",
+		"secureCheckout": "دفع آمن ومشفر",
+		"progressSteps": {
+			"cart": "سلة التسوق",
+			"checkout": "الدفع",
+			"complete": "مكتمل"
+		},
+		"features": {
+			"securePayment": "دفع آمن",
+			"securePaymentDesc": "معاملات مشفرة بـ SSL",
+			"fastDelivery": "توصيل سريع",
+			"fastDeliveryDesc": "شحن سريع وموثوق",
+			"easyReturns": "إرجاع سهل",
+			"easyReturnsDesc": "سياسة إرجاع لمدة 30 يوم"
+		}
 	},
 	"address": {
 		"savedAddresses": "العناوين المحفوظة",

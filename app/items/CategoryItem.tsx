@@ -28,7 +28,7 @@ interface CategoryItemProps {
 
 function CategoryItem({ category }: CategoryItemProps) {
     return (
-        <Link href={'/front/shop/'} 
+        <Link href={`/front/shop/${category.id}`} 
             
             className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 cursor-pointer border border-gray-100 hover:border-indigo-200"
         >

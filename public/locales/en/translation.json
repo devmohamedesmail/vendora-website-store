@@ -389,7 +389,21 @@
 		"tax": "Tax",
 		"total": "Total",
 		"placeOrder": "Place Order",
-		"securityNotice": "Your payment information is secure and encrypted"
+		"securityNotice": "Your payment information is secure and encrypted",
+		"secureCheckout": "Secure & Encrypted Checkout",
+		"progressSteps": {
+			"cart": "Cart",
+			"checkout": "Checkout",
+			"complete": "Complete"
+		},
+		"features": {
+			"securePayment": "Secure Payment",
+			"securePaymentDesc": "SSL encrypted transactions",
+			"fastDelivery": "Fast Delivery",
+			"fastDeliveryDesc": "Quick and reliable shipping",
+			"easyReturns": "Easy Returns",
+			"easyReturnsDesc": "30-day return policy"
+		}
 	},
 	"address": {
 		"savedAddresses": "Saved Addresses",
