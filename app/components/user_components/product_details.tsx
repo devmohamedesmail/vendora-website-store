@@ -4,33 +4,34 @@ import { config } from '../../config/api';
 import Link from 'next/link';
 import { useCart } from '../../redux/hooks/useCart';
 import { useWishlist } from '../../redux/hooks/useWishlist';
+import { toast } from 'react-toastify';
 
 export default function Product_Details({ product }: any) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [quantity, setQuantity] = useState(1);
-    
+
     // Redux hooks
     const { addItem: addToCart, isItemInCart, getItemQuantity } = useCart();
     const { toggleItem: toggleWishlist, isItemInWishlist } = useWishlist();
-    
+
     // Check if item is already in cart/wishlist
     const isInCart = isItemInCart(product.id);
     const cartQuantity = getItemQuantity(product.id);
     const isInWishlist = isItemInWishlist(product.id);
-    
+
     // Quantity controls
     const increaseQuantity = () => {
         if (quantity < (product.stock || 999)) {
             setQuantity(quantity + 1);
         }
     };
-    
+
     const decreaseQuantity = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1);
         }
     };
-    
+
     // Handle add to cart
     const handleAddToCart = () => {
         for (let i = 0; i < quantity; i++) {
@@ -45,9 +46,10 @@ export default function Product_Details({ product }: any) {
                 maxQuantity: product.stock
             });
         }
-        setQuantity(1); // Reset quantity after adding
+        setQuantity(1); 
+        toast.success(t('productDetails.addedToCart'));
     };
-    
+
     // Handle wishlist toggle
     const handleWishlistToggle = () => {
         toggleWishlist({
@@ -60,6 +62,12 @@ export default function Product_Details({ product }: any) {
             stock: product.stock,
             description: product.description
         });
+        if (isInWishlist) {
+            toast.success(t('productDetails.removedFromWishlist'));
+        } else {
+            toast.success(t('productDetails.addedToWishlist'));
+        }
+       
     };
     return (
         <div className="w-full flex flex-col justify-between bg-white rounded-xl shadow-lg p-6">
@@ -91,8 +99,8 @@ export default function Product_Details({ product }: any) {
                         {product.category?.title}
                     </span>
                     <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${product.stock > 0
-                            ? 'bg-gradient-to-r from-green-100 to-green-200 text-green-800 border-green-300'
-                            : 'bg-gradient-to-r from-red-100 to-red-200 text-red-800 border-red-300'
+                        ? 'bg-gradient-to-r from-green-100 to-green-200 text-green-800 border-green-300'
+                        : 'bg-gradient-to-r from-red-100 to-red-200 text-red-800 border-red-300'
                         }`}>
                         <svg className="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -116,17 +124,24 @@ export default function Product_Details({ product }: any) {
                 {/* Price Section */}
                 <div className="mb-8 p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200">
                     <div className="flex items-baseline gap-4 mb-2">
-                        <span className="text-4xl font-bold text-indigo-700">
-                            {product.price} {config.currency_en}
-                        </span>
-                        {product.sale && (
-                            <span className="text-xl line-through text-red-400 font-medium">
-                                {product.sale} {config.currency_en}
-                            </span>
+
+
+                        {product.sale ? (
+                            <div className="flex items-center">
+                                <p className='text-second font-bold text-2xl  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                                <p className='line-through text-red-600 text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+
+                            </div>
+                        ) : (
+                            <div className="flex items-center">
+                                <p className='text-second font-bold text-2xl  mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                            </div>
                         )}
+
+
                         {product.sale && (
                             <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                {t('productDetails.save')} {((product.sale - product.price) / product.sale * 100).toFixed(0)}%
+                                {t('productDetails.save')} {((product.price - product.sale) / product.price * 100).toFixed(0)}%
                             </span>
                         )}
                     </div>
@@ -239,13 +254,12 @@ export default function Product_Details({ product }: any) {
                         </Link>
                     )}
 
-                    <button 
+                    <button
                         onClick={handleWishlistToggle}
-                        className={`w-full font-semibold py-3 px-8 rounded-xl border transition flex items-center justify-center ${
-                            isInWishlist 
-                                ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300' 
+                        className={`w-full font-semibold py-3 px-8 rounded-xl border transition flex items-center justify-center ${isInWishlist
+                                ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'
                                 : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300'
-                        }`}
+                            }`}
                     >
                         <svg className="w-5 h-5 mr-2" fill={isInWishlist ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />

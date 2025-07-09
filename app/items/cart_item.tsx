@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Cart_Item({ item, removeItem, increaseItemQuantity, decreaseItemQuantity, t, i18n, config }: any) {
+   
     return (
         <div key={item.id} className="flex items-center gap-4 py-6">
             <img
@@ -33,7 +34,7 @@ export default function Cart_Item({ item, removeItem, increaseItemQuantity, decr
             </div>
             <div className="flex flex-col items-end gap-2">
                 <div className="text-sm text-gray-500">
-                    ${(item.sale || item.price).toFixed(2)} {t('cart.each')}
+                    {i18n.language === 'en' ? config.currency_en : config.currency_ar} {(item.sale || item.price).toFixed(2)} {t('cart.each')}
                 </div>
                 <div className="font-bold text-second text-lg">
                     {i18n.language === 'en' ? config.currency_en : config.currency_ar} {((item.sale || item.price) * item.quantity).toFixed(2)}

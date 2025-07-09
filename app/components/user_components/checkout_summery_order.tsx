@@ -1,10 +1,19 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
+import { config } from '../../config/api';
 
 
-export default function Checkout_Summery_Order({ items , formatPrice,decreaseItemQuantity, increaseItemQuantity, removeItem ,totalPrice, totalItems }: any) {
-    const { t } = useTranslation();
+export default function Checkout_Summery_Order({ 
+     items ,
+     decreaseItemQuantity, 
+     increaseItemQuantity, 
+     removeItem ,
+     totalPrice, 
+     totalItems,
+    
+    }: any) {
+    const { t , i18n} = useTranslation();
 
 
  
@@ -18,10 +27,10 @@ export default function Checkout_Summery_Order({ items , formatPrice,decreaseIte
 
                 {/* Cart Items */}
                 <div className="space-y-4 mb-6 max-h-80 overflow-y-auto">
-                    {items.map((item) => (
+                    {items.map((item:any) => (
                         <div key={item.id} className="flex items-center gap-3 p-3 border border-gray-100 rounded-xl">
                             <img
-                                src={item.images?.[0]?.url || '/placeholder-image.jpg'}
+                                src={item.images?.[0]?.url }
                                 alt={item.title}
                                 className="w-16 h-16 rounded-lg object-cover"
                             />
@@ -30,7 +39,8 @@ export default function Checkout_Summery_Order({ items , formatPrice,decreaseIte
                                     {item.title}
                                 </h3>
                                 <p className="text-sm text-gray-500">
-                                    {formatPrice(item.price)}
+                                  
+                                    {item.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}
                                 </p>
                                 <div className="flex items-center gap-2 mt-2">
                                     <button
@@ -54,7 +64,9 @@ export default function Checkout_Summery_Order({ items , formatPrice,decreaseIte
                             </div>
                             <div className="text-right">
                                 <p className="font-semibold text-gray-900">
-                                    {formatPrice(item.price * item.quantity)}
+
+                                    {item.price * item.quantity}
+                                    {i18n.language === 'en' ? config.currency_en : config.currency_ar}
                                 </p>
                                 <button
                                     type="button"
@@ -74,7 +86,7 @@ export default function Checkout_Summery_Order({ items , formatPrice,decreaseIte
                         <span className="text-gray-600">
                             {t('checkout.subtotal', 'Subtotal')} ({totalItems} {t('checkout.items', 'items')})
                         </span>
-                        <span className="font-medium">{formatPrice(totalPrice)}</span>
+                        <span className="font-medium">{totalPrice}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-600">{t('checkout.shipping', 'Shipping')}</span>
@@ -82,12 +94,19 @@ export default function Checkout_Summery_Order({ items , formatPrice,decreaseIte
                     </div>
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-600">{t('checkout.tax', 'Tax')}</span>
-                        <span className="font-medium">{formatPrice(totalPrice * 0.1)}</span>
+                        <span className="font-medium">
+                            {totalPrice * 0.1}
+                            
+                            {/* {formatPrice(totalPrice * 0.1)} */}
+                        </span>
                     </div>
                     <div className="border-t border-gray-200 pt-3">
                         <div className="flex justify-between text-lg font-bold">
                             <span className="text-gray-900">{t('checkout.total', 'Total')}</span>
-                            <span className="text-indigo-600">{formatPrice(totalPrice * 1.1)}</span>
+                            <span className="text-indigo-600">
+                                {totalPrice}
+                                {/* {formatPrice(totalPrice * 1.1)} */}
+                            </span>
                         </div>
                     </div>
                 </div>

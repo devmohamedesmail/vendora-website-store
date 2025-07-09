@@ -62,7 +62,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
                     }
                 })
             const authData = response.data
-            console.log('Login response:', authData); // Debug log
+          
             
             // Strapi returns { user: {...}, jwt: "..." }
             const user = authData.user || authData

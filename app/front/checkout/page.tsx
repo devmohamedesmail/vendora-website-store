@@ -10,22 +10,20 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { fetchUserAddress } from "../../ultilites/ultitites";
 import { AuthContext } from "../../context/auth_context";
+import axios from "axios";
+import { config } from "../../config/api";
 
 function Checkout() {
-    const { t } = useTranslation();
+    const { t , i18n } = useTranslation();
     const { items, totalPrice, totalItems, updateItemQuantity, removeItem, increaseItemQuantity, decreaseItemQuantity } = useCart();
     const [payment, setPayment] = useState("cod");
-    const {auth}=useContext(AuthContext)
+    const {auth}=useContext(AuthContext);
+    const [userAddress, setUserAddress] = useState(null);
 
 
 
 
-    const formatPrice = (price: number) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(price);
-    };
+   
 
 
 
@@ -57,19 +55,28 @@ function Checkout() {
 
 
 
-
-
-useEffect(() => {
-  const fetchAddress = async () => {
+ const fetchAddress = async () => {
     if (auth?.id) {
       try {
-        const result = await fetchUserAddress(auth.id);
-        console.log('Fetched address:', result);
+        const response = await axios.get(
+            `${config.url}/api/addresses?filters[user_id][$eq]=${auth?.id}`, 
+            {
+                headers: {
+                    Authorization: `Bearer ${config.token}`,
+                }
+            }
+        );
+        const addressData = response.data.data;
+        console.log('Fetched address:', addressData);
+        setUserAddress(addressData);
       } catch (error) {
         console.error('Error fetching user address:', error);
       }
     }
   };
+
+useEffect(() => {
+ 
 
   fetchAddress();
 }, [auth]);
@@ -105,8 +112,9 @@ useEffect(() => {
                         <form onSubmit={formik.handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                             {/* Customer Information */}
                             <Checkout_Info_Client
-                                formData={formik}
+                                formik={formik}
                                 payment={payment}
+                                userAddress={userAddress}
                                 setPayment={setPayment}
                             />
 
@@ -114,7 +122,7 @@ useEffect(() => {
 
                             <Checkout_Summery_Order
                                 items={items}
-                                formatPrice={formatPrice}
+                                // formatPrice={formatPrice}
                                 decreaseItemQuantity={decreaseItemQuantity}
                                 increaseItemQuantity={increaseItemQuantity}
                                 removeItem={removeItem}

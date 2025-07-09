@@ -7,10 +7,11 @@ import { getLimitedWords } from '../ultilites/ultitites'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { addToCart } from '../redux/slices/cartSlice'
 import { toggleWishlistItem, selectIsInWishlist } from '../redux/slices/wishlistSlice'
+import { toast } from 'react-toastify'
 
 function ProductItem({ product, viewMode = 'grid' }:any) {
   const isListView = viewMode === 'list';
-  const { t } = useTranslation();
+  const { t , i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const isWishlisted = useAppSelector((state) => selectIsInWishlist(state, product.id));
 
@@ -26,6 +27,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
         stock: product.stock,
         maxQuantity: product.maxQuantity || product.stock
       }));
+      toast.success(t('productDetails.addedToCart'));
     }
   };
 
@@ -40,6 +42,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
       stock: product.stock,
       description: product.description
     }));
+    toast.success(t('productDetails.addedToWishlist'));
   };
   
   return (
@@ -86,7 +89,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
               ? "bg-green-500 text-white" 
               : "bg-red-500 text-white"
           }`}>
-            {product.stock > 0 ? "In Stock" : "Out of Stock"}
+            {product.stock > 0 ? t('productDetails.inStock') :  t('productDetails.outOfStock')}
           </span>
         </div>
 
@@ -120,17 +123,24 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
         {/* Price and Actions */}
         <div className="mt-auto">
           <div className={`flex items-center justify-between ${isListView ? 'mb-3' : 'mb-2'}`}>
-            <div className="flex flex-col">
-              {product.originalPrice && product.originalPrice > product.price && (
-                <span className="text-sm text-gray-400 line-through">
-                  {product.originalPrice} {config.currency_en}
-                </span>
-              )}
-              <span className="text-md font-bold text-second">
-                {product.price} {config.currency_en}
-              </span>
+           
+
+            {product.sale ? (
+               <div className="flex items-center">
+                <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                <p className='line-through text-red-600 text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+
+                </div>
+            ):(
+               <div className="flex items-center">
+                <p className='text-second font-bold text-md text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+               </div>
+            )}
+
+            <div className="flex items-center">
+
             </div>
-            
+           
             {isListView && (
               <button
                 onClick={handleAddToCart}
@@ -138,7 +148,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
                 disabled={product.stock === 0}
               >
                 <FiShoppingCart className="w-4 h-4" />
-                <span>{t('product.addToCart', 'Add to Cart')}</span>
+                <span>{t('productDetails.addToCart')}</span>
               </button>
             )}
           </div>
@@ -150,7 +160,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
               disabled={product.stock === 0}
             >
               <FiShoppingCart className="w-4 h-4" />
-              <span>{product.stock === 0 ? t('product.outOfStock', 'Out of Stock') : t('product.addToCart', 'Add to Cart')}</span>
+              <span>{product.stock === 0 ? t('productDetails.outOfStock') : t('productDetails.addToCart')}</span>
             </button>
           )}
         </div>

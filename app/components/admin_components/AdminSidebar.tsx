@@ -26,6 +26,7 @@ export default function AdminSidebar({ isOpen, setIsOpen }: AdminSidebarProps) {
 
   const menuItems = [
     { href: '/admin', icon: FiHome, label: 'Dashboard' },
+    { href: '/admin/categories', icon: FiHome, label: 'categories' },
     { href: '/admin/users', icon: FiUsers, label: 'Users' },
     { href: '/admin/vendors', icon: FiShoppingCart, label: 'Vendors' },
     { href: '/admin/products', icon: FiShoppingBag, label: 'Products' },
