@@ -48,7 +48,7 @@ export default function Products_Slideshow_Section() {
                     }}
                     className="w-full"
                 >
-                    {products.map((product) => (
+                    {products && products.map((product) => (
                         <SwiperSlide key={product.id}>
                           <ProductItem product={product} />
                         </SwiperSlide>
