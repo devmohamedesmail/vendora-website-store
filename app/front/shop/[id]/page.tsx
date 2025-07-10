@@ -14,7 +14,7 @@ interface ShopPageProps {
 
 export default function Shop({ params }: ShopPageProps) {
   const unwrappedParams = use(params);
-  const [category_products, setCategoryProducts] = React.useState<any[]>([]);
+  const [category_products, setCategoryProducts] = React.useState<any[]>(null);
   const {categories} = useContext(DataContext)
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
@@ -29,38 +29,28 @@ export default function Shop({ params }: ShopPageProps) {
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [selectedRating, setSelectedRating] = useState<number>(0);
   const [showAvailableOnly, setShowAvailableOnly] = useState<boolean>(false);
-  const [isClient, setIsClient] = useState<boolean>(false);
   const {t , i18n}=useTranslation()
 
 
 
 
   const fetch_category_products = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(`${config.url}/api/products?filters[category][id][$eq]=${unwrappedParams.id}&populate=*`, {
-        headers: {
-          Authorization: `Bearer ${config.token}`,
-        }
-      });
-      setCategoryProducts(response.data.data || []);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setCategoryProducts([]);
-    } finally {
-      setIsLoading(false);
+    const response = await axios.get(`https://ecommerce-strapi-x4e8.onrender.com/api/products?filters[category][id][$eq]=38&populate=*`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`,
+      }
     }
+
+    )
+    setCategoryProducts(response.data.data);
+
+
   }
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   useEffect(() => {
-    if (isClient) {
-      fetch_category_products();
-    }
-  }, [unwrappedParams.id, isClient]);
+    fetch_category_products()
+  }, [unwrappedParams.id])
 
 
   const clearFilters = () => {
@@ -75,39 +65,6 @@ export default function Shop({ params }: ShopPageProps) {
 
   return (
     <div>
-      {!isClient ? (
-        // Server-side render placeholder
-        <div className="container mx-auto px-4 pb-12">
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="lg:w-1/4">
-              <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
-                <div className="animate-pulse">
-                  <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="lg:w-3/4">
-              <div className="bg-white rounded-2xl shadow-lg p-4 mb-6">
-                <div className="animate-pulse">
-                  <div className="h-10 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(6)].map((_, index) => (
-                  <ProductItemSkeleton key={index} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        // Client-side render
-        <>
       {/* Main Content */}
       <div className="container mx-auto px-4 pb-12">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -270,7 +227,7 @@ export default function Shop({ params }: ShopPageProps) {
 
                 <div className="flex items-center space-x-4">
                   <div className="text-sm text-gray-600">
-                    {t('shop.showing', 'Showing')} {category_products?.length || 0} {t('shop.of', 'of')} {category_products?.length || 0} {t('shop.products', 'products')}
+                    {t('shop.showing', 'Showing')} {category_products.length} {t('shop.of', 'of')} {category_products.length} {t('shop.products', 'products')}
                   </div>
 
                   <select
@@ -296,7 +253,7 @@ export default function Shop({ params }: ShopPageProps) {
                   <ProductItemSkeleton key={index} />
                 ))}
               </div>
-            ) : category_products && category_products.length > 0 ? (
+            ) : category_products.length > 0 ? (
               <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-6`}>
                 {category_products.map((product) => (
                   <ProductItem
@@ -370,8 +327,6 @@ export default function Shop({ params }: ShopPageProps) {
           </div>
         </div>
       </div>
-        </>
-      )}
     </div>
   )
 }

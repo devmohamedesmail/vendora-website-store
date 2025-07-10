@@ -1,0 +1,187 @@
+import React from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useTranslation } from 'react-i18next';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade, EffectCube, EffectFlip, EffectCoverflow } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay';
+import 'swiper/css/effect-fade';
+import 'swiper/css/effect-cube';
+import 'swiper/css/effect-flip';
+import 'swiper/css/effect-coverflow';
+
+export default function Slide_Show() {
+    const { t } = useTranslation();
+
+    const slides = [
+        { id: 1, content: 'Special Offer 1', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=400&fit=crop&crop=center' },
+        { id: 2, content: 'New Products', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&h=400&fit=crop&crop=center' },
+        { id: 3, content: 'Best Sellers', image: 'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?w=1200&h=400&fit=crop&crop=center' },
+        { id: 4, content: 'Limited Time', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=400&fit=crop&crop=center' },
+        { id: 5, content: 'Limited Time 3', image: '/images/slide.jpg' },
+    ];
+
+    return (
+        <Swiper
+            // Basic Configuration
+            spaceBetween={30}
+            slidesPerView={1}
+            speed={600}
+            loop={true}
+
+            // Modules
+            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+
+            // Navigation
+            navigation={{
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                hideOnClick: false,
+            }}
+
+            // Autoplay (fixed: should be lowercase 'autoplay')
+            autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+                reverseDirection: false,
+            }}
+
+            // Pagination
+            pagination={{
+                clickable: true,
+                dynamicBullets: true,
+                type: 'bullets', // 'bullets' | 'fraction' | 'progressbar' | 'custom'
+                hideOnClick: false,
+            }}
+
+            // Scrollbar
+            scrollbar={{
+                draggable: true,
+                hide: false,
+                snapOnRelease: true,
+            }}
+
+            // Accessibility
+            a11y={{
+                prevSlideMessage: 'Previous slide',
+                nextSlideMessage: 'Next slide',
+                firstSlideMessage: 'This is the first slide',
+                lastSlideMessage: 'This is the last slide',
+            }}
+
+            // Responsive Breakpoints
+            breakpoints={{
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+            }}
+
+            // Effects (uncomment one at a time)
+            // effect="fade"
+            // fadeEffect={{
+            //     crossFade: true
+            // }}
+
+            // effect="cube"
+            // cubeEffect={{
+            //     shadow: true,
+            //     slideShadows: true,
+            //     shadowOffset: 20,
+            //     shadowScale: 0.94,
+            // }}
+
+            // effect="flip"
+            // flipEffect={{
+            //     slideShadows: true,
+            //     limitRotation: true,
+            // }}
+
+            // effect="coverflow"
+            // coverflowEffect={{
+            //     rotate: 50,
+            //     stretch: 0,
+            //     depth: 100,
+            //     modifier: 1,
+            //     slideShadows: true,
+            // }}
+
+            // Event Handlers
+            onSlideChange={(swiper) => console.log('Slide changed to:', swiper.activeIndex)}
+            onSwiper={(swiper) => console.log('Swiper initialized:', swiper)}
+            onReachBeginning={() => console.log('Reached beginning')}
+            onReachEnd={() => console.log('Reached end')}
+            onAutoplayStart={() => console.log('Autoplay started')}
+            onAutoplayStop={() => console.log('Autoplay stopped')}
+
+            // Touch/Mouse Settings
+            touchRatio={1}
+            touchAngle={45}
+            grabCursor={true}
+            allowTouchMove={true}
+
+            // Keyboard Navigation
+            keyboard={{
+                enabled: true,
+                onlyInViewport: true,
+            }}
+
+            // Mouse Wheel
+            mousewheel={{
+                enabled: false,
+                forceToAxis: false,
+                sensitivity: 1,
+            }}
+
+            // Lazy Loading
+            // lazy={{
+            //     enabled: true,
+            //     loadOnTransitionStart: false,
+            //     loadPrevNext: false,
+            // }}
+
+            // Zoom
+            zoom={{
+                maxRatio: 3,
+                minRatio: 1,
+                toggle: true,
+            }}
+
+            // Center Slides
+            centeredSlides={false}
+
+            // Direction
+            direction="horizontal" // 'horizontal' | 'vertical'
+
+            className="w-full h-[250px] md:h-[400px] lg:h-[500px]"
+        >
+            {slides.map((slide) => (
+                <SwiperSlide key={slide.id} className="relative">
+                    <img
+                        className="w-full h-full object-cover"
+                        src={slide.image}
+                        alt={slide.content}
+                    // loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gray-100  opacity-10 flex items-center justify-center">
+                        <h2 className="text-white text-2xl md:text-4xl font-bold text-center">
+                            {t(slide.content)}
+                        </h2>
+                    </div>
+                </SwiperSlide>
+            ))}
+        </Swiper>
+    );
+}

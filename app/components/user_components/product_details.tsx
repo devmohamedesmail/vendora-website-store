@@ -159,14 +159,9 @@ export default function Product_Details({ product }: any) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex items-center">
                             <span className="font-medium text-gray-700 mr-2">{t('productDetails.store')}</span>
-                            <span className="text-indigo-600 font-semibold">{product.vendor?.vendor_name}</span>
+                            <span className="text-indigo-600 font-semibold">{product.vendor?.store_name}</span>
                         </div>
-                        <div className="flex items-center">
-                            <svg className="w-4 h-4 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg>
-                            <span className="text-gray-600">{product.vendor?.phone}</span>
-                        </div>
+                       
                     </div>
                 </div>
 

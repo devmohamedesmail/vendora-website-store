@@ -125,7 +125,7 @@ useEffect(()=>{
         {/* View All Button */}
         <div className="text-center mt-12">
           <Link
-            href="/vendors"
+            href="/front/vendors"
             className="inline-flex items-center gap-2 bg-main text-white px-8 py-3 rounded-xl font-medium hover:bg-second transition-colors"
           >
             {t('vendors.viewAll', 'View All Vendors')}

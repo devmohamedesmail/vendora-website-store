@@ -15,6 +15,9 @@ import { AuthContext } from './context/auth_context';
 import Categories_Section from './sections/categories_section';
 import Products_Section from './sections/products_section';
 import Vendors_Section from './sections/vendors_section';
+import Slide_Show from './components/user_components/slide_show';
+import Deals_Section from './sections/deals_section';
+import Products_Slideshow_Section from './sections/products_slideshow_section';
 
 
 
@@ -38,9 +41,12 @@ const {auth}=useContext(AuthContext)
   return (
     <>
       <Navbar />
-      <Banner />
+      <Slide_Show />
+      {/* <Banner /> */}
+      <Deals_Section />
       <Categories_Section />
       <Vendors_Section />
+      <Products_Slideshow_Section />
       <Products_Section />
       <Footer />
       <BottomNavbar />

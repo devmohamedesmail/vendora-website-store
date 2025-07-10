@@ -101,7 +101,22 @@
 		"each": "each",
 		"remove": "Remove",
 		"total": "Total",
-		"proceedToCheckout": "Proceed to Checkout"
+		"proceedToCheckout": "Proceed to Checkout",
+		"itemsInCart": "items in cart",
+		"orderSummary": "Order Summary",
+		"subtotal": "Subtotal",
+		"shipping": "Shipping",
+		"free": "Free",
+		"tax": "Tax",
+		"calculatedAtCheckout": "Calculated at checkout",
+		"secureCheckout": "Secure & Encrypted Checkout",
+		"relatedProducts":"Related Products",
+		"relatedDescription": "Popular items that other customers added to their carts",
+		"specialOffer": "Special Offer: Add any item below and get 10% off!",
+		"limitedOffer": "Limited Time Offer",
+		"offerDescription": "Add 2 or more items to your cart and enjoy free shipping + 15% discount",
+		"fastDelivery": "Fast Delivery",
+		"instantDiscount": "Instant Discount"
 	},
 	"wishlist": {
 		"myWishlist": "My Wishlist",
@@ -622,5 +637,16 @@
 		"no": "No",
 		"ok": "OK",
 		"close": "Close"
+	},
+	"deals":{
+		"title": "Exclusive Deals",
+		"subtitle": "Save big on your favorite vaping products with our limited-time offers and special discounts.",
+		"viewAllDeals": "View All Deals",
+		"dealOfTheDay": "Deal of the Day",
+		"limitedTimeOffer": "Limited Time Offer",
+		"discountedProducts": "Discounted Products",
+		"shopNow": "Shop Now",
+		"noDeals": "No deals found",
+		"checkBackLater": "Check back later for new deals!"
 	}
 }

@@ -100,7 +100,22 @@
 		"each": "للقطعة",
 		"remove": "إزالة",
 		"total": "المجموع",
-		"proceedToCheckout": "المتابعة للدفع"
+		"proceedToCheckout": "المتابعة للدفع",
+		"itemsInCart": "العناصر في السلة",
+		"orderSummary": "ملخص الطلب",
+		"subtotal": "المجموع الفرعي",
+		"shipping": "الشحن",
+		"free": "مجاني",
+		"tax": "الضريبة",
+		"calculatedAtCheckout": "يتم حسابها عند الدفع",
+		"secureCheckout": "دفع آمن ومشفّر",
+		"relatedProducts": "منتجات ذات صلة",
+		"relatedDescription": "عناصر شائعة أضافها عملاء آخرون إلى سلاتهم",
+		"specialOffer": "عرض خاص: أضف أي منتج أدناه واحصل على خصم 10٪!",
+		"limitedOffer": "عرض لفترة محدودة",
+		"offerDescription": "أضف منتجين أو أكثر إلى سلتك واحصل على شحن مجاني + خصم 15٪",
+		"fastDelivery": "توصيل سريع",
+		"instantDiscount": "خصم فوري"
 	},
 	"wishlist": {
 		"myWishlist": "قائمة أمنياتي",
@@ -621,5 +636,16 @@
 		"no": "لا",
 		"ok": "موافق",
 		"close": "إغلاق"
+	},
+	"deals": {
+		"title": "عروض حصرية",
+		"subtitle": "وفر الكثير على منتجات الفيب المفضلة لديك مع عروضنا المحدودة والخصومات الخاصة.",
+		"viewAllDeals": "عرض جميع العروض",
+		"dealOfTheDay": "عرض اليوم",
+		"limitedTimeOffer": "عرض لفترة محدودة",
+		"discountedProducts": "منتجات مخفضة",
+		"shopNow": "تسوق الآن",
+		"noDeals": "لم يتم العثور على عروض",
+		"checkBackLater": "عد لاحقًا لمزيد من العروض!"
 	}
 }

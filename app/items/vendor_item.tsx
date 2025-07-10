@@ -56,59 +56,6 @@ const renderStars = (rating: number) => {
                   {vendor.description}
                 </p>
 
-                {/* Categories */}
-                {/* <div className="flex flex-wrap gap-2 mb-4">
-                  {vendor.categories.slice(0, 2).map((category, index) => (
-                    <span
-                      key={index}
-                      className="bg-indigo-50 text-indigo-600 px-2 py-1 rounded-lg text-xs font-medium"
-                    >
-                      {category}
-                    </span>
-                  ))}
-                  {vendor.categories.length > 2 && (
-                    <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-lg text-xs font-medium">
-                      +{vendor.categories.length - 2} {t('vendors.more', 'more')}
-                    </span>
-                  )}
-                </div> */}
-
-                {/* Vendor Details */}
-                {/* <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <FiMapPin className="w-4 h-4" />
-                    <span>{vendor.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <FiShoppingBag className="w-4 h-4" />
-                    <span>
-                      {vendor.productsCount} {t('vendors.products', 'Products')}
-                    </span>
-                  </div>
-                </div> */}
-
-                {/* Contact Info */}
-                <div className="flex items-center gap-3 mb-4 pt-4 border-t border-gray-100">
-                  <a
-                    href={`tel:${vendor.phone}`}
-                    className="text-gray-400 hover:text-indigo-600 transition-colors"
-                    title={t('vendors.callVendor', 'Call Vendor')}
-                  >
-                    <FiPhone className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={`mailto:${vendor.email}`}
-                    className="text-gray-400 hover:text-indigo-600 transition-colors"
-                    title={t('vendors.emailVendor', 'Email Vendor')}
-                  >
-                    <FiMail className="w-4 h-4" />
-                  </a>
-                  <div className="flex-1"></div>
-                  <div className="flex items-center gap-1 text-sm font-medium text-indigo-600">
-                    <span>{vendor.rating}</span>
-                    <FiStar className="w-4 h-4 text-yellow-400 fill-current" />
-                  </div>
-                </div>
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
@@ -119,13 +66,7 @@ const renderStars = (rating: number) => {
                     <FaStore className="w-4 h-4" />
                     {t('vendors.visitStore', 'Visit Store')}
                   </Link>
-                  <Link
-                    href={`/vendor/${vendor.id}/products`}
-                    className="bg-gray-100 text-gray-700 py-2 px-4 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center"
-                    title={t('vendors.viewProducts', 'View Products')}
-                  >
-                    <FiExternalLink className="w-4 h-4" />
-                  </Link>
+                 
                 </div>
               </div>
             </div>

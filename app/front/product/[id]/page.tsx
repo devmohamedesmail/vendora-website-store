@@ -7,6 +7,7 @@ import Loader from '../../../components/Loader'
 import Product_Review from '../../../components/user_components/product_review'
 import { useTranslation } from 'react-i18next'
 import Product_Details from '../../../components/user_components/product_details'
+import Product_Gallery from '../../../components/user_components/product_gallery'
 
 function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
   const { t } = useTranslation()
@@ -43,34 +44,8 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
         <div className="container mx-auto px-4 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Gallery */}
-            <div className="w-full  flex flex-col items-center">
-              <div className="w-full bg-white rounded-xl shadow-lg p-4 mb-4 flex justify-center">
-                <img
-                  src={
-                    product.images[selectedImage]?.formats?.medium?.url ||
-                    product.images[selectedImage]?.url ||
-                    "/placeholder.png"
-                  }
-                  alt={product.title}
-                  className="rounded-xl object-cover max-h-[400px] w-full bg-red-600"
-                />
-              </div>
-              <div className="flex gap-2 overflow-x-auto">
-                {product.images.map((img: any, idx: number) => (
-                  <button
-                    key={img.id}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`border-2 rounded-lg p-1 transition ${selectedImage === idx ? "border-indigo-600" : "border-transparent"}`}
-                  >
-                    <img
-                      src={img.formats?.thumbnail?.url || img.url}
-                      alt={`thumb-${idx}`}
-                      className="h-16 w-16 object-cover rounded"
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
+          
+            <Product_Gallery product={product} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
             {/* Details */}
             <Product_Details product={product} />
           </div>
