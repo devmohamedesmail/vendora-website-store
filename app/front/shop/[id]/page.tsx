@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { FiFilter, FiSearch, FiGrid, FiList, FiChevronDown, FiX, FiStar, FiHeart, FiShoppingCart, FiEye, FiSliders, FiTrendingUp, FiTag } from 'react-icons/fi';
 import ProductItem from '../../../items/ProductItem';
 import ProductItemSkeleton from '../../../items/ProductItemSkeleton';
+import { toast } from 'react-toastify';
 
 interface ShopPageProps {
   params: Promise<{ id: string }>
@@ -15,7 +16,7 @@ interface ShopPageProps {
 export default function Shop({ params }: ShopPageProps) {
   const unwrappedParams = use(params);
   const [category_products, setCategoryProducts] = React.useState<any[]>(null);
-  const {categories} = useContext(DataContext)
+  const { categories } = useContext(DataContext)
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sortBy, setSortBy] = useState<string>('popular');
@@ -29,24 +30,35 @@ export default function Shop({ params }: ShopPageProps) {
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [selectedRating, setSelectedRating] = useState<number>(0);
   const [showAvailableOnly, setShowAvailableOnly] = useState<boolean>(false);
-  const {t , i18n}=useTranslation()
+  const { t, i18n } = useTranslation()
 
 
 
 
   const fetch_category_products = async () => {
-    const response = await axios.get(`https://ecommerce-strapi-x4e8.onrender.com/api/products?filters[category][id][$eq]=38&populate=*`, {
-      headers: {
-        Authorization: `Bearer ${config.token}`,
-      }
+
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${config.url}/api/products?filters[category][id][$eq]=${unwrappedParams.id}&populate=*`,
+        {
+          headers: {
+            Authorization: `Bearer ${config.token}`,
+          },
+        }
+      );
+
+      setIsLoading(false);
+      setCategoryProducts(response.data.data);
+    } catch (error) {
+      
+      setIsLoading(false);
+      setCategoryProducts([]);
+      toast.error(t('shop.fetchError', 'Failed to fetch products. Please try again later.'));
+    }finally {
+      setIsLoading(false);
     }
-
-    )
-    setCategoryProducts(response.data.data);
-
-
-  }
-
+  };
 
   useEffect(() => {
     fetch_category_products()
@@ -62,6 +74,11 @@ export default function Shop({ params }: ShopPageProps) {
     setSelectedRating(0);
     setShowAvailableOnly(false);
   };
+
+
+
+  console.log("category_products", category_products)
+
 
   return (
     <div>
@@ -144,7 +161,7 @@ export default function Shop({ params }: ShopPageProps) {
                 </div>
               </div>
 
-            
+
 
               {/* Rating Filter */}
               <div className="mb-6">
@@ -227,7 +244,8 @@ export default function Shop({ params }: ShopPageProps) {
 
                 <div className="flex items-center space-x-4">
                   <div className="text-sm text-gray-600">
-                    {t('shop.showing', 'Showing')} {category_products.length} {t('shop.of', 'of')} {category_products.length} {t('shop.products', 'products')}
+                    {t('shop.showing', 'Showing')}
+                    {category_products && category_products.length} {t('shop.of', 'of')} {category_products && category_products.length} {t('shop.products', 'products')}
                   </div>
 
                   <select
