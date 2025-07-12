@@ -89,7 +89,14 @@
 		"removeFromWishlist": "إزالة من المفضلة",
 		"addedToCart": " تمت إضافة المنتج إلى السلة!",
 		"addedToWishlist": " تمت إضافة المنتج إلى المفضلة!",
-		"removedFromWishlist": " تمت إزالة المنتج من المفضلة!"
+		"removedFromWishlist": " تمت إزالة المنتج من المفضلة!",
+		"notifyme": "إشعار عند توفر المنتج",
+		"notifyTitle": "احصل على إشعار",
+		"notifySubtitle": "سنرسل لك بريد إلكتروني عندما يصبح هذا المنتج متوفراً",
+		"emailLabel": "عنوان البريد الإلكتروني",
+		"emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+		"notifyMe": "إشعاري",
+		"privacyNotice": "نحترم خصوصيتك. لا بريد مزعج، إشعارات التوفر فقط."
 	},
 	"cart": {
 		"yourCart": "سلة التسوق",

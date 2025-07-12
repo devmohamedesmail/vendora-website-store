@@ -17,11 +17,11 @@ export default function Slide_Show() {
     const { t } = useTranslation();
 
     const slides = [
-        { id: 1, content: 'Special Offer 1', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=400&fit=crop&crop=center' },
-        { id: 2, content: 'New Products', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&h=400&fit=crop&crop=center' },
-        { id: 3, content: 'Best Sellers', image: 'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?w=1200&h=400&fit=crop&crop=center' },
-        { id: 4, content: 'Limited Time', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=400&fit=crop&crop=center' },
-        { id: 5, content: 'Limited Time 3', image: '/images/slide.jpg' },
+        { id: 1, content: 'Special Offer 1', image: '/images/slide1.jpg' },
+        { id: 2, content: 'New Products', image: '/images/slide2.jpg' },
+        { id: 3, content: 'Best Sellers', image: '/images/slide3.jpg' },
+        { id: 4, content: 'Limited Time', image: '/images/slide4.jpg' },
+        { id: 5, content: 'Limited Time 3', image: '/images/slide1.jpg' },
     ];
 
     return (
@@ -119,12 +119,12 @@ export default function Slide_Show() {
             // }}
 
             // Event Handlers
-            onSlideChange={(swiper) => console.log('Slide changed to:', swiper.activeIndex)}
-            onSwiper={(swiper) => console.log('Swiper initialized:', swiper)}
-            onReachBeginning={() => console.log('Reached beginning')}
-            onReachEnd={() => console.log('Reached end')}
-            onAutoplayStart={() => console.log('Autoplay started')}
-            onAutoplayStop={() => console.log('Autoplay stopped')}
+            // onSlideChange={(swiper) => console.log('Slide changed to:', swiper.activeIndex)}
+            // onSwiper={(swiper) => console.log('Swiper initialized:', swiper)}
+            // onReachBeginning={() => console.log('Reached beginning')}
+            // onReachEnd={() => console.log('Reached end')}
+            // onAutoplayStart={() => console.log('Autoplay started')}
+            // onAutoplayStop={() => console.log('Autoplay stopped')}
 
             // Touch/Mouse Settings
             touchRatio={1}
@@ -165,18 +165,18 @@ export default function Slide_Show() {
             // Direction
             direction="horizontal" // 'horizontal' | 'vertical'
 
-            className="w-full h-[250px] md:h-[400px] lg:h-[500px]"
+            className="w-full h-[250px] md:h-[800px] lg:h-[800px]"
         >
             {slides.map((slide) => (
                 <SwiperSlide key={slide.id} className="relative">
                     <img
-                        className="w-full h-full object-cover"
+                        className="w-full h-full "
                         src={slide.image}
                         alt={slide.content}
                     // loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gray-100  opacity-10 flex items-center justify-center">
-                        <h2 className="text-white text-2xl md:text-4xl font-bold text-center">
+                        <h2 className="text-black text-2xl md:text-4xl font-bold text-center">
                             {t(slide.content)}
                         </h2>
                     </div>

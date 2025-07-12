@@ -89,7 +89,14 @@
 		"totalPrice": "Total price",
 		"addedToCart": "Product added to cart!",
 		"addedToWishlist": "Product added to wishlist!",
-		"removedFromWishlist": "Product removed from wishlist!"
+		"removedFromWishlist": "Product removed from wishlist!",
+		"notifyme": "Notify me",
+		"notifyTitle": "Get Notified",
+		"notifySubtitle": "We'll email you when this item is back in stock",
+		"emailLabel": "Email Address",
+		"emailPlaceholder": "Enter your email address",
+		"notifyMe": "Notify Me",
+		"privacyNotice": "We respect your privacy. No spam, just stock notifications."
 		
 	},
 	"cart": {

@@ -1,13 +1,16 @@
 import React from 'react'
 import { config } from '../config/api'
 import Link from 'next/link'
-import { FiHeart, FiShoppingCart, FiEye, FiStar } from 'react-icons/fi'
+import { FiHeart, FiShoppingCart, FiEye, FiStar ,FiMail} from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { getLimitedWords } from '../ultilites/ultitites'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { addToCart } from '../redux/slices/cartSlice'
 import { toggleWishlistItem, selectIsInWishlist } from '../redux/slices/wishlistSlice'
 import { toast } from 'react-toastify'
+import { IoIosNotificationsOutline } from "react-icons/io";
+import CustomInput from '../custom/custom_input'
+
 
 function ProductItem({ product, viewMode = 'grid' }:any) {
   const isListView = viewMode === 'list';
@@ -154,14 +157,86 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
           </div>
           
           {!isListView && (
-            <button
-              onClick={handleAddToCart}
-              className="w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={product.stock === 0}
-            >
-              <FiShoppingCart className="w-4 h-4" />
-              <span>{product.stock === 0 ? t('productDetails.outOfStock') : t('productDetails.addToCart')}</span>
-            </button>
+            <>
+              <button
+                onClick={product.stock === 0 ? () => (document.getElementById(`notify_modal_${product.id}`) as HTMLDialogElement)?.showModal() : handleAddToCart}
+                className="w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={false}
+              >
+                <IoIosNotificationsOutline className="w-4 h-4" />
+                <span>{product.stock === 0 ? t('productDetails.notifyme') : t('productDetails.addToCart')}</span>
+              </button>
+
+              {/* Notify Me Modal */}
+              <dialog id={`notify_modal_${product.id}`} className="modal">
+                <div className="modal-box max-w-md mx-auto bg-white rounded-2xl shadow-2xl">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                      <IoIosNotificationsOutline className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-xl text-gray-900">{t('productDetails.notifyTitle') || 'Get Notified'}</h3>
+                      <p className="text-sm text-gray-500">{t('productDetails.notifySubtitle') || 'We\'ll email you when this item is back in stock'}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mb-6">
+                    <div className="flex items-center mb-4 p-3 bg-gray-50 rounded-lg">
+                      <img
+                        src={product?.images?.[0]?.url || '/placeholder.png'}
+                        alt={product.title}
+                        className="w-16 h-16 object-cover rounded-lg mr-3"
+                      />
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900 text-sm line-clamp-2">{product.title}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {product.sale ? (
+                            <span className="text-blue-600 font-semibold">{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
+                          ) : (
+                            <span className="text-blue-600 font-semibold">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t('productDetails.emailLabel') || 'Email Address'}
+                        </label>
+                       
+                        <CustomInput type='email' placeholder={t('productDetails.emailPlaceholder')} icon={FiMail} />
+                      </div>
+                      
+                      <div className="flex space-x-3">
+                        <button
+                          type="button"
+                          className="flex-1 px-4 py-3 bg-main text-white rounded-lg hover:bg-second transition-colors font-medium"
+                        >
+                          {t('productDetails.notifyMe') || 'Notify Me'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => (document.getElementById(`notify_modal_${product.id}`) as HTMLDialogElement)?.close()}
+                          className="px-4 py-3 border border-gray-300 text-gray-700  rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                        >
+                          {t('common.cancel') || 'Cancel'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">
+                      {t('productDetails.privacyNotice') || 'We respect your privacy. No spam, just stock notifications.'}
+                    </p>
+                  </div>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
+            </>
           )}
         </div>
       </div>
