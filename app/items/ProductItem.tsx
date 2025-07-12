@@ -140,9 +140,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
                </div>
             )}
 
-            <div className="flex items-center">
-
-            </div>
+           
            
             {isListView && (
               <button
@@ -163,7 +161,8 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
                 className="w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={false}
               >
-                <IoIosNotificationsOutline className="w-4 h-4" />
+                {/* <IoIosNotificationsOutline className="w-4 h-4" /> */}
+                {product.stock === 0 ? <IoIosNotificationsOutline className="w-4 h-4" /> : <FiShoppingCart className="w-4 h-4" />}
                 <span>{product.stock === 0 ? t('productDetails.notifyme') : t('productDetails.addToCart')}</span>
               </button>
 
