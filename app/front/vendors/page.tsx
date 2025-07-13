@@ -161,7 +161,7 @@ export default function Vendors() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredVendors.map((vendor) => (
-                <Link href={`/front/vendor/${vendor.documentId}`} key={vendor.id}>
+                <Link href={`/front/vendor/${vendor.id}`} key={vendor.id}>
                   <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer transform hover:scale-105">
                     {/* Banner Image */}
                     <div className="h-48 relative overflow-hidden bg-gradient-to-r from-gray-100 to-gray-200">
@@ -241,9 +241,9 @@ export default function Vendors() {
                       </div> */}
 
                       {/* Action Button */}
-                      <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform group-hover:scale-105">
+                      <Link href={`/front/vendor/${vendor.id}`} className="w-full block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform group-hover:scale-105">
                         {t('vendors.visitStore') || 'Visit Store'}
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </Link>
