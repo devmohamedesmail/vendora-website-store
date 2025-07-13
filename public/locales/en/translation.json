@@ -669,6 +669,30 @@
 		"maybeLater": "Maybe Later",
 		"terms": "Valid for new customers only. Terms and conditions apply."
 	},
+	"home": {
+		"featuredProducts": "Featured Products",
+		"trendingProducts": "Trending Products",
+		"product1": {
+			"title": "Premium Vape Kit",
+			"description": "High-quality vaping experience with advanced features"
+		},
+		"product2": {
+			"title": "Flavor Pods Set",
+			"description": "Delicious variety pack with multiple flavors"
+		},
+		"product3": {
+			"title": "Starter Bundle",
+			"description": "Perfect for beginners - everything you need"
+		},
+		"product4": {
+			"title": "Advanced Mod",
+			"description": "Professional grade device for experienced users"
+		},
+		"vendor1": "VapeStore Pro",
+		"vendor2": "FlavorMax",
+		"vendor3": "BeginnerVape",
+		"vendor4": "ProVape Tech"
+	},
 	"deals":{
 		"title": "Exclusive Deals",
 		"subtitle": "Save big on your favorite vaping products with our limited-time offers and special discounts.",

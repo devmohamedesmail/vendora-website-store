@@ -165,7 +165,7 @@ export default function Slide_Show() {
             // Direction
             direction="horizontal" // 'horizontal' | 'vertical'
 
-            className="w-full h-[250px] md:h-[800px] lg:h-[800px]"
+            className="w-full h-[250px] md:h-[400px] lg:h-[400px]"
         >
             {slides.map((slide) => (
                 <SwiperSlide key={slide.id} className="relative">
