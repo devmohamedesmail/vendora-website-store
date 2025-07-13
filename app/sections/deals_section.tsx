@@ -95,7 +95,7 @@ export default function Deals_Section() {
                                     <div className="p-4">
                                         <div className="flex items-center justify-center">
                                             <div className="text-center flex items-center ">
-                                                <p className="text-lg font-bold text-second mb-1 mx-1">
+                                                <p className="text-xs md:text-sm font-bold text-second mb-1 mx-1">
                                                     {product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}
                                                 </p>
                                                 <p className="line-through text-main text-sm mx-1">

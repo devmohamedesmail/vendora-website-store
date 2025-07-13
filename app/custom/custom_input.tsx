@@ -34,7 +34,7 @@ export default function CustomInput({
   const { t, i18n } = useTranslation();
   
   return (
-    <div className="mb-4">
+    <div className="mb-1">
       {label && (
         <p className={`block text-sm font-medium text-gray-700 mb-2   ${i18n.language === 'ar' ? 'text-right' : 'text-left'}  `}>
           {label}

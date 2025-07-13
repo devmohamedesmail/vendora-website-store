@@ -128,6 +128,7 @@ useEffect(() => {
                                 removeItem={removeItem}
                                 totalPrice={totalPrice}
                                 totalItems={totalItems}
+                                auth={auth}
 
                             />
                         </form>

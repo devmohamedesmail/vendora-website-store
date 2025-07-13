@@ -1,8 +1,9 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
+import { FiTrash2, FiPlus, FiMinus  } from 'react-icons/fi';
 import { config } from '../../config/api';
-
+import CustomInput from '../../custom/custom_input';
+import { MdDiscount } from "react-icons/md";
 
 export default function Checkout_Summery_Order({ 
      items ,
@@ -11,16 +12,61 @@ export default function Checkout_Summery_Order({
      removeItem ,
      totalPrice, 
      totalItems,
-    
+     auth
     }: any) {
     const { t , i18n} = useTranslation();
-
+   
 
  
 
     return (
         <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 sticky top-8">
+
+{/* coupons input */}
+             {auth ? (
+                <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <h3 className="text-sm font-semibold text-gray-800 mb-3">
+                        {t('checkout.couponCode', 'Have a coupon code?')}
+                    </h3>
+                    <div className="flex items-center  gap-1">
+                       
+                        <CustomInput 
+                         icon={MdDiscount}
+                         placeholder={t('checkout.enterCoupon', 'Enter coupon code')} />
+                        <button
+                            type="button"
+                            className="px-4 h-12 py-1 bg-main text-white rounded-lg hover:bg-second transition-colors text-sm font-medium"
+                        >
+                            {t('checkout.apply')}
+                        </button>
+                    </div>
+                </div>
+             ) : (
+                <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl border border-purple-200">
+                    <div className="text-center">
+                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span className="text-white font-bold text-lg">%</span>
+                        </div>
+                        <h3 className="font-bold text-gray-800 mb-2">
+                            {t('checkout.unlockCoupons', 'Unlock Exclusive Coupons!')}
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-3">
+                            {t('checkout.registerMessage', 'Register now to access special discount codes and save more on your orders.')}
+                        </p>
+                        <a 
+                            href="/auth/login"
+                            className="inline-block px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all text-sm font-medium"
+                        >
+                            {t('checkout.registerNow', 'Register Now')}
+                        </a>
+                    </div>
+                </div>
+             )}
+
+
+
+
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                     {t('checkout.orderSummary', 'Order Summary')}
                 </h2>

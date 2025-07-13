@@ -42,7 +42,7 @@ export default function Products_Slideshow_Section() {
                             spaceBetween: 5,
                         },
                         1024: {
-                            slidesPerView: 4,
+                            slidesPerView: 6,
                             spaceBetween: 5,
                         },
                     }}

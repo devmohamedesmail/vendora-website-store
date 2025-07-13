@@ -23,21 +23,21 @@ interface CategoryItemProps {
         isTrending?: boolean;
         rating?: number;
     };
- 
+
 }
 
 function CategoryItem({ category }: CategoryItemProps) {
     return (
-        <Link href={`/front/shop/${category.id}`} 
-            
+        <Link href={`/front/shop/${category.id}`}
+
             className="flex flex-col items-center justify-center"
         >
-          <img
-                    src={category.image?.formats?.small?.url || category.image?.formats?.thumbnail?.url || category.image?.url || "/placeholder.png"}
-                    alt={category.title}
-                    className="w-32 h-32 rounded-full "
-                />
-                <p className='font-semibold mt-3'>{category.title}</p>
+            <img
+                src={category.image?.formats?.small?.url || category.image?.formats?.thumbnail?.url || category.image?.url || "/placeholder.png"}
+                alt={category.title}
+                className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full "
+            />
+            <p className='mt-3 text-sm'>{category.title}</p>
         </Link>
     )
 }

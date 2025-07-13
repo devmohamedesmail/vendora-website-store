@@ -11,7 +11,7 @@ export default function Categories_Section() {
       <CustomSectionTitle title={"Shop by Categories"} />
 
        {categories ? (
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-10">
+          <div className="grid grid-cols-3 md:grid-cols-9 gap-2 mb-10">
             {categories.map((category:any, index:any) => (
               <CategoryItem 
                 category={ category} 

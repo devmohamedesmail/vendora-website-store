@@ -1,7 +1,7 @@
 import React from 'react'
 import { config } from '../config/api'
 import Link from 'next/link'
-import { FiHeart, FiShoppingCart, FiEye, FiStar ,FiMail} from 'react-icons/fi'
+import { FiHeart, FiShoppingCart, FiEye, FiStar, FiMail } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { getLimitedWords } from '../ultilites/ultitites'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
@@ -12,9 +12,9 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import CustomInput from '../custom/custom_input'
 
 
-function ProductItem({ product, viewMode = 'grid' }:any) {
+function ProductItem({ product, viewMode = 'grid' }: any) {
   const isListView = viewMode === 'list';
-  const { t , i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const isWishlisted = useAppSelector((state) => selectIsInWishlist(state, product.id));
 
@@ -47,13 +47,12 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
     }));
     toast.success(t('productDetails.addedToWishlist'));
   };
-  
+
   return (
     <div
       key={product.id}
-      className={`bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group ${
-        isListView ? 'flex flex-row' : 'flex flex-col'
-      }`}
+      className={`bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group ${isListView ? 'flex flex-row' : 'flex flex-col'
+        }`}
     >
       {/* Image Section */}
       <div className={`${isListView ? 'w-48 h-48' : 'h-48 w-full'} relative overflow-hidden ${isListView ? 'rounded-l-xl' : 'rounded-t-xl'} bg-gray-50 flex items-center justify-center`}>
@@ -64,16 +63,15 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
             className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
-        
+
         {/* Action Buttons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             onClick={handleToggleWishlist}
-            className={`p-2 rounded-full shadow-lg transition-colors ${
-              isWishlisted 
-                ? 'bg-red-500 text-white' 
+            className={`p-2 rounded-full shadow-lg transition-colors ${isWishlisted
+                ? 'bg-red-500 text-white'
                 : 'bg-white text-gray-600 hover:bg-red-50 hover:text-red-500'
-            }`}
+              }`}
           >
             <FiHeart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
           </button>
@@ -87,12 +85,11 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
 
         {/* Stock Badge */}
         <div className="absolute top-3 left-3">
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-            product.stock > 0 
-              ? "bg-green-500 text-white" 
+          <span className={`px-2 py-1 rounded-full text-xs font-medium ${product.stock > 0
+              ? "bg-green-500 text-white"
               : "bg-red-500 text-white"
-          }`}>
-            {product.stock > 0 ? t('productDetails.inStock') :  t('productDetails.outOfStock')}
+            }`}>
+            {product.stock > 0 ? t('productDetails.inStock') : t('productDetails.outOfStock')}
           </span>
         </div>
 
@@ -110,50 +107,49 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
       <div className={`p-2 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
         <div>
           <Link href={`/front/product/${product.id}`}>
-            <h3 className="text-lg font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
-              {/* {product.title} */}
+            <h3 className="text-sm md:text-md font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
               {getLimitedWords(product.title, 5)}
             </h3>
           </Link>
-          
+
           {!isListView && (
             <p className="text-gray-500 text-sm mb-3 line-clamp-2">{getLimitedWords(product.description, 5)}</p>
           )}
 
-      
+
         </div>
 
         {/* Price and Actions */}
         <div className="mt-auto">
-          <div className={`flex items-center justify-between ${isListView ? 'mb-3' : 'mb-2'}`}>
-           
+          <div className={`flex flex-col items-center justify-between ${isListView ? 'mb-3' : 'mb-2'}`}>
+
 
             {product.sale ? (
-               <div className="flex items-center">
+              <div className="flex items-center">
                 <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
                 <p className='line-through text-red-600 text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
 
-                </div>
-            ):(
-               <div className="flex items-center">
+              </div>
+            ) : (
+              <div className="flex items-center">
                 <p className='text-second font-bold text-md text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
-               </div>
+              </div>
             )}
 
-           
-           
+
+
             {isListView && (
               <button
                 onClick={handleAddToCart}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2"
+                className="px-4 py-2 bg-main text-white rounded-lg hover:bg-secondtransition-colors flex items-center space-x-2"
                 disabled={product.stock === 0}
               >
                 <FiShoppingCart className="w-4 h-4" />
-                <span>{t('productDetails.addToCart')}</span>
+                <span className='text-sm'>{t('productDetails.addToCart')}</span>
               </button>
             )}
           </div>
-          
+
           {!isListView && (
             <>
               <button
@@ -163,7 +159,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
               >
                 {/* <IoIosNotificationsOutline className="w-4 h-4" /> */}
                 {product.stock === 0 ? <IoIosNotificationsOutline className="w-4 h-4" /> : <FiShoppingCart className="w-4 h-4" />}
-                <span>{product.stock === 0 ? t('productDetails.notifyme') : t('productDetails.addToCart')}</span>
+                <span className='text-sm'>{product.stock === 0 ? t('productDetails.notifyme') : t('productDetails.addToCart')}</span>
               </button>
 
               {/* Notify Me Modal */}
@@ -178,7 +174,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
                       <p className="text-sm text-gray-500">{t('productDetails.notifySubtitle') || 'We\'ll email you when this item is back in stock'}</p>
                     </div>
                   </div>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center mb-4 p-3 bg-gray-50 rounded-lg">
                       <img
@@ -197,16 +193,16 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
                         </p>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           {t('productDetails.emailLabel') || 'Email Address'}
                         </label>
-                       
+
                         <CustomInput type='email' placeholder={t('productDetails.emailPlaceholder')} icon={FiMail} />
                       </div>
-                      
+
                       <div className="flex space-x-3">
                         <button
                           type="button"
@@ -224,7 +220,7 @@ function ProductItem({ product, viewMode = 'grid' }:any) {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="text-center">
                     <p className="text-xs text-gray-500">
                       {t('productDetails.privacyNotice') || 'We respect your privacy. No spam, just stock notifications.'}

@@ -23,6 +23,7 @@ import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
 import Vendor_Store_Info from '../../../components/user_components/vendor_store_info'
 import ProductItem from '../../../items/ProductItem'
 import Vendor_Products_Section from '../../../components/user_components/vendor_products_section'
+import Loader from '../../../components/Loader'
 
 export default function Vendor_Store({ params }: { params: Promise<{ id: number }> }) {
     const resolvedParams = use(params)
@@ -80,7 +81,9 @@ export default function Vendor_Store({ params }: { params: Promise<{ id: number 
     }, [resolvedParams])
 
     return (
-        <div className="min-h-screen bg-gray-50">
+       <>
+       {vendor ? (
+         <div className="min-h-screen bg-gray-50 ">
             <Vendor_Hero vendor={vendor} />
 
 
@@ -126,5 +129,10 @@ export default function Vendor_Store({ params }: { params: Promise<{ id: number 
 
 
         </div>
+       ):(
+        <Loader />
+       )}
+       
+       </>
     )
 }

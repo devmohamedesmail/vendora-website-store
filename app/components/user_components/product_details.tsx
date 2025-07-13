@@ -159,7 +159,8 @@ export default function Product_Details({ product }: any) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex items-center">
                             <span className="font-medium text-gray-700 mr-2">{t('productDetails.store')}</span>
-                            <span className="text-indigo-600 font-semibold">{product.vendor?.store_name}</span>
+                           
+                            <Link href={`/front/vendor/${product.vendor?.id}`} className="text-indigo-600 font-semibold">{product.vendor?.store_name}</Link>
                         </div>
                        
                     </div>

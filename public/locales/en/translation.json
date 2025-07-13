@@ -98,6 +98,7 @@
 		"notifyMe": "Notify Me",
 		"privacyNotice": "We respect your privacy. No spam, just stock notifications."
 		
+		
 	},
 	"cart": {
 		"yourCart": "Your Cart",
@@ -413,6 +414,12 @@
 		"placeOrder": "Place Order",
 		"securityNotice": "Your payment information is secure and encrypted",
 		"secureCheckout": "Secure & Encrypted Checkout",
+		"couponCode": "Have a coupon code?",
+		"enterCoupon": "Enter coupon code",
+		"apply": "Apply",
+		"unlockCoupons": "Unlock Exclusive Coupons!",
+		"registerMessage": "Register now to access special discount codes and save more on your orders.",
+		"registerNow": "Register Now",
 		"progressSteps": {
 			"cart": "Cart",
 			"checkout": "Checkout",
@@ -645,6 +652,18 @@
 		"ok": "OK",
 		"close": "Close"
 	},
+	"introModal": {
+		"welcome": "Welcome to Vendora!",
+		"subtitle": "Discover amazing deals just for you",
+		"discountText": "Exclusive First-Time Discount",
+		"limitedTime": "Limited time offer for new members",
+		"benefit1": "Access to exclusive products",
+		"benefit2": "Free shipping on first order", 
+		"benefit3": "Early access to new arrivals",
+		"claimDiscount": "Claim Your 50% Discount",
+		"maybeLater": "Maybe Later",
+		"terms": "Valid for new customers only. Terms and conditions apply."
+	},
 	"deals":{
 		"title": "Exclusive Deals",
 		"subtitle": "Save big on your favorite vaping products with our limited-time offers and special discounts.",
@@ -655,5 +674,28 @@
 		"shopNow": "Shop Now",
 		"noDeals": "No deals found",
 		"checkBackLater": "Check back later for new deals!"
+	},
+	"footer":{
+		"home": "Home",
+		"about": "About Us",
+		"contact": "Contact Us",
+		"privacyPolicy": "Privacy Policy",
+		"termsOfService": "Terms of Service",
+		"followUs": "Follow Us",
+		"subscribe": "Subscribe to our newsletter",
+		"subscribeDesc": "Get the latest updates and exclusive offers",
+		"emailPlaceholder": "Enter your email address",
+		"subscribeButton": "Subscribe",
+		"newsletterSuccess": "Thank you for subscribing!",
+		"newsletterError": "Failed to subscribe. Please try again.",
+		"account": "My Account",
+		"cart": "Cart",
+		"wishlist": "Wishlist",
+		"customerService": "Customer Service",
+		"faq": "FAQs",
+		"useful_links": "Useful Links",
+		"support": "Support",
+		"terms": "Terms",
+		"privacy": "Privacy Policy"
 	}
 }

@@ -18,18 +18,18 @@ export default function Footer() {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-5">
         {/* Useful Pages Section */}
         <div>
-          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Useful Pages')}</h3>
+          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('footer.useful_links')}</h3>
           <ul className="space-y-4">
-            <li><Link href="/" className="hover:text-gray-400 transition-colors">{t('Home')}</Link></li>
-            <li><Link href={auth ? "/front/account" : "/auth/login"} className="hover:text-gray-400 transition-colors">{t('Account')}</Link></li>
-            <li><Link href="/front/cart" className="hover:text-gray-400 transition-colors">{t('Cart')}</Link></li>
-            <li><Link href="/front/wishlist" className="hover:text-gray-400 transition-colors">{t('Wishlist')}</Link></li>
+            <li><Link href="/" className="hover:text-gray-400 transition-colors">{t('footer.home')}</Link></li>
+            <li><Link href={auth ? "/front/account" : "/auth/login"} className="hover:text-gray-400 transition-colors">{t('footer.account')}</Link></li>
+            <li><Link href="/front/cart" className="hover:text-gray-400 transition-colors">{t('footer.cart')}</Link></li>
+            <li><Link href="/front/wishlist" className="hover:text-gray-400 transition-colors">{t('footer.wishlist')}</Link></li>
           </ul>
         </div>
 
         {/* Contact Section */}
         <div>
-          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Contact')}</h3>
+          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('footer.contact')}</h3>
           <ul className="space-y-4">
             <li className="flex items-center gap-3">
               <MdOutlineMailOutline className="text-lg" />
@@ -48,11 +48,11 @@ export default function Footer() {
 
         {/* Support Section */}
         <div>
-          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('Support')}</h3>
+          <h3 className="text-xl font-bold mb-6 border-b-2 border-gray-700 pb-2">{t('footer.support')}</h3>
           <ul className="space-y-4">
-            <li><Link href="/front/fqa" className="hover:text-gray-400 transition-colors">{t('FAQs')}</Link></li>
-            <li><Link href="/front/support" className="hover:text-gray-400 transition-colors">{t('Support')}</Link></li>
-            <li><Link href="/front/privacy" className="hover:text-gray-400 transition-colors">{t('pricacy policy')}</Link></li>
+            <li><Link href="/front/fqa" className="hover:text-gray-400 transition-colors">{t('footer.faq')}</Link></li>
+            <li><Link href="/front/support" className="hover:text-gray-400 transition-colors">{t('footer.support')}</Link></li>
+            <li><Link href="/front/privacy" className="hover:text-gray-400 transition-colors">{t('footer.privacy')}</Link></li>
           </ul>
         </div>
       </div>

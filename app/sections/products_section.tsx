@@ -10,7 +10,7 @@ export default function Products_Section() {
     <div className='container m-auto px-4 py-8'>
         <CustomSectionTitle title={"New Arrivals"} />
          {products ? (
-          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2  md:grid-cols-5 lg:grid-cols-6 gap-1">
             {products.map((product:any, index:any) => (
               <ProductItem product={product} key={index} />
             ))}

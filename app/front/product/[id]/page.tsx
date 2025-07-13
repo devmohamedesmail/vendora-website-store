@@ -68,7 +68,7 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
                   }`}
                 onClick={() => setActiveTab("reviews")}
               >
-                Reviews
+                  {t('productDetails.reviews')}
               </button>
             </div>
             <div>

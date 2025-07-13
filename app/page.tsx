@@ -18,6 +18,7 @@ import Vendors_Section from './sections/vendors_section';
 import Slide_Show from './components/user_components/slide_show';
 import Deals_Section from './sections/deals_section';
 import Products_Slideshow_Section from './sections/products_slideshow_section';
+import Intro_Modal from './components/user_components/intro_modal';
 
 
 
@@ -25,21 +26,10 @@ import Products_Slideshow_Section from './sections/products_slideshow_section';
 
 export default function Home() {
 
-  
- const {categories , products}=useContext(DataContext)
-
-const {auth}=useContext(AuthContext)
-
-
-
-
-
-
-
-
 
   return (
     <>
+     <Intro_Modal />
       <Navbar />
       <Slide_Show />
       {/* <Banner /> */}

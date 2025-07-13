@@ -30,9 +30,9 @@ export default function Vendor_Hero({ vendor }: { vendor: any }) {
 
 
     return (
-        <div className="relative h-64 sm:h-80 overflow-hidden">
+        <div className="relative h-64 sm:h-80 overflow-hidden pt-10">
            
-            <img src={vendor?.banner?.formats?.thumbnail?.url} alt={vendor?.store_name} className='w-full h-44' />
+            <img src={vendor?.banner?.formats?.thumbnail?.url} alt={vendor?.store_name} className='w-full h-44 mt-5' />
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
             {/* Vendor Info Overlay */}
