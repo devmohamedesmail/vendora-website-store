@@ -703,7 +703,8 @@
 		"vendor1": "VapeStore Pro",
 		"vendor2": "FlavorMax",
 		"vendor3": "BeginnerVape",
-		"vendor4": "ProVape Tech"
+		"vendor4": "ProVape Tech",
+		"noFeaturedProducts": "No featured products available"
 	},
 	"deals":{
 		"title": "Exclusive Deals",

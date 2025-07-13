@@ -1,17 +1,8 @@
 'use client';
 import React, { useState, useEffect, useContext } from 'react'
 import Footer from './components/user_components/footer';
-import ProductItem from './items/ProductItem';
-import CategoryItem from './items/CategoryItem';
-import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import Navbar from './components/user_components/navbar';
-import CategoryItemSkeleton from './items/CategoryItemSkeleton';
-import ProductItemSkeleton from './items/ProductItemSkeleton';
 import BottomNavbar from './components/user_components/bottom_navbar';
-import CustomSectionTitle from './custom/CustomSectionTitle';
-import { DataContext } from './context/data_context';
-import Banner from './components/user_components/banner';
-import { AuthContext } from './context/auth_context';
 import Categories_Section from './sections/categories_section';
 import Products_Section from './sections/products_section';
 import Vendors_Section from './sections/vendors_section';
@@ -21,6 +12,7 @@ import Products_Slideshow_Section from './sections/products_slideshow_section';
 import Intro_Modal from './components/user_components/intro_modal';
 import { useTranslation } from 'react-i18next';
 import { config } from './config/api';
+import Home_Featured_Products from './components/user_components/hero_featured_products';
 
 
 
@@ -80,25 +72,8 @@ export default function Home() {
       <Navbar />
      
       <div className='grid grid-cols-1 lg:grid-cols-5 gap-4 container mx-auto px-4 py-8'>
-        {/* Left Products Grid - Hidden on mobile, shown on desktop */}
-        <div className="hidden lg:block">
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">
-              {t('home.featuredProducts') || 'Featured Products'}
-            </h3>
-            <div className="grid grid-cols-2 gap-2">
-              {fakeProducts.slice(0, 4).map((product) => (
-                <div key={product.id} className="transform scale-90">
-                 
-                  <div>
-                     <img src="/images/slide1.jpg" className='w-32 h-32' alt="" />
-                     <p className='text-center'>{product.price} {config.currency_ar}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+       
+        <Home_Featured_Products  />
 
         {/* Center Slideshow - Always centered */}
         <div className="lg:col-span-3 flex justify-center">
@@ -108,21 +83,7 @@ export default function Home() {
         </div>
 
         {/* Right Products Grid - Hidden on mobile, shown on desktop */}
-        <div className="hidden lg:block">
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">
-              {t('home.trendingProducts') || 'Trending Products'}
-            </h3>
-            <div className="grid grid-cols-1 gap-4">
-              {fakeProducts.slice(2, 4).map((product) => (
-                <div>
-                     <img src="/images/slide1.jpg" className='w-32 h-32' alt="" />
-                     <p className='text-center'>{product.price} {config.currency_ar}</p>
-                  </div>
-              ))}
-            </div>
-          </div>
-        </div>
+       <Home_Featured_Products  />
       </div>
 
       {/* Mobile Products Grid - Shown below slideshow on mobile */}
