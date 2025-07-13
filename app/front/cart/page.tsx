@@ -23,7 +23,7 @@ function Cart() {
     clear
   } = useCart();
 
- 
+ console.log('Cart Items:', cartItems);
 
   const handleClearCart = () => {
     clear();

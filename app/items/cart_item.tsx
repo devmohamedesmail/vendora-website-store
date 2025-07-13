@@ -13,7 +13,7 @@ export default function Cart_Item({ item, removeItem, increaseItemQuantity, decr
                 <div className="font-semibold text-gray-800">{item.title}</div>
                 {item.vendor && (
                     <div className="text-sm text-gray-500 mt-1">
-                        {t('cart.soldBy')} {item.vendor.vendor_name}
+                        {t('cart.soldBy')} {item.vendor.store_name}
                     </div>
                 )}
                 <div className="flex items-center gap-2 mt-3">

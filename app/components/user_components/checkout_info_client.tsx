@@ -11,7 +11,9 @@ export default function Checkout_Info_Client({
     handleInputChange,
     payment,
     setPayment,
-    userAddress
+    userAddress,
+    selectedAddress,
+    setSelectedAddress
 }: any) {
     const { t } = useTranslation();
 
@@ -45,13 +47,13 @@ export default function Checkout_Info_Client({
                     <Custom_Input
                         label={t('checkout.fullName')}
                         icon={FiUser}
-                        name="fullName"
-                        value={formik.values.fullName}
-                        onChange={handleInputChange}
+                        name="name"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
                         placeholder={t('checkout.enterFullName')}
 
                     />
-                    <Custom_Input
+                    {/* <Custom_Input
                         label={t('checkout.email')}
                         icon={FiMail}
                         name="fullName"
@@ -59,26 +61,26 @@ export default function Checkout_Info_Client({
                         onChange={handleInputChange}
                         placeholder={t('checkout.enterEmail')}
 
-                    />
+                    /> */}
 
 
                     <Custom_Input
                         label={t('checkout.phone')}
                         icon={FiPhone}
-                        name="fullName"
+                        name="phone"
                         value={formik.values.phone}
-                        onChange={handleInputChange}
-                        placeholder={t('checkout.enterEmail')}
+                        onChange={formik.handleChange}
+                        placeholder={t('checkout.phone')}
 
                     />
 
                     <Custom_Input
-                        label={t('checkout.city')}
+                        label={t('checkout.address')}
                         icon={FiMapPin}
-                        name="fullName"
-                        value={formik.values.phone}
-                        onChange={handleInputChange}
-                        placeholder={t('checkout.enterEmail')}
+                        name="address"
+                        value={formik.values.address}
+                        onChange={formik.handleChange}
+                        placeholder={t('checkout.address')}
 
                     />
 
@@ -90,7 +92,7 @@ export default function Checkout_Info_Client({
                         <Custom_Textarea
                             name='notes'
                             value={formik.values.notes}
-                            onChange={handleInputChange}
+                            onChange={formik.handleChange}
                             placeholder={t('checkout.enterNotes', 'Any special instructions for your order')}
                             rows={3}
                         />
@@ -125,6 +127,7 @@ export default function Checkout_Info_Client({
                                         type="radio"
                                         name="selectedAddress"
                                         value={address.id}
+                                        onChange={() => setSelectedAddress(address)}
                                         className="mt-1 text-indigo-600 focus:ring-second focus:ring-2"
                                     />
                                     <div className="flex-1">

@@ -12,7 +12,8 @@ export default function Checkout_Summery_Order({
      removeItem ,
      totalPrice, 
      totalItems,
-     auth
+     auth,
+     formik
     }: any) {
     const { t , i18n} = useTranslation();
    
@@ -23,7 +24,7 @@ export default function Checkout_Summery_Order({
         <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 sticky top-8">
 
-{/* coupons input */}
+              {/* coupons input */}
              {auth ? (
                 <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
                     <h3 className="text-sm font-semibold text-gray-800 mb-3">
@@ -84,10 +85,14 @@ export default function Checkout_Summery_Order({
                                 <h3 className="font-semibold text-gray-900 text-sm truncate">
                                     {item.title}
                                 </h3>
+                               
                                 <p className="text-sm text-gray-500">
                                   
                                     {item.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}
                                 </p>
+                                 <h3 className=" text-second text-sm truncate">
+                                    {item.vendor?.store_name}
+                                </h3>
                                 <div className="flex items-center gap-2 mt-2">
                                     <button
                                         type="button"
@@ -160,9 +165,10 @@ export default function Checkout_Summery_Order({
                 {/* Place Order Button */}
                 <button
                     type="submit"
-                    className="w-full mt-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-lg"
+                    // onClick={() => formik.handleSubmit()}
+                    className="w-full mt-8 bg-gradient-to-r from-main to-main/70 hover:from-second hover:to-second/70 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-lg"
                 >
-                    {t('checkout.placeOrder', 'Place Order')}
+                    {t('checkout.placeOrder')}
                 </button>
 
                 {/* Security Notice */}

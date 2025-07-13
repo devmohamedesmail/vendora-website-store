@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any) {
     const { t } = useTranslation();
     const [addresses, setAddresses] = useState([]);
-   
     const {auth}:any=useContext(AuthContext)
 
 
@@ -35,7 +34,7 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                         address_line2: values.address_line2,
                         city: values.city,
                         type: values.type, 
-                        user_id: auth.user.id,
+                        user_id: auth?.id,
                         // isDefault: addresses.length === 0 // Make first address default
                     }
                 }, {
@@ -60,7 +59,7 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
    
     const fetchUserAddresses = async () => {
         try {
-              const response = await axios.get(`${config.url}/api/addresses?filters[user_id][$eq]=${auth.user.id}`,{
+              const response = await axios.get(`${config.url}/api/addresses?filters[user_id][$eq]=${auth?.id}`,{
                     headers:{
                         Authorization: `Bearer ${config.token}`,
                     }
@@ -109,7 +108,7 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
 
     useEffect(()=>{
         fetchUserAddresses();
-    },[])
+    },[auth])
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

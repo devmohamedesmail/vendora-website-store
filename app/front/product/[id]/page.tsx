@@ -8,6 +8,7 @@ import Product_Review from '../../../components/user_components/product_review'
 import { useTranslation } from 'react-i18next'
 import Product_Details from '../../../components/user_components/product_details'
 import Product_Gallery from '../../../components/user_components/product_gallery'
+import { toast } from 'react-toastify'
 
 function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
   const { t } = useTranslation()
@@ -25,10 +26,10 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
           Authorization: `Bearer ${config.token}`,
         }
       })
-      console.log(response.data.data[0])
       setProduct(response.data.data[0])
     } catch (error) {
-      console.log(error)
+      toast.error(t('common.errorFetchingProductDetails'));
+     
     }
   }
 

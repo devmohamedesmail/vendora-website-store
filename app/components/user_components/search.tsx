@@ -28,7 +28,7 @@ export default function Search() {
             
             // Extract words from category (if available)
             const categoryWords = product.category 
-                ? product.category.toLowerCase().split(/\s+/)
+                ? product.category.title.toLowerCase().split(/\s+/)
                 : [];
             
             // Extract words from tags (if available)

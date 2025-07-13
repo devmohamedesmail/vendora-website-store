@@ -73,7 +73,7 @@ export default function Checkout_Header() {
             </div>
             
             {/* Features Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                 <div className="bg-white rounded-xl shadow-md p-4 border border-gray-100 text-center">
                     <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <FiShield className="w-6 h-6 text-green-600" />
@@ -113,7 +113,7 @@ export default function Checkout_Header() {
                         {t('checkout.features.easyReturnsDesc', '30-day return policy')}
                     </p>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

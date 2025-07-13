@@ -3,6 +3,8 @@ import axios from "axios";
 
 import React, { createContext, useState, useEffect } from 'react';
 import { config } from "../config/api";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 
 const DataContext = createContext({
@@ -13,7 +15,7 @@ const DataProvider = ({ children }) => {
     
     const [categories, setCategories] = useState(null);
     const [products, setProducts] = useState(null);
-
+    const { t } = useTranslation();
 
     const fetch_categories = async () => {
         try {
@@ -24,7 +26,8 @@ const DataProvider = ({ children }) => {
             })
             setCategories(res.data.data)
         } catch (error) {
-            console.log("error fetch categories", error)
+            toast.error(t('common.errorFetchingCategories'));
+           
         }
     }
 
@@ -34,7 +37,7 @@ const DataProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `${config.url}/api/products?populate=*`,
-        `${config.url}/api/products?populate=images`,
+        `${config.url}/api/products?populate=*`,
         {
           headers: {
             Authorization: `Bearer ${config.token}`,
@@ -45,6 +48,7 @@ const DataProvider = ({ children }) => {
 
     } catch (error) {
       console.log("error fetching products data", error);
+      toast.error(t('common.errorFetchingProducts'));
     }
   };
 

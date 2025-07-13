@@ -8,78 +8,133 @@ import Checkout_Header from "../../components/user_components/checkout_header";
 import Checkout_Summery_Order from "../../components/user_components/checkout_summery_order";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { fetchUserAddress } from "../../ultilites/ultitites";
+
 import { AuthContext } from "../../context/auth_context";
 import axios from "axios";
 import { config } from "../../config/api";
+import { toast } from "react-toastify";
 
 function Checkout() {
-    const { t , i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { items, totalPrice, totalItems, updateItemQuantity, removeItem, increaseItemQuantity, decreaseItemQuantity } = useCart();
     const [payment, setPayment] = useState("cod");
-    const {auth}=useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const [userAddress, setUserAddress] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
 
 
 
-   
+
 
 
 
 
     const formik = useFormik({
         initialValues: {
-            fullName: '',
-            email: '',
-            phone: '',
-            city: '',
+            name: '',
             address: '',
-            notes: ''
+            phone: '',
+            notes: '',
+            payment_method: payment,
+            order: items
+
         },
 
         validationSchema: Yup.object({
-            fullName: Yup.string().required(t('checkout.required', 'Full name is required')),
-            email: Yup.string().email(t('checkout.invalidEmail', 'Invalid email address')).required(t('checkout.required', 'Email is required')),
-            phone: Yup.string().required(t('checkout.required', 'Phone number is required')),
-            city: Yup.string().required(t('checkout.required', 'City is required')),
-            address: Yup.string().required(t('checkout.required', 'Address is required')),
-            notes: Yup.string().optional()
+            // fullName: Yup.string().required(t('checkout.required', 'Full name is required')),
+            // email: Yup.string().email(t('checkout.invalidEmail', 'Invalid email address')).required(t('checkout.required', 'Email is required')),
+            // phone: Yup.string().required(t('checkout.required', 'Phone number is required')),
+            // city: Yup.string().required(t('checkout.required', 'City is required')),
+            // address: Yup.string().required(t('checkout.required', 'Address is required')),
+            // notes: Yup.string().optional()
         }),
 
-        onSubmit: (values) => {
-            console.log('Form submitted:', values);
+        onSubmit: async (values) => {
+            // console.log('Form submitted:', values);
+            const groupedByVendor = items.reduce((acc: any, item: any) => {
+                const vendorId = item.vendor.id;
+
+                if (!acc[vendorId]) {
+                    acc[vendorId] = [];
+                }
+
+                acc[vendorId].push(item);
+                return acc;
+            }, {});
+
+            try {
+               
+                const orderRequests = Object.entries(groupedByVendor).map(([vendorId, vendorItems]: [string, any[]]) => {
+                    return axios.post(`${config.url}/api/orders`, {
+                        data: {
+                            name: values.name,
+                            address: values.address,
+                            phone: values.phone,
+                            notes: values.notes,
+                            payment_method: values.payment_method,
+                            user_id: auth?.id || null,
+                            vendor_id: vendorId,
+                            full_address: {
+                                address_line1: selectedAddress?.address_line1 || '',
+                                address_line2: selectedAddress?.address_line2 || '',
+                                city: selectedAddress?.city || '',
+                                type: selectedAddress?.type || '',
+                            },
+                            order: vendorItems.map(item => ({
+                                product_id: item.id,
+                                quantity: item.quantity,
+                                price: item.price,
+                                sale: item.sale,
+                                image: item.images?.[0]?.url,
+                                title: item.title
+
+                            })),
+                        }
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${config.token}`,
+                        }
+                    });
+                });
+
+               toast.success(t('common.orderPlaced'));
+            } catch (error) {
+                toast.error(t('common.orderFailed'));
+                console.log('Error placing order:', error);
+            }
+
         },
 
     })
 
 
 
- const fetchAddress = async () => {
-    if (auth?.id) {
-      try {
-        const response = await axios.get(
-            `${config.url}/api/addresses?filters[user_id][$eq]=${auth?.id}`, 
-            {
-                headers: {
-                    Authorization: `Bearer ${config.token}`,
-                }
+    const fetchAddress = async () => {
+        if (auth?.id) {
+            try {
+                const response = await axios.get(
+                    `${config.url}/api/addresses?filters[user_id][$eq]=${auth?.id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${config.token}`,
+                        }
+                    }
+                );
+                const addressData = response.data.data;
+                console.log('Fetched address:', addressData);
+                setUserAddress(addressData);
+            } catch (error) {
+                console.error('Error fetching user address:', error);
             }
-        );
-        const addressData = response.data.data;
-        console.log('Fetched address:', addressData);
-        setUserAddress(addressData);
-      } catch (error) {
-        console.error('Error fetching user address:', error);
-      }
-    }
-  };
+        }
+    };
 
-useEffect(() => {
- 
+    useEffect(() => {
 
-  fetchAddress();
-}, [auth]);
+
+        fetchAddress();
+    }, [auth]);
 
 
 
@@ -116,19 +171,22 @@ useEffect(() => {
                                 payment={payment}
                                 userAddress={userAddress}
                                 setPayment={setPayment}
+                                setSelectedAddress={setSelectedAddress}
+                                selectedAddress={selectedAddress}
                             />
 
                             {/* Order Summary */}
 
                             <Checkout_Summery_Order
                                 items={items}
-                                // formatPrice={formatPrice}
+                                
                                 decreaseItemQuantity={decreaseItemQuantity}
                                 increaseItemQuantity={increaseItemQuantity}
                                 removeItem={removeItem}
                                 totalPrice={totalPrice}
                                 totalItems={totalItems}
                                 auth={auth}
+                                formik={formik}
 
                             />
                         </form>

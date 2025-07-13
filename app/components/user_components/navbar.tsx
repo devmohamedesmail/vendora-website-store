@@ -10,7 +10,7 @@ import { useWishlist } from "../../redux/hooks/useWishlist";
 import { useTranslation } from "react-i18next";
 import Toggle_Lng from "../common/toggle_lng";
 import User_Drawer from "./user_drawer";
-
+import { CiLogin } from "react-icons/ci";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { auth } = useContext(AuthContext);
@@ -45,7 +45,8 @@ export default function Navbar() {
           {/* Icons */}
           <div className="hidden  md:flex items-center space-x-4">
             <Link href={auth ? "/front/account" : "/auth/login"} className="p-2 rounded-full hover:bg-gray-100 transition">
-              <FiUser size={22} className="text-gray-600" />
+              
+              {auth ? (<FiUser size={22} className="text-gray-600" />):(<p className="flex items-center text-xs">{t('auth.login')}<CiLogin size={25} /></p>)}
             </Link>
 
             <Link href="/front/wishlist" className="relative p-2 rounded-full hover:bg-gray-100 transition">

@@ -648,7 +648,12 @@
 		"yes": "نعم",
 		"no": "لا",
 		"ok": "موافق",
-		"close": "إغلاق"
+		"close": "إغلاق",
+		"errorFetchingCategories": " خطأ في جلب التصنيفات",
+		"errorFetchingProducts": " خطأ في جلب المنتجات",
+		"errorFetchingProductDetails": " خطأ في جلب تفاصيل المنتج",
+		"orderPlaced": " تم تقديم الطلب بنجاح!",
+		"orderFailed": " فشل في تقديم الطلب. يرجى المحاولة مرة أخرى."
 	},
 	"introModal": {
 		"welcome": "أهلاً بك في فيندورا!",

@@ -650,7 +650,12 @@
 		"yes": "Yes",
 		"no": "No",
 		"ok": "OK",
-		"close": "Close"
+		"close": "Close",
+		"errorFetchingCategories": "Error fetching categories",
+		"errorFetchingProducts": "Error fetching products",
+		"errorFetchingProductDetails": "Error fetching product details",
+		"orderPlaced": "Order placed successfully!",
+		"orderFailed": "Failed to place order. Please try again."
 	},
 	"introModal": {
 		"welcome": "Welcome to Vendora!",
