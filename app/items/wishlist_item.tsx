@@ -4,9 +4,10 @@ import Link from 'next/link'
 import { useWishlist } from '../redux/hooks/useWishlist'
 import { useCart } from '../redux/hooks/useCart'
 import { useTranslation } from 'react-i18next'
+import { config } from '../config/api'
 
 export default function Wishlist_Item({ item }: { item: any }) {
-    const { t } = useTranslation();
+    const { t , i18n } = useTranslation();
     const { items: wishlistItems, totalItems, removeItem,
         clear,
         getTotalValue
@@ -98,11 +99,11 @@ export default function Wishlist_Item({ item }: { item: any }) {
 
                 <div className="flex items-center justify-center gap-2 mb-2">
                     <span className="text-indigo-700 font-extrabold text-lg">
-                        ${(item.sale || item.price).toFixed(2)}
+                   {i18n.language === "ar" ? config.currency_ar : config.currency_en}  {(item.sale || item.price).toFixed(2)}
                     </span>
                     {item.sale && (
                         <span className="text-sm text-gray-400 line-through">
-                            ${item.price.toFixed(2)}
+                            {i18n.language === "ar" ? config.currency_ar : config.currency_en}  {item.price.toFixed(2)}
                         </span>
                     )}
                 </div>

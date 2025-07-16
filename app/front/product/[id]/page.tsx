@@ -2,7 +2,7 @@
 import React, { useEffect, useState, use } from 'react'
 import axios from 'axios'
 import { config } from '../../../config/api'
-import Loader from '../../../components/Loader'
+import Loader from '../../../components/common/Loader'
 
 import Product_Review from '../../../components/user_components/product_review'
 import { useTranslation } from 'react-i18next'

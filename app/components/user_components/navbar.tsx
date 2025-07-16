@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
-import FloatBtn from "../FloatBtn";
 import { AuthContext } from "../../context/auth_context"
 import Search from "./search";
 import { useCart } from "../../redux/hooks/useCart";
