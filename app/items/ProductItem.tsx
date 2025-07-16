@@ -112,9 +112,9 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
             </h3>
           </Link>
 
-          {!isListView && (
+          {/* {!isListView && (
             <p className="text-gray-500 text-sm mb-3 line-clamp-2">{getLimitedWords(product.description, 5)}</p>
-          )}
+          )} */}
 
 
         </div>

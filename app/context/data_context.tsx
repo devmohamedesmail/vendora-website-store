@@ -12,7 +12,6 @@ const DataContext = createContext({
     products: null,
 });
 const DataProvider = ({ children }) => {
-    
     const [categories, setCategories] = useState(null);
     const [products, setProducts] = useState(null);
     const { t } = useTranslation();
@@ -27,37 +26,30 @@ const DataProvider = ({ children }) => {
             setCategories(res.data.data)
         } catch (error) {
             toast.error(t('common.errorFetchingCategories'));
-           
         }
-    }
+    };
 
-
-
-     const fetch_products_data = async () => {
-    try {
-      const response = await axios.get(
-        // `${config.url}/api/products?populate=*`,
-        `${config.url}/api/products?populate=*`,
-        {
-          headers: {
-            Authorization: `Bearer ${config.token}`,
-          },
+    const fetch_products_data = async () => {
+        try {
+            const response = await axios.get(
+                `${config.url}/api/products?populate=*`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${config.token}`,
+                    },
+                }
+            );
+            setProducts(response.data.data);
+        } catch (error) {
+            console.log("error fetching products data", error);
+            toast.error(t('common.errorFetchingProducts'));
         }
-      );
-      setProducts(response.data.data);
-
-    } catch (error) {
-      console.log("error fetching products data", error);
-      toast.error(t('common.errorFetchingProducts'));
-    }
-  };
-
+    };
 
     useEffect(() => {
-        
         fetch_categories();
-        fetch_products_data()
-    }, [])
+        fetch_products_data();
+    }, []);
 
 
     return (

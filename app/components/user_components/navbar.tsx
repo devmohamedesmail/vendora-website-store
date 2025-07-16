@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import Toggle_Lng from "../common/toggle_lng";
 import User_Drawer from "./user_drawer";
 import { CiLogin } from "react-icons/ci";
+import Logo from "../common/logo";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { auth } = useContext(AuthContext);
@@ -28,14 +29,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 flex items-center">
-            <img
-              className="h-10 w-auto"
-              src="/images/logo.png"
-              alt="Logo"
-            />
-            <span className="ml-2 font-bold text-xl text-indigo-700 tracking-tight">{t('common.siteName', 'VapeStore')}</span>
-          </Link>
+         
+          <Logo />
 
           {/* Desktop Search */}
           <div className="hidden md:flex flex-1 mx-8">

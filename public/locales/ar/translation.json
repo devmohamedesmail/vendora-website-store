@@ -665,7 +665,8 @@
 		"errorFetchingProducts": " خطأ في جلب المنتجات",
 		"errorFetchingProductDetails": " خطأ في جلب تفاصيل المنتج",
 		"orderPlaced": " تم تقديم الطلب بنجاح!",
-		"orderFailed": " فشل في تقديم الطلب. يرجى المحاولة مرة أخرى."
+		"orderFailed": " فشل في تقديم الطلب. يرجى المحاولة مرة أخرى.",
+		"siteName":" فيب تون"
 	},
 	"introModal": {
 		"welcome": "أهلاً بك في فيندورا!",
@@ -737,5 +738,20 @@
 		"support": "الدعم",
 		"terms": "الشروط",
 		"privacy": "سياسة الخصوصية"
+	},
+	"vendorDashboard": {
+		"welcomeBack": "أهلاً بك مرة أخرى",
+		"todayActivity": "إليك ما يحدث في متجرك اليوم.",
+		"totalRevenue": "إجمالي الإيرادات",
+		"productsSold": "المنتجات المباعة",
+		"activeProducts": "المنتجات النشطة",
+		"storeVisitors": "زوار المتجر",
+		"quickActions": "الإجراءات السريعة",
+		"addProduct": "إضافة منتج",
+		"createProductListing": "إنشاء قائمة منتج جديد",
+		"manageProducts": "إدارة المنتجات",
+		"editExistingProducts": "تعديل المنتجات الموجودة",
+		"storeSettings": "إعدادات المتجر",
+		"configureStore": "تكوين متجرك"
 	}
 }

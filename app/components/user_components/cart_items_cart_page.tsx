@@ -7,7 +7,7 @@ export default function Cart_Items_Cart_Page({ cartItems, handleClearCart, incre
         <div className="lg:col-span-8">
             <div className="bg-white rounded-2xl  overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-6">
+                <div className="bg-gradient-to-r from-sky-500 to-sky-600 px-6 py-6">
                     <div className="flex justify-between items-center">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-bold text-white">{t('cart.yourCart')}</h1>

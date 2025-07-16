@@ -667,7 +667,8 @@
 		"errorFetchingProducts": "Error fetching products",
 		"errorFetchingProductDetails": "Error fetching product details",
 		"orderPlaced": "Order placed successfully!",
-		"orderFailed": "Failed to place order. Please try again."
+		"orderFailed": "Failed to place order. Please try again.",
+		"siteName":"VapeToon"
 	},
 	"introModal": {
 		"welcome": "Welcome to Vendora!",
@@ -739,5 +740,20 @@
 		"support": "Support",
 		"terms": "Terms",
 		"privacy": "Privacy Policy"
+	},
+	"vendorDashboard": {
+		"welcomeBack": "Welcome back",
+		"todayActivity": "Here's what's happening with your store today.",
+		"totalRevenue": "Total Revenue",
+		"productsSold": "Products Sold",
+		"activeProducts": "Active Products",
+		"storeVisitors": "Store Visitors",
+		"quickActions": "Quick Actions",
+		"addProduct": "Add Product",
+		"createProductListing": "Create a new product listing",
+		"manageProducts": "Manage Products",
+		"editExistingProducts": "Edit existing products",
+		"storeSettings": "Store Settings",
+		"configureStore": "Configure your store"
 	}
 }
