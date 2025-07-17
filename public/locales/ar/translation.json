@@ -279,7 +279,10 @@
 			"subtitle": "إنشاء قائمة منتجات جديدة لمتجرك",
 			"sections": {
 				"productImages": "صور المنتج",
-				"productDetails": "تفاصيل المنتج"
+				"productDetails": "تفاصيل المنتج",
+				"productType": "نوع المنتج",
+				"attributes": "خصائص المنتج",
+				"variations": "تنويعات المنتج"
 			},
 			"fields": {
 				"category": "الفئة",
@@ -288,18 +291,38 @@
 				"stockQuantity": "كمية المخزون",
 				"salePrice": "سعر التخفيض",
 				"productDescription": "وصف المنتج",
-				"address": " عنوان المتجر "
+				"address": " عنوان المتجر ",
+				"stock": "المخزون"
 			},
 			"placeholders": {
 				"selectCategory": "اختر الفئة",
 				"productTitle": "أدخل عنوان المنتج",
 				"description": "اوصف منتجك بالتفصيل...",
-				"address": "  أدخل عنوان متجرك الكامل "
+				"address": "  أدخل عنوان متجرك الكامل ",
+				"price": "0.00",
+				"stock": "0",
+				"salePrice": "0.00"
 			},
 			"imageAlt": "المنتج",
 			"addImage": "إضافة صورة",
 			"imageInstructions": "ارفع حتى 10 صور. الصورة الأولى ستكون الصورة الرئيسية للمنتج.",
 			"optional": "اختياري",
+			"simpleProduct": "منتج بسيط",
+			"variableProduct": "منتج متغير",
+			"simpleDescription": "هذا منتج بسيط بدون تنويعات",
+			"variableDescription": "هذا المنتج له تنويعات متعددة (مثل الحجم، اللون، إلخ)",
+			"attributeName": "اسم الخاصية (مثل: الحجم، اللون)",
+			"attributeValues": "قيم الخاصية",
+			"valuePlaceholder": "القيمة (مثل: كبير، أحمر)",
+			"addAttribute": "إضافة خاصية",
+			"addValue": "إضافة قيمة",
+			"noAttributes": "لم يتم إضافة أي خصائص بعد. انقر على \"إضافة خاصية\" للبدء.",
+			"variation": "التنويع",
+			"variationsCount": "تنويعات",
+			"hints": {
+				"setPriceInVariations": "حدد السعر في التنويعات",
+				"setStockInVariations": "حدد المخزون في التنويعات"
+			},
 			"buttons": {
 				"cancel": "إلغاء",
 				"addProduct": "إضافة منتج",
@@ -317,7 +340,11 @@
 			},
 			"errors": {
 				"noImages": "يرجى إضافة صورة واحدة على الأقل للمنتج",
-				"generalError": "فشل في إضافة المنتج. يرجى المحاولة مرة أخرى."
+				"generalError": "فشل في إضافة المنتج. يرجى المحاولة مرة أخرى.",
+				"noAttributes": "يرجى إضافة خاصية واحدة على الأقل للمنتج المتغير",
+				"invalidAttributes": "يرجى إضافة أسماء وقيم خصائص صالحة",
+				"noVariations": "لم يتم إنشاء تنويعات. يرجى التحقق من الخصائص",
+				"invalidVariations": "يرجى ملء جميع أسعار وكميات المخزون للتنويعات"
 			},
 			"success": "تم إضافة المنتج بنجاح!"
 		},

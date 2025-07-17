@@ -281,7 +281,10 @@
 			"subtitle": "Create a new product listing for your store",
 			"sections": {
 				"productImages": "Product Images",
-				"productDetails": "Product Details"
+				"productDetails": "Product Details",
+				"productType": "Product Type",
+				"attributes": "Product Attributes",
+				"variations": "Product Variations"
 			},
 			"fields": {
 				"category": "Category",
@@ -290,18 +293,38 @@
 				"stockQuantity": "Stock Quantity",
 				"salePrice": "Sale Price",
 				"productDescription": "Product Description",
-				"address": "Address"
+				"address": "Address",
+				"stock": "Stock"
 			},
 			"placeholders": {
 				"selectCategory": "Select Category",
 				"productTitle": "Enter product title",
 				"description": "Describe your product in detail...",
-				"address": "Enter your store address"
+				"address": "Enter your store address",
+				"price": "0.00",
+				"stock": "0",
+				"salePrice": "0.00"
 			},
 			"imageAlt": "Product",
 			"addImage": "Add Image",
 			"imageInstructions": "Upload up to 10 images. First image will be the main product image.",
 			"optional": "Optional",
+			"simpleProduct": "Simple Product",
+			"variableProduct": "Variable Product",
+			"simpleDescription": "This is a simple product with no variations",
+			"variableDescription": "This product has multiple variations (like size, color, etc.)",
+			"attributeName": "Attribute name (e.g., Size, Color)",
+			"attributeValues": "Attribute Values",
+			"valuePlaceholder": "Value (e.g., Large, Red)",
+			"addAttribute": "Add Attribute",
+			"addValue": "Add Value",
+			"noAttributes": "No attributes added yet. Click \"Add Attribute\" to get started.",
+			"variation": "Variation",
+			"variationsCount": "variations",
+			"hints": {
+				"setPriceInVariations": "Set price in variations",
+				"setStockInVariations": "Set stock in variations"
+			},
 			"buttons": {
 				"cancel": "Cancel",
 				"addProduct": "Add Product",
@@ -319,7 +342,11 @@
 			},
 			"errors": {
 				"noImages": "Please add at least one product image",
-				"generalError": "Failed to add product. Please try again."
+				"generalError": "Failed to add product. Please try again.",
+				"noAttributes": "Please add at least one attribute for variable product",
+				"invalidAttributes": "Please add valid attribute names and values",
+				"noVariations": "No variations generated. Please check your attributes",
+				"invalidVariations": "Please fill in all variation prices and stock quantities"
 			},
 			"success": "Product added successfully!"
 		},

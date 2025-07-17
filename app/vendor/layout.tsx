@@ -138,7 +138,10 @@ useEffect(() => {
             <div className="flex-1 flex flex-col md:ml-72">
                 {/* Navbar - Fixed at top */}
               
-                <Vendor_Header setSidebarOpen={setSidebarOpen} language={language} setLanguage={setLanguage} />
+                <Vendor_Header 
+                   setSidebarOpen={setSidebarOpen} 
+                   language={language} 
+                   setLanguage={setLanguage} />
                 {/* Main Content - Scrollable */}
                 <main className="flex-1 overflow-y-auto bg-transparent p-6 md:p-8">
                     {children}

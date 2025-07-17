@@ -4,14 +4,12 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FiUpload, FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiFileText, FiSettings, FiPlus, FiTrash2 } from 'react-icons/fi'
 import { DataContext } from '../../context/data_context';
-import { AuthContext } from '../../context/auth_context';
 import axios from 'axios';
 import { uploadImagesToStrapi } from '../../ultilites/uploadImagesToStrapi.js'
 import { config } from '../../config/api';
 import { useTranslation } from 'react-i18next';
 import CustomInput from '../../custom/custom_input';
 import Custom_Textarea from '../../custom/custom_textarea';
-import Product_Attributes from '../../components/vendor_components/product_attributes';
 function AddProduct() {
   const { t } = useTranslation();
   const [images, setImages] = useState([]);
@@ -23,7 +21,6 @@ function AddProduct() {
   const [variations, setVariations] = useState([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { categories } = useContext(DataContext);
-  const { auth } = useContext(AuthContext);
 
 
   const showNotification = (type: 'success' | 'error', message: string) => {
@@ -34,108 +31,10 @@ function AddProduct() {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(t('vendor.addProduct.validation.titleRequired', 'Product title is required')),
     description: Yup.string().required(t('vendor.addProduct.validation.descriptionRequired', 'Description is required')),
-    price: Yup.number().when('hasVariations', {
-      is: false,
-      then: () => Yup.number().required(t('vendor.addProduct.validation.priceRequired', 'Price is required')).positive(t('vendor.addProduct.validation.pricePositive', 'Price must be positive')),
-      otherwise: () => Yup.number().nullable()
-    }),
-    stock: Yup.number().when('hasVariations', {
-      is: false,
-      then: () => Yup.number().required(t('vendor.addProduct.validation.stockRequired', 'Stock is required')).integer(t('vendor.addProduct.validation.stockInteger', 'Stock must be an integer')).min(0, t('vendor.addProduct.validation.stockMin', 'Stock cannot be negative')),
-      otherwise: () => Yup.number().nullable()
-    }),
+    price: Yup.number().required(t('vendor.addProduct.validation.priceRequired', 'Price is required')).positive(t('vendor.addProduct.validation.pricePositive', 'Price must be positive')),
+    stock: Yup.number().required(t('vendor.addProduct.validation.stockRequired', 'Stock is required')).integer(t('vendor.addProduct.validation.stockInteger', 'Stock must be an integer')).min(0, t('vendor.addProduct.validation.stockMin', 'Stock cannot be negative')),
     category: Yup.string().required(t('vendor.addProduct.validation.categoryRequired', 'Category is required')),
   });
-
-  // Validate variations
-  const validateVariations = () => {
-    if (!hasVariations) return true;
-
-    if (attributes.length === 0) {
-      showNotification('error', t('vendor.addProduct.errors.noAttributes', 'Please add at least one attribute for variable product'));
-      return false;
-    }
-
-    const hasValidAttributes = attributes.some(attr =>
-      attr.name.trim() && attr.values.some(val => val.trim())
-    );
-
-    if (!hasValidAttributes) {
-      showNotification('error', t('vendor.addProduct.errors.invalidAttributes', 'Please add valid attribute names and values'));
-      return false;
-    }
-
-    if (variations.length === 0) {
-      showNotification('error', t('vendor.addProduct.errors.noVariations', 'No variations generated. Please check your attributes'));
-      return false;
-    }
-
-    const hasValidVariations = variations.every(variation =>
-      variation.price && variation.stock && Number(variation.price) > 0 && Number(variation.stock) >= 0
-    );
-
-    if (!hasValidVariations) {
-      showNotification('error', t('vendor.addProduct.errors.invalidVariations', 'Please fill in all variation prices and stock quantities'));
-      return false;
-    }
-
-    return true;
-  };
-
-  // API functions for attributes, values and variants
-  const createAttribute = async (name: string) => {
-    try {
-      const response = await axios.post(`${config.url}/api/attributes`, {
-        data: { name }
-      }, {
-        headers: {
-          Authorization: `Bearer ${config.token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      return response.data.data;
-    } catch (error) {
-      console.error('Error creating attribute:', error);
-      throw error;
-    }
-  };
-
-  const createAttributeValue = async (value: string, attributeId: number) => {
-    try {
-      const response = await axios.post(`${config.url}/api/values`, {
-        data: {
-          value: value,
-          attribute: attributeId
-        }
-      }, {
-        headers: {
-          Authorization: `Bearer ${config.token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      return response.data.data;
-    } catch (error) {
-      console.error('Error creating attribute value:', error);
-      throw error;
-    }
-  };
-
-  const createProductVariant = async (variantData: any) => {
-    try {
-      const response = await axios.post(`${config.url}/api/product-variants`, {
-        data: variantData
-      }, {
-        headers: {
-          Authorization: `Bearer ${config.token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      return response.data.data;
-    } catch (error) {
-      console.error('Error creating product variant:', error);
-      throw error;
-    }
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -156,125 +55,32 @@ function AddProduct() {
           return;
         }
 
-        // Validate variations if product has variations
-        if (!validateVariations()) {
-          return;
-        }
+        const imageIds = await uploadImagesToStrapi(images)
 
-        const imageIds = await uploadImagesToStrapi(images);
-        const createdAttributeIds = [];
-
-        // Step 1: Create attributes and values if product has variations
-        if (hasVariations && attributes.length > 0) {
-          console.log('Creating attributes:', attributes);
-
-          for (const attribute of attributes) {
-            if (attribute.name.trim()) {
-              try {
-                // Create attribute
-                const createdAttribute = await createAttribute(attribute.name.trim());
-                createdAttributeIds.push(createdAttribute.id);
-                console.log('Created attribute:', createdAttribute);
-
-                // Create attribute values
-                const validValues = attribute.values.filter(val => val.trim());
-                for (const value of validValues) {
-                  const createdValue = await createAttributeValue(value.trim(), createdAttribute.id);
-                  console.log('Created value:', createdValue);
-                }
-              } catch (error) {
-                console.error('Error creating attribute/values:', error);
-                showNotification('error', `Failed to create attribute "${attribute.name}": ${error.message}`);
-              }
-            }
-          }
-        }
-
-        // Step 2: Create the main product
-        const productPayload = {
+        const payload = {
           data: {
-            title: values.title,
-            description: values.description,
-            price: hasVariations ? 0 : Number(values.price),
-            stock: hasVariations ? 0 : Number(values.stock),
-            sale: values.sale && !hasVariations ? Number(values.sale) : null,
-            vendor_id: auth?.id || "3", // Use auth context or fallback
+            ...values,
             category: Number(values.category),
+            price: Number(values.price),
+            stock: Number(values.stock),
+            sale: values.sale ? Number(values.sale) : null,
             images: imageIds,
-            attributes: createdAttributeIds
           },
         };
 
-        console.log('Creating product with payload:', productPayload);
+        
 
-        const productResponse = await axios.post(`${config.url}/api/products`, productPayload, {
+        const response = await axios.post(`${config.url}/api/products`, payload, {
           headers: {
             Authorization: `Bearer ${config.token}`,
             'Content-Type': 'application/json',
           },
         });
 
-        const createdProduct = productResponse.data.data;
-        console.log('Created product:', createdProduct);
-
-        // Step 3: Create product variants if variations exist
-        if (hasVariations && variations.length > 0) {
-          console.log('Creating variants for product:', createdProduct.id);
-
-          for (const variation of variations) {
-            if (variation.price && variation.stock) {
-              try {
-                // Get attribute value IDs for this variation
-                const attributeValueIds = [];
-
-                for (const attr of variation.attributes) {
-                  // You would need to fetch the created attribute value IDs
-                  // This is a simplified approach - in production you'd want to store the IDs when creating values
-                  try {
-                    const valuesResponse = await axios.get(`${config.url}/api/values?filters[value][$eq]=${attr.value}&populate=attribute`, {
-                      headers: {
-                        Authorization: `Bearer ${config.token}`,
-                      },
-                    });
-
-                    if (valuesResponse.data.data.length > 0) {
-                      const matchingValue = valuesResponse.data.data.find(val =>
-                        val.attribute?.name === attr.attributeName
-                      );
-                      if (matchingValue) {
-                        attributeValueIds.push(matchingValue.id);
-                      }
-                    }
-                  } catch (error) {
-                    console.error('Error fetching attribute value ID:', error);
-                  }
-                }
-
-                const variantData = {
-                  price: Number(variation.price),
-                  stock: Number(variation.stock),
-                  product: createdProduct.id,
-                  attribute_values: attributeValueIds
-                };
-
-                console.log('Creating variant with data:', variantData);
-                await createProductVariant(variantData);
-              } catch (error) {
-                console.error('Error creating variant:', error);
-                // Don't fail the entire process if one variant fails
-                showNotification('error', `Failed to create variation: ${error.message}`);
-              }
-            }
-          }
-        }
-
         showNotification('success', t('vendor.addProduct.success', 'Product added successfully!'));
         formik.resetForm();
         setImages([]);
         setSelectedCategory('');
-        setAttributes([]);
-        setVariations([]);
-        setHasVariations(false);
       } catch (error) {
         let errorMessage = t('vendor.addProduct.errors.generalError', 'Failed to add product. Please try again.');
 
@@ -324,24 +130,21 @@ function AddProduct() {
 
   const removeAttribute = (attributeId: number) => {
     setAttributes(prev => prev.filter(attr => attr.id !== attributeId));
-    // Regenerate variations after removing attribute
-    setTimeout(() => generateVariations(), 100);
+    generateVariations();
   };
 
   const updateAttributeName = (attributeId: number, name: string) => {
-    setAttributes(prev =>
-      prev.map(attr =>
+    setAttributes(prev => 
+      prev.map(attr => 
         attr.id === attributeId ? { ...attr, name } : attr
       )
     );
-    // Regenerate variations when attribute name changes
-    setTimeout(() => generateVariations(), 100);
   };
 
   const addAttributeValue = (attributeId: number) => {
-    setAttributes(prev =>
-      prev.map(attr =>
-        attr.id === attributeId
+    setAttributes(prev => 
+      prev.map(attr => 
+        attr.id === attributeId 
           ? { ...attr, values: [...attr.values, ''] }
           : attr
       )
@@ -349,30 +152,28 @@ function AddProduct() {
   };
 
   const updateAttributeValue = (attributeId: number, valueIndex: number, value: string) => {
-    setAttributes(prev =>
-      prev.map(attr =>
-        attr.id === attributeId
-          ? {
-            ...attr,
-            values: attr.values.map((v, i) => i === valueIndex ? value : v)
-          }
+    setAttributes(prev => 
+      prev.map(attr => 
+        attr.id === attributeId 
+          ? { 
+              ...attr, 
+              values: attr.values.map((v, i) => i === valueIndex ? value : v)
+            }
           : attr
       )
     );
-    // Regenerate variations when attribute values change
-    setTimeout(() => generateVariations(), 100);
+    generateVariations();
   };
 
   const removeAttributeValue = (attributeId: number, valueIndex: number) => {
-    setAttributes(prev =>
-      prev.map(attr =>
-        attr.id === attributeId
+    setAttributes(prev => 
+      prev.map(attr => 
+        attr.id === attributeId 
           ? { ...attr, values: attr.values.filter((_, i) => i !== valueIndex) }
           : attr
       )
     );
-    // Regenerate variations when attribute values are removed
-    setTimeout(() => generateVariations(), 100);
+    generateVariations();
   };
 
   // Generate all possible variations
@@ -382,7 +183,7 @@ function AddProduct() {
       return;
     }
 
-    const validAttributes = attributes.filter(attr =>
+    const validAttributes = attributes.filter(attr => 
       attr.name.trim() && attr.values.some(val => val.trim())
     );
 
@@ -403,16 +204,15 @@ function AddProduct() {
       }, [[]]);
     };
 
-    const attributeValues = validAttributes.map(attr =>
-      attr.values.filter(val => val.trim()).map(val => ({
-        attributeName: attr.name,
-        value: val.trim(),
-        attributeId: attr.id // Store attribute ID for API calls
+    const attributeValues = validAttributes.map(attr => 
+      attr.values.filter(val => val.trim()).map(val => ({ 
+        attributeName: attr.name, 
+        value: val.trim() 
       }))
     );
 
     const combinations = cartesianProduct(attributeValues);
-
+    
     const newVariations = combinations.map((combination, index) => ({
       id: Date.now() + index,
       attributes: combination,
@@ -426,9 +226,9 @@ function AddProduct() {
   };
 
   const updateVariation = (variationId: number, field: string, value: string) => {
-    setVariations(prev =>
-      prev.map(variation =>
-        variation.id === variationId
+    setVariations(prev => 
+      prev.map(variation => 
+        variation.id === variationId 
           ? { ...variation, [field]: value }
           : variation
       )
@@ -437,8 +237,8 @@ function AddProduct() {
 
 
 
-  console.log("Variations:", variations);
-  console.log("Attributes:", attributes);
+console.log("Variations:", variations);
+console.log("Attributes:", attributes);
 
 
   return (
@@ -551,7 +351,7 @@ function AddProduct() {
             </div>
 
             {/* Product Title */}
-
+           
             <CustomInput icon={FiTag}
               label={t('vendor.addProduct.fields.productTitle')}
               name="title"
@@ -562,51 +362,33 @@ function AddProduct() {
             />
 
             {/* Price */}
-            <div className="relative">
-              <CustomInput
-                icon={FiDollarSign}
-                label={t('vendor.addProduct.fields.price')}
-                name="price"
-                onChange={formik.handleChange}
-                value={formik.values.price}
-                placeholder={t('vendor.addProduct.fields.price')}
-                error={formik.errors.price}
-                disabled={hasVariations}
-              />
-              {hasVariations && (
-                <div className="absolute inset-0 bg-gray-100 bg-opacity-50 rounded-xl flex items-center justify-center">
-                  <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded">
-                    {t('vendor.addProduct.hints.setPriceInVariations', 'Set price in variations')}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Stock */}
-            <div className="relative">
-              <CustomInput
-                icon={FiPackage}
-                label={t('vendor.addProduct.fields.stockQuantity')}
-                name="stock"
-                onChange={formik.handleChange}
-                value={formik.values.stock}
-                placeholder={t('vendor.addProduct.fields.stockQuantity')}
-                error={formik.errors.stock}
-                disabled={hasVariations}
-              />
-              {hasVariations && (
-                <div className="absolute inset-0 bg-gray-100 bg-opacity-50 rounded-xl flex items-center justify-center">
-                  <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded">
-                    {t('vendor.addProduct.hints.setStockInVariations', 'Set stock in variations')}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Sale Price */}
-
+            
 
             <CustomInput
+              icon={FiDollarSign}
+              label={t('vendor.addProduct.fields.price')}
+              name="price"
+              onChange={formik.handleChange}
+              value={formik.values.price}
+              placeholder={t('vendor.addProduct.fields.price')}
+              error={formik.errors.price}
+            />
+
+            {/* Stock */}
+            <CustomInput
+              icon={FiPackage}
+              label={t('vendor.addProduct.fields.stockQuantity')}
+              name="stock"
+              onChange={formik.handleChange}
+              value={formik.values.stock}
+              placeholder={t('vendor.addProduct.fields.stockQuantity')}
+              error={formik.errors.stock}
+            />
+
+            {/* Sale Price */}
+           
+
+             <CustomInput
               icon={FiPercent}
               label={t('vendor.addProduct.fields.salePrice')}
               name="sale"
@@ -618,22 +400,22 @@ function AddProduct() {
           </div>
 
           {/* Description */}
-
+         
           <Custom_Textarea
-            label={t('vendor.addProduct.fields.productDescription', 'Product Description')}
-            name="description"
-            rows={5}
-            placeholder={t('vendor.addProduct.placeholders.description', 'Describe your product in detail...')}
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            error={formik.errors.description}
+          label={t('vendor.addProduct.fields.productDescription', 'Product Description')} 
+          name="description"
+          rows={5}
+          placeholder={t('vendor.addProduct.placeholders.description', 'Describe your product in detail...')}
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          error={formik.errors.description}
           />
         </div>
 
 
 
 
-        {/* attribute and values and variant section */}
+         {/* attribute and values and variant section */}
         {/* Product Type Toggle */}
         <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
           <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
@@ -650,19 +432,18 @@ function AddProduct() {
               onClick={() => {
                 setHasVariations(!hasVariations);
                 if (!hasVariations) {
-                  // Switching to variable product - keep existing data
-                } else {
-                  // Switching to simple product - clear variations and attributes
                   setAttributes([]);
                   setVariations([]);
                 }
               }}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${hasVariations ? 'bg-indigo-600' : 'bg-gray-300'
-                }`}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${
+                hasVariations ? 'bg-indigo-600' : 'bg-gray-300'
+              }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${hasVariations ? 'translate-x-6' : 'translate-x-1'
-                  }`}
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                  hasVariations ? 'translate-x-6' : 'translate-x-1'
+                }`}
               />
             </button>
             <span className="text-sm font-medium text-gray-700">
@@ -671,7 +452,7 @@ function AddProduct() {
           </div>
 
           <p className="text-sm text-gray-500 mt-2">
-            {hasVariations
+            {hasVariations 
               ? t('vendor.addProduct.variableDescription', 'This product has multiple variations (like size, color, etc.)')
               : t('vendor.addProduct.simpleDescription', 'This is a simple product with no variations')
             }
@@ -680,17 +461,171 @@ function AddProduct() {
 
         {/* Attributes and Variations Section */}
         {hasVariations && (
-          <Product_Attributes
-            t={t}
-            attributes={attributes}
-            addAttribute={addAttribute}
-            variations={variations}
-            updateAttributeName={updateAttributeName}
-            removeAttribute={removeAttribute}
-            updateAttributeValue={updateAttributeValue}
-            removeAttributeValue={removeAttributeValue}
-            addAttributeValue={addAttributeValue}
-            updateVariation={updateVariation} />
+          <>
+            {/* Attributes Section */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                  <FiTag className="text-indigo-600" />
+                  {t('vendor.addProduct.sections.attributes', 'Product Attributes')}
+                </h2>
+                <button
+                  type="button"
+                  onClick={addAttribute}
+                  className="flex items-center gap-2 px-4 py-2 bg-main text-xs text-white rounded-lg hover:bg-second transition-colors duration-200"
+                >
+                  <FiPlus className="w-4 h-4" />
+                  {t('vendor.addProduct.addAttribute', 'Add Attribute')}
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {attributes.map((attribute) => (
+                  <div key={attribute.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder={t('vendor.addProduct.attributeName')}
+                          value={attribute.name}
+                          onChange={(e) => updateAttributeName(attribute.id, e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeAttribute(attribute.id)}
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                      >
+                        <FiTrash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">
+                        {t('vendor.addProduct.attributeValues')}
+                      </label>
+                      
+                      {attribute.values.map((value, valueIndex) => (
+                        <div key={valueIndex} className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            placeholder={t('vendor.addProduct.valuePlaceholder')}
+                            value={value}
+                            onChange={(e) => updateAttributeValue(attribute.id, valueIndex, e.target.value)}
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          />
+                          {attribute.values.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => removeAttributeValue(attribute.id, valueIndex)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                            >
+                              <FiX className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      
+                      <button
+                        type="button"
+                        onClick={() => addAttributeValue(attribute.id)}
+                        className="flex items-center gap-2 px-3 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-200"
+                      >
+                        <FiPlus className="w-4 h-4" />
+                        {t('vendor.addProduct.addValue', 'Add Value')}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
+                {attributes.length === 0 && (
+                  <div className="text-center py-8 text-gray-500">
+                    {t('vendor.addProduct.noAttributes', 'No attributes added yet. Click "Add Attribute" to get started.')}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Variations Section */}
+            {variations.length > 0 && (
+              <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                  <FiPackage className="text-indigo-600" />
+                  {t('vendor.addProduct.sections.variations', 'Product Variations')}
+                  <span className="text-sm font-normal text-gray-500">
+                    ({variations.length} {t('vendor.addProduct.variationsCount', 'variations')})
+                  </span>
+                </h2>
+
+                <div className="space-y-4">
+                  {variations.map((variation) => (
+                    <div key={variation.id} className="border border-gray-200 rounded-lg p-4">
+                      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                        {/* Variation Name */}
+                        <div className="lg:col-span-2">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            {t('vendor.addProduct.variation', 'Variation')}
+                          </label>
+                          <div className="flex flex-wrap gap-1">
+                            {variation.attributes.map((attr, index) => (
+                              <span key={index} className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-xs">
+                                {attr.attributeName}: {attr.value}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Price */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            {t('vendor.addProduct.fields.price', 'Price')} *
+                          </label>
+                          <input
+                            type="number"
+                            step="0.01"
+                            placeholder="0.00"
+                            value={variation.price}
+                            onChange={(e) => updateVariation(variation.id, 'price', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          />
+                        </div>
+
+                        {/* Stock */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            {t('vendor.addProduct.fields.stock', 'Stock')} *
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="0"
+                            value={variation.stock}
+                            onChange={(e) => updateVariation(variation.id, 'stock', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          />
+                        </div>
+
+                        {/* Sale Price */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            {t('vendor.addProduct.fields.salePrice', 'Sale Price')}
+                          </label>
+                          <input
+                            type="number"
+                            step="0.01"
+                            placeholder="0.00"
+                            value={variation.sale}
+                            onChange={(e) => updateVariation(variation.id, 'sale', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
 
 
@@ -725,9 +660,6 @@ function AddProduct() {
               formik.resetForm();
               setImages([]);
               setSelectedCategory('');
-              setAttributes([]);
-              setVariations([]);
-              setHasVariations(false);
             }}
             className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200"
           >
