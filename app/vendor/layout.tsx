@@ -49,10 +49,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
      console.log("store details", store);
 
   const fetchStoreSettings = async () => {
+        // Check if auth is available and has an id
+        if (!auth?.id) {
+            console.log('Auth not available or no user ID');
+            setLoading(false);
+            return;
+        }
+
         try {
             setLoading(true);
             const response = await axios.get(
-                `${config.url}/api/vendors?filters[user_id][$eq]=${auth?.id}&populate[logo]=true&populate[banner]=true`,
+                `${config.url}/api/vendors?filters[user_id][$eq]=${auth.id}&populate[logo]=true&populate[banner]=true`,
                 {
                     headers: {
                         Authorization: `Bearer ${config.token}`,
@@ -79,6 +86,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             // }
         } catch (error) {
             console.error('Error fetching store settings:', error);
+            if (axios.isAxiosError(error)) {
+                console.error('Store settings API error status:', error.response?.status);
+                console.error('Store settings API error data:', error.response?.data);
+                console.error('Store settings API error message:', error.message);
+            }
+            // Don't throw the error, just log it and continue
+            setStore(null);
         } finally {
             setLoading(false);
         }
@@ -90,9 +104,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
 
-useEffect(()=> {
-    fetchStoreSettings();
-},[auth])
+useEffect(() => {
+    // Only fetch store settings when auth is loaded and has an id, and we haven't already loaded the store
+    if (auth?.id && !store && !loading) {
+        fetchStoreSettings();
+    } else if (!auth?.id) {
+        setLoading(false);
+    }
+}, [auth?.id, store])  // Include store in dependencies to prevent unnecessary calls
 
 
 

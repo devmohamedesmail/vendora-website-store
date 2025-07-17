@@ -18,10 +18,10 @@ export default function Toggle_Lng() {
  
         <button
             onClick={handleLanguageChange}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-gray-700 font-medium border border-gray-200 hover:bg-gray-50 transition-all duration-200 shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-gray-700 font-medium border border-gray-200 hover:bg-gray-50 transition-all duration-200 shadow-none"
         >
             <FiGlobe className="w-4 h-4" />
-            <span className="hidden sm:inline">{i18n.language === 'en' ? 'العربية' : 'English'}</span>
+            <span className="hidden text-xs sm:inline">{i18n.language === 'en' ? 'العربية' : 'English'}</span>
         </button>
     );
 }
