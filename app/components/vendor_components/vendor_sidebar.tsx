@@ -6,57 +6,109 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 function Vendor_Sidebar(
-    {setSidebarOpen,
-     sidebarOpen,
-     store,
-     auth
-    }: {setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean , store: any , auth: any}) {
+    { setSidebarOpen,
+        sidebarOpen,
+        store,
+        auth
+    }: { setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean, store: any, auth: any }) {
     const { t } = useTranslation();
     const pathname = usePathname();
-    
+
     const navItems = [
-        {
-            key: 'dashboard',
-            label: t('vendor.sidebar.dashboard', 'Dashboard'),
-            link: '/vendor',
-            icon: <FiHome className="w-5 h-5" />,
-            badge: null
-        },
-        {
-            key: 'products',
-            label: t('vendor.sidebar.products', 'Products'),
-            link: '/vendor/products/show',
-            icon: <FiBox className="w-5 h-5" />,
-            badge: '24'
-        },
-        {
-            key: 'orders',
-            label: t('vendor.sidebar.orders', 'Orders'),
-            link: '/vendor/orders',
-            icon: <FiClipboard className="w-5 h-5" />,
-            badge: '12'
-        },
-        {
-            key: 'add-product',
-            label: t('vendor.sidebar.addProduct', 'Add Product'),
-            link: '/vendor/products',
-            icon: <FiPlus className="w-5 h-5" />,
-            badge: null
-        },
-        {
-            key: 'analytics',
-            label: t('vendor.sidebar.analytics', 'Analytics'),
-            link: '/vendor/analytics',
-            icon: <FiBarChart className="w-5 h-5" />,
-            badge: null
-        },
+        // Settings is always available
         {
             key: 'settings',
             label: t('vendor.sidebar.storeSettings', 'Store Settings'),
             link: '/vendor/settings',
             icon: <FiSettings className="w-5 h-5" />,
-            badge: null
-        }
+            badge: null,
+            disabled: false
+        },
+        // Conditional items based on store verification and active status
+        ...(store?.isVarified && store?.isActive ? [
+            {
+                key: 'dashboard',
+                label: t('vendor.sidebar.dashboard', 'Dashboard'),
+                link: '/vendor',
+                icon: <FiHome className="w-5 h-5" />,
+                badge: null,
+                disabled: false
+            },
+            {
+                key: 'products',
+                label: t('vendor.sidebar.products', 'Products'),
+                link: '/vendor/products/show',
+                icon: <FiBox className="w-5 h-5" />,
+                badge: null,
+                disabled: false
+            },
+            {
+                key: 'orders',
+                label: t('vendor.sidebar.orders', 'Orders'),
+                link: '/vendor/orders',
+                icon: <FiClipboard className="w-5 h-5" />,
+                badge: null,
+                disabled: false
+            },
+            {
+                key: 'add-product',
+                label: t('vendor.sidebar.addProduct', 'Add Product'),
+                link: '/vendor/products',
+                icon: <FiPlus className="w-5 h-5" />,
+                badge: null,
+                disabled: false
+            },
+            {
+                key: 'analytics',
+                label: t('vendor.sidebar.analytics', 'Analytics'),
+                link: '/vendor/analytics',
+                icon: <FiBarChart className="w-5 h-5" />,
+                badge: null,
+                disabled: false
+            }
+        ] : [
+            // Show disabled items when not verified/active
+            {
+                key: 'dashboard',
+                label: t('vendor.sidebar.dashboard', 'Dashboard'),
+                link: '#',
+                icon: <FiHome className="w-5 h-5" />,
+                badge: null,
+                disabled: true
+            },
+            {
+                key: 'products',
+                label: t('vendor.sidebar.products', 'Products'),
+                link: '#',
+                icon: <FiBox className="w-5 h-5" />,
+                badge: null,
+                disabled: true
+            },
+            {
+                key: 'orders',
+                label: t('vendor.sidebar.orders', 'Orders'),
+                link: '#',
+                icon: <FiClipboard className="w-5 h-5" />,
+                badge: null,
+                disabled: true
+            },
+            {
+                key: 'add-product',
+                label: t('vendor.sidebar.addProduct', 'Add Product'),
+                link: '#',
+                icon: <FiPlus className="w-5 h-5" />,
+                badge: null,
+                disabled: true
+            },
+            {
+                key: 'analytics',
+                label: t('vendor.sidebar.analytics', 'Analytics'),
+                link: '#',
+                icon: <FiBarChart className="w-5 h-5" />,
+                badge: null,
+                disabled: true
+            }
+        ])
     ];
 
     const isActiveLink = (link: string) => {
@@ -66,7 +118,7 @@ function Vendor_Sidebar(
     return (
         <aside className={`fixed z-30 top-0 left-0 h-screen w-72 bg-white shadow-2xl border-r border-gray-100 flex flex-col transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             {/* Header - Fixed */}
-            <div className="flex-shrink-0 px-6 py-8 border-b border-gray-100 bg-gradient-to-r from-indigo-600 to-purple-600">
+            <div className="flex-shrink-0 px-6 py-8 border-b border-gray-100 bg-gradient-to-r from-main to-main/90">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
@@ -77,8 +129,8 @@ function Vendor_Sidebar(
                             <p className="text-indigo-100 text-sm font-medium">{t('vendor.sidebar.vendorPortal')}</p>
                         </div>
                     </div>
-                    <button 
-                        className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors duration-200" 
+                    <button
+                        className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
                         onClick={() => setSidebarOpen(false)}
                     >
                         <FiX className="w-5 h-5 text-white" />
@@ -90,7 +142,7 @@ function Vendor_Sidebar(
             {/* User Profile Section - Fixed */}
             <div className="flex-shrink-0 px-6 py-4 bg-gray-50 border-b border-gray-100">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-br from-main to-main/90 rounded-full flex items-center justify-center">
                         <span className="text-white font-semibold text-sm">{auth?.username[0]}</span>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -114,47 +166,72 @@ function Vendor_Sidebar(
                 </div>
                 {navItems.map(item => {
                     const isActive = isActiveLink(item.link);
+                    const isDisabled = item.disabled;
+                    
                     return (
                         <Link
                             key={item.key}
-                            href={item.link}
+                            href={isDisabled ? '#' : item.link}
                             className={`relative flex items-center gap-4 px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200 group ${
-                                isActive 
-                                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25 transform scale-[1.02]' 
-                                    : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 hover:shadow-md'
+                                isDisabled
+                                    ? 'text-gray-400 cursor-not-allowed opacity-50'
+                                    : isActive
+                                        ? 'bg-gradient-to-r from-main to-main/90 text-white shadow-sm shadow-main/25 transform scale-[1.02]'
+                                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 hover:shadow-md'
                             }`}
-                            onClick={() => setSidebarOpen(false)}
+                            onClick={(e) => {
+                                if (isDisabled) {
+                                    e.preventDefault();
+                                    return;
+                                }
+                                setSidebarOpen(false);
+                            }}
                         >
                             {/* Active indicator */}
-                            {isActive && (
+                            {isActive && !isDisabled && (
                                 <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-white rounded-r-full" />
                             )}
-                            
+
                             <span className={`transition-all duration-200 ${
-                                isActive ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500'
+                                isDisabled 
+                                    ? 'text-gray-400' 
+                                    : isActive 
+                                        ? 'text-white' 
+                                        : 'text-gray-500 group-hover:text-indigo-500'
                             }`}>
                                 {item.icon}
                             </span>
-                            
+
                             <span className={`font-semibold flex-1 ${
-                                isActive ? 'text-white' : 'group-hover:text-indigo-600'
+                                isDisabled 
+                                    ? 'text-gray-400' 
+                                    : isActive 
+                                        ? 'text-white' 
+                                        : 'group-hover:text-indigo-600'
                             }`}>
                                 {item.label}
                             </span>
-                            
+
                             {/* Badge */}
                             {item.badge && (
                                 <span className={`inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full min-w-[20px] ${
-                                    isActive 
-                                        ? 'bg-white/20 text-white' 
-                                        : 'bg-indigo-100 text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white'
+                                    isDisabled
+                                        ? 'bg-gray-200 text-gray-400'
+                                        : isActive
+                                            ? 'bg-white/20 text-white'
+                                            : 'bg-indigo-100 text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white'
                                 }`}>
                                     {item.badge}
                                 </span>
                             )}
-                            
+
+                            {/* Disabled indicator */}
+                            {isDisabled && (
+                                <div className="w-2 h-2 bg-gray-400 rounded-full opacity-50" />
+                            )}
+
                             {/* Chevron for active state */}
-                            {isActive && (
+                            {isActive && !isDisabled && (
                                 <div className="w-2 h-2 bg-white rounded-full opacity-80" />
                             )}
                         </Link>
@@ -163,7 +240,7 @@ function Vendor_Sidebar(
             </nav>
 
             {/* Stats Section - Fixed at bottom */}
-            <div className="flex-shrink-0 px-6 py-4 border-t border-gray-100 bg-gray-50">
+            {/* <div className="flex-shrink-0 px-6 py-4 border-t border-gray-100 bg-gray-50">
                 <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="text-center">
                         <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-lg mx-auto mb-1">
@@ -183,11 +260,11 @@ function Vendor_Sidebar(
                 <div className="text-center">
                     <p className="text-xs text-gray-500 mb-1">{t('vendor.sidebar.storePerformance', 'Store Performance')}</p>
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
-                        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" style={{width: '78%'}}></div>
+                        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" style={{ width: '78%' }}></div>
                     </div>
                     <p className="text-xs font-semibold text-gray-700">{t('vendor.sidebar.complete', '78% Complete')}</p>
                 </div>
-            </div>
+            </div> */}
         </aside>
     )
 }

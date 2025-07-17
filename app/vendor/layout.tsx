@@ -1,7 +1,6 @@
 'use client'
 import React, { useState , useContext, useEffect } from 'react'
 import Vendor_Sidebar from '../components/vendor_components/vendor_sidebar';
-import { FiBox, FiClipboard, FiPlus, FiSettings, FiMenu, FiLogOut, FiGlobe } from 'react-icons/fi';
 import Vendor_Header from '../components/vendor_components/vendor_header';
 import { config } from '../config/api';
 import axios from 'axios';
@@ -41,12 +40,13 @@ interface StoreData {
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+     const [sidebarOpen, setSidebarOpen] = useState(false);
      const [language, setLanguage] = useState('en');
      const [store, setStore] = useState<StoreData | null>(null);
      const [loading, setLoading] = useState(true);
      const { auth } = useContext(AuthContext);
 
+     console.log("store details", store);
 
   const fetchStoreSettings = async () => {
         try {

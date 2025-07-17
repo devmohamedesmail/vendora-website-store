@@ -287,12 +287,14 @@
 				"price": "السعر",
 				"stockQuantity": "كمية المخزون",
 				"salePrice": "سعر التخفيض",
-				"productDescription": "وصف المنتج"
+				"productDescription": "وصف المنتج",
+				"address": " عنوان المتجر "
 			},
 			"placeholders": {
 				"selectCategory": "اختر الفئة",
 				"productTitle": "أدخل عنوان المنتج",
-				"description": "اوصف منتجك بالتفصيل..."
+				"description": "اوصف منتجك بالتفصيل...",
+				"address": "  أدخل عنوان متجرك الكامل "
 			},
 			"imageAlt": "المنتج",
 			"addImage": "إضافة صورة",
@@ -528,6 +530,16 @@
 			"phonePlaceholder": "أدخل رقم هاتفك",
 			"storeDescription": "وصف المتجر",
 			"descriptionPlaceholder": "اوصف متجرك وما تبيعه...",
+			"businessLicence": "رخصة التجارة",
+			"optional": "اختياري",
+			"licenceFormat": "PDF, DOC, DOCX, JPG, PNG حتى 5 ميجابايت",
+			"selectedFile": "الملف المحدد",
+			"facebook": "صفحة فيسبوك",
+			"facebookPlaceholder": "أدخل رابط صفحة فيسبوك الخاصة بك",
+			"instagram": "حساب إنستغرام",
+			"instagramPlaceholder": "أدخل رابط حساب إنستغرام الخاص بك",
+			"tiktok": "حساب تيك توك",
+			"tiktokPlaceholder": "أدخل رابط حساب تيك توك الخاص بك",
 			"updating": "جاري التحديث...",
 			"saveChanges": "حفظ التغييرات",
 			"storeMetadata": "بيانات المتجر الوصفية",
@@ -535,7 +547,9 @@
 			"lastUpdated": "آخر تحديث",
 			"publishedAt": "تاريخ النشر",
 			"userId": "معرف المستخدم",
-			"notAvailable": "غير متاح"
+			"notAvailable": "غير متاح",
+			"address": "عنوان المتجر",
+			"addressPlaceholder": "أدخل عنوان متجرك الكامل"
 		},
 		"validation": {
 			"storeNameMin": "يجب أن يكون اسم المتجر على الأقل حرفين",

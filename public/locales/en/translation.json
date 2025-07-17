@@ -289,12 +289,14 @@
 				"price": "Price",
 				"stockQuantity": "Stock Quantity",
 				"salePrice": "Sale Price",
-				"productDescription": "Product Description"
+				"productDescription": "Product Description",
+				"address": "Address"
 			},
 			"placeholders": {
 				"selectCategory": "Select Category",
 				"productTitle": "Enter product title",
-				"description": "Describe your product in detail..."
+				"description": "Describe your product in detail...",
+				"address": "Enter your store address"
 			},
 			"imageAlt": "Product",
 			"addImage": "Add Image",
@@ -530,6 +532,16 @@
 			"phonePlaceholder": "Enter your phone number",
 			"storeDescription": "Store Description",
 			"descriptionPlaceholder": "Describe your store and what you sell...",
+			"businessLicence": "Business Licence",
+			"optional": "Optional",
+			"licenceFormat": "PDF, DOC, DOCX, JPG, PNG up to 5MB",
+			"selectedFile": "Selected file",
+			"facebook": "Facebook Page",
+			"facebookPlaceholder": "Enter your Facebook page URL",
+			"instagram": "Instagram Profile",
+			"instagramPlaceholder": "Enter your Instagram profile URL",
+			"tiktok": "TikTok Profile",
+			"tiktokPlaceholder": "Enter your TikTok profile URL",
 			"updating": "Updating...",
 			"saveChanges": "Save Changes",
 			"storeMetadata": "Store Metadata",
@@ -537,7 +549,9 @@
 			"lastUpdated": "Last Updated",
 			"publishedAt": "Published At",
 			"userId": "User ID",
-			"notAvailable": "N/A"
+			"notAvailable": "N/A",
+			"address": "Address",
+			"addressPlaceholder": "Enter your store address"
 		},
 		"validation": {
 			"storeNameMin": "Store name must be at least 2 characters",

@@ -1,10 +1,8 @@
 'use client'
 import axios from "axios";
-
 import React, { createContext, useState, useEffect } from 'react';
 import { config } from "../config/api";
 import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next";
 
 
 const DataContext = createContext({
@@ -14,8 +12,7 @@ const DataContext = createContext({
 const DataProvider = ({ children }) => {
     const [categories, setCategories] = useState(null);
     const [products, setProducts] = useState(null);
-    const { t } = useTranslation();
-
+    
     const fetch_categories = async () => {
         try {
             const res = await axios.get(`${config.url}/api/categories?populate=image`, {
@@ -25,7 +22,7 @@ const DataProvider = ({ children }) => {
             })
             setCategories(res.data.data)
         } catch (error) {
-            toast.error(t('common.errorFetchingCategories'));
+            toast.error('Error fetching categories');
         }
     };
 
@@ -42,7 +39,7 @@ const DataProvider = ({ children }) => {
             setProducts(response.data.data);
         } catch (error) {
             console.log("error fetching products data", error);
-            toast.error(t('common.errorFetchingProducts'));
+            toast.error('Error fetching products');
         }
     };
 
