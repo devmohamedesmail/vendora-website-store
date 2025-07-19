@@ -1,70 +1,17 @@
 'use client'
 import axios from "axios";
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { config } from "../config/api";
 import { toast } from "react-toastify";
 
-// Define types for Category
-interface Category {
-    id: number;
-    documentId: string;
-    title: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    image?: {
-        id: number;
-        url: string;
-        name: string;
-        alternativeText?: string;
-    };
-}
 
-// Define types for Product
-interface Product {
-    id: number;
-    documentId: string;
-    title: string;
-    description: string;
-    price: number;
-    stock: number;
-    sale?: number;
-    vendor_id: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    category?: Category;
-    images?: Array<{
-        id: number;
-        url: string;
-        name: string;
-        alternativeText?: string;
-    }>;
-    attributes?: Array<{
-        id: number;
-        name: string;
-    }>;
-}
-
-// Define the context type
-interface DataContextType {
-    categories: Category[] | null;
-    products: Product[] | null;
-}
-
-// Define the provider props type
-interface DataProviderProps {
-    children: ReactNode;
-}
-
-const DataContext = createContext<DataContextType>({
+const DataContext = createContext({
     categories: null,
     products: null,
 });
-
-const DataProvider = ({ children }: DataProviderProps) => {
-    const [categories, setCategories] = useState<Category[] | null>(null);
-    const [products, setProducts] = useState<Product[] | null>(null);
+const DataProvider = ({ children }) => {
+    const [categories, setCategories] = useState(null);
+    const [products, setProducts] = useState(null);
     
     const fetch_categories = async () => {
         try {

@@ -3,7 +3,7 @@ import React, { useState, useRef, useContext } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FiUpload, FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiFileText, FiSettings, FiPlus, FiTrash2 } from 'react-icons/fi'
-import { DataContext } from '../../context/data_context';
+// import { DataContext } from '../../context/data_context';
 import { AuthContext } from '../../context/auth_context';
 import axios from 'axios';
 import { uploadImagesToStrapi } from '../../ultilites/uploadImagesToStrapi.js'
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import CustomInput from '../../custom/custom_input';
 import Custom_Textarea from '../../custom/custom_textarea';
 import Product_Attributes from '../../components/vendor_components/product_attributes';
+import { DataContext } from '../../context/data_context';
 function AddProduct() {
   const { t } = useTranslation();
   const [images, setImages] = useState([]);
