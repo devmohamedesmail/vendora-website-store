@@ -26,10 +26,16 @@ interface Product {
     documentId: string;
     title: string;
     description: string;
+    long_description?: string;
     price: number;
     stock: number;
     sale?: number;
     vendor_id: string;
+    isFeatured?: boolean;
+    tags?: string[];
+    brand?: string;
+    rating?: number;
+    views?: number;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;

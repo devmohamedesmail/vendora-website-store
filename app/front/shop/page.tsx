@@ -55,7 +55,7 @@ export default function Shop() {
         // Category filter
         if (selectedCategory !== 'all') {
             filtered = filtered.filter(product =>
-                product.category?.toLowerCase().includes(selectedCategory.toLowerCase())
+                product.category?.title?.toLowerCase().includes(selectedCategory.toLowerCase())
             );
         }
 
