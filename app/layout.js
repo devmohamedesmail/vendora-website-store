@@ -8,14 +8,14 @@ import { ToastContainer } from "react-toastify";
 import ClientWrapper from "./components/ClientWrapper";
 import { DataProvider } from "./context/data_context";
 import { ReduxProvider } from "./redux/ReduxProvider";
-
+import PWAInstallPrompt from "./components/user_components/pwd_install_prompt";
 
 
 
 export const metadata = {
   title: "VapeHub - Multi-vendor Vape Store",
   description: "Multi-vendor vape e-commerce platform with premium vaping products",
-
+  manifest: '/manifest.json',
   metadataBase: new URL("https://yourdomain.com"),
   alternates: {
     canonical: "/",
@@ -73,6 +73,16 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+       <head>
+        {/* ❌ Missing PWA meta tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#6366f1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="VapeHub" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+      </head>
       <body
         className={` antialiased`}
       >
@@ -100,6 +110,7 @@ export default function RootLayout({ children }) {
             </DataProvider>
           </AuthProvider>
         </ReduxProvider>
+         <PWAInstallPrompt />
       </body>
     </html>
   );
