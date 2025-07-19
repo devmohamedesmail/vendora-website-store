@@ -74,14 +74,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
        <head>
-        {/* ❌ Missing PWA meta tags */}
+        {/* PWA meta tags for all platforms */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#6366f1" />
+        
+        {/* iOS PWA meta tags */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="VapeHub" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Vendora" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
+        
+        {/* iOS icons */}
+        <link rel="apple-touch-icon" href="/images/logo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png" />
+        <link rel="apple-touch-startup-image" href="/images/logo.png" />
+        
+        {/* Prevent zooming on iOS */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
       </head>
       <body
         className={` antialiased`}

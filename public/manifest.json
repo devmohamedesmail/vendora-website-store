@@ -1,8 +1,9 @@
 {
   "name": "Vendora - Multi Vendor Marketplace",
   "short_name": "Vendora",
-  "description": "Multi-vendor vape marketplace",
+  "description": "Multi-vendor vape marketplace with offline support",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#6366f1",
@@ -31,9 +32,20 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "categories": ["shopping", "business"],
   "lang": "en",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay", "standalone"],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }

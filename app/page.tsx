@@ -22,48 +22,7 @@ export default function Home() {
   const { t } = useTranslation();
 
   // Fake products data
-  const fakeProducts = [
-    {
-      id: 1,
-      title: t('home.product1.title') || 'Premium Vape Kit',
-      description: t('home.product1.description') || 'High-quality vaping experience',
-      price: 299,
-      sale: 249,
-      stock: 15,
-      images: [{ url: '/images/slide1.jpg' }],
-      vendor: { name: t('home.vendor1') || 'VapeStore Pro' }
-    },
-    {
-      id: 2,
-      title: t('home.product2.title') || 'Flavor Pods Set',
-      description: t('home.product2.description') || 'Delicious variety pack',
-      price: 89,
-      sale: null,
-      stock: 25,
-      images: [{ url: '/images/slide2.jpg' }],
-      vendor: { name: t('home.vendor2') || 'FlavorMax' }
-    },
-    {
-      id: 3,
-      title: t('home.product3.title') || 'Starter Bundle',
-      description: t('home.product3.description') || 'Perfect for beginners',
-      price: 149,
-      sale: 99,
-      stock: 8,
-      images: [{ url: '/images/slide3.jpg' }],
-      vendor: { name: t('home.vendor3') || 'BeginnerVape' }
-    },
-    {
-      id: 4,
-      title: t('home.product4.title') || 'Advanced Mod',
-      description: t('home.product4.description') || 'Professional grade device',
-      price: 399,
-      sale: null,
-      stock: 12,
-      images: [{ url: '/images/slide4.jpg' }],
-      vendor: { name: t('home.vendor4') || 'ProVape Tech' }
-    }
-  ];
+ 
 
 
   return (
