@@ -3,7 +3,7 @@ import React, { useState, useRef, useContext } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FiUpload, FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiFileText, FiSettings, FiPlus, FiTrash2 } from 'react-icons/fi'
-// import { DataContext } from '../../context/data_context';
+import { DataContext } from '../../context/data_context';
 import { AuthContext } from '../../context/auth_context';
 import axios from 'axios';
 import { uploadImagesToStrapi } from '../../ultilites/uploadImagesToStrapi.js'
@@ -12,16 +12,43 @@ import { useTranslation } from 'react-i18next';
 import CustomInput from '../../custom/custom_input';
 import Custom_Textarea from '../../custom/custom_textarea';
 import Product_Attributes from '../../components/vendor_components/product_attributes';
-import { DataContext } from '../../context/data_context';
+// Define types for the component
+interface ImageFile {
+  id: number;
+  url: string;
+  file: File;
+}
+
+interface Attribute {
+  id: number;
+  name: string;
+  values: string[];
+}
+
+interface AttributeVariation {
+  attributeName: string;
+  value: string;
+  attributeId: number;
+}
+
+interface Variation {
+  id: number;
+  attributes: AttributeVariation[];
+  price: string;
+  stock: string;
+  sale: string;
+  sku: string;
+}
+
 function AddProduct() {
   const { t } = useTranslation();
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [images, setImages] = useState<ImageFile[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
-  const [hasVariations, setHasVariations] = useState(false);
-  const [attributes, setAttributes] = useState([]);
-  const [variations, setVariations] = useState([]);
+  const [hasVariations, setHasVariations] = useState<boolean>(false);
+  const [attributes, setAttributes] = useState<Attribute[]>([]);
+  const [variations, setVariations] = useState<Variation[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { categories } = useContext(DataContext);
   const { auth } = useContext(AuthContext);
@@ -121,7 +148,12 @@ function AddProduct() {
     }
   };
 
-  const createProductVariant = async (variantData: any) => {
+  const createProductVariant = async (variantData: {
+    price: number;
+    stock: number;
+    product: number;
+    attribute_values: number[];
+  }) => {
     try {
       const response = await axios.post(`${config.url}/api/product-variants`, {
         data: variantData
@@ -163,7 +195,7 @@ function AddProduct() {
         }
 
         const imageIds = await uploadImagesToStrapi(images);
-        const createdAttributeIds = [];
+        const createdAttributeIds: number[] = [];
 
         // Step 1: Create attributes and values if product has variations
         if (hasVariations && attributes.length > 0) {
@@ -183,7 +215,7 @@ function AddProduct() {
                   const createdValue = await createAttributeValue(value.trim(), createdAttribute.id);
                   console.log('Created value:', createdValue);
                 }
-              } catch (error) {
+              } catch (error: any) {
                 console.error('Error creating attribute/values:', error);
                 showNotification('error', `Failed to create attribute "${attribute.name}": ${error.message}`);
               }
@@ -246,7 +278,7 @@ function AddProduct() {
                         attributeValueIds.push(matchingValue.id);
                       }
                     }
-                  } catch (error) {
+                  } catch (error: any) {
                     console.error('Error fetching attribute value ID:', error);
                   }
                 }
@@ -260,7 +292,7 @@ function AddProduct() {
 
                 console.log('Creating variant with data:', variantData);
                 await createProductVariant(variantData);
-              } catch (error) {
+              } catch (error: any) {
                 console.error('Error creating variant:', error);
                 // Don't fail the entire process if one variant fails
                 showNotification('error', `Failed to create variation: ${error.message}`);
@@ -276,7 +308,7 @@ function AddProduct() {
         setAttributes([]);
         setVariations([]);
         setHasVariations(false);
-      } catch (error) {
+      } catch (error: any) {
         let errorMessage = t('vendor.addProduct.errors.generalError', 'Failed to add product. Please try again.');
 
         if (error.response?.data?.error?.message) {
@@ -392,9 +424,9 @@ function AddProduct() {
       return;
     }
 
-    const cartesianProduct = (arrays) => {
-      return arrays.reduce((acc, curr) => {
-        const result = [];
+    const cartesianProduct = (arrays: any[][]): any[][] => {
+      return arrays.reduce((acc: any[][], curr: any[]) => {
+        const result: any[][] = [];
         acc.forEach(a => {
           curr.forEach(c => {
             result.push([...a, c]);
@@ -414,7 +446,7 @@ function AddProduct() {
 
     const combinations = cartesianProduct(attributeValues);
 
-    const newVariations = combinations.map((combination, index) => ({
+    const newVariations: Variation[] = combinations.map((combination, index) => ({
       id: Date.now() + index,
       attributes: combination,
       price: '',
@@ -533,7 +565,7 @@ function AddProduct() {
                 value={formik.values.category}
                 onChange={(e) => {
                   formik.handleChange(e);
-                  const category = categories.find(cat => cat.id.toString() === e.target.value);
+                  const category = categories?.find(cat => cat.id.toString() === e.target.value);
                   setSelectedCategory(category?.title || '');
                 }}
                 className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 ${formik.errors.category && formik.touched.category ? 'border-red-300' : 'border-gray-300'
