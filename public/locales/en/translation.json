@@ -849,5 +849,19 @@
 		"editExistingProducts": "Edit existing products",
 		"storeSettings": "Store Settings",
 		"configureStore": "Configure your store"
+	},
+	"pwa": {
+		"install": {
+			"title": "Install Vendora App",
+			"description": "Get the full app experience with offline access, push notifications, and lightning-fast performance.",
+			"rating": "5.0 Rating",
+			"feature1": "Fast & Smooth",
+			"feature2": "Offline Ready",
+			"feature3": "Native Feel",
+			"installButton": "Install Now",
+			"installing": "Installing...",
+			"laterButton": "Later",
+			"smallPrint": "Free • No ads • Secure"
+		}
 	}
 }

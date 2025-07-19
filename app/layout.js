@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import ClientWrapper from "./components/ClientWrapper";
 import { DataProvider } from "./context/data_context";
 import { ReduxProvider } from "./redux/ReduxProvider";
-import PWAInstallPrompt from "./components/user_components/pwd_install_prompt";
+import PWAInstallPrompt from "./components/user_components/pwa_install_prompt";
 
 
 
