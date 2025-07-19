@@ -496,6 +496,10 @@
 		"unlockCoupons": "اكتشف كوبونات حصرية!",
 		"registerMessage": "سجل الآن للوصول إلى أكواد خصم خاصة ووفر أكثر على طلباتك.",
 		"registerNow": "سجل الآن",
+		"deliveryAddress": "عنوان التوصيل",
+		"addNewAddress": "إضافة عنوان جديد",
+		"noAddressesFound": "لم يتم العثور على عناوين",
+		"addFirstAddress": "أضف عنوانك الأول",
 		"progressSteps": {
 			"cart": "سلة التسوق",
 			"checkout": "الدفع",
@@ -756,7 +760,7 @@
 		"errorFetchingProductDetails": " خطأ في جلب تفاصيل المنتج",
 		"orderPlaced": " تم تقديم الطلب بنجاح!",
 		"orderFailed": " فشل في تقديم الطلب. يرجى المحاولة مرة أخرى.",
-		"siteName":" فيب تون"
+		"siteName": " فيب تون"
 	},
 	"introModal": {
 		"welcome": "أهلاً بك في فيندورا!",

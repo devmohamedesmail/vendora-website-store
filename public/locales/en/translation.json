@@ -498,6 +498,10 @@
 		"unlockCoupons": "Unlock Exclusive Coupons!",
 		"registerMessage": "Register now to access special discount codes and save more on your orders.",
 		"registerNow": "Register Now",
+		"deliveryAddress": "Delivery Address",
+		"addNewAddress": "Add New Address",
+		"noAddressesFound": "No addresses found",
+		"addFirstAddress": "Add your first address ",
 		"progressSteps": {
 			"cart": "Cart",
 			"checkout": "Checkout",

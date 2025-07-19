@@ -173,6 +173,7 @@ function Checkout() {
                                 setPayment={setPayment}
                                 setSelectedAddress={setSelectedAddress}
                                 selectedAddress={selectedAddress}
+                                auth={auth}
                             />
 
                             {/* Order Summary */}

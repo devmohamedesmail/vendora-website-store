@@ -51,7 +51,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
   return (
     <div
       key={product.id}
-      className={`bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group ${isListView ? 'flex flex-row' : 'flex flex-col'
+      className={`bg-white rounded-xl  hover:shadow-2xl transition-all duration-300 border border-gray-100 group ${isListView ? 'flex flex-row' : 'flex flex-col'
         }`}
     >
       {/* Image Section */}
@@ -107,7 +107,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
       <div className={`p-2 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
         <div>
           <Link href={`/front/product/${product.id}`}>
-            <h3 className="text-sm md:text-md font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
+            <h3 className="text-sm md:text-sm font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
               {getLimitedWords(product.title, 5)}
             </h3>
           </Link>
@@ -125,14 +125,14 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
 
 
             {product.sale ? (
-              <div className="flex items-center">
+              <div className="flex items-center  w-full">
                 <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
                 <p className='line-through text-red-600 text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
 
               </div>
             ) : (
-              <div className="flex items-center">
-                <p className='text-second font-bold text-md text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+              <div className="flex items-center w-full">
+                <p className='text-second font-bold text-md  mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
               </div>
             )}
 

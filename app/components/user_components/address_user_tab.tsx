@@ -219,22 +219,7 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                     </div>
 
                     <div className="space-y-4">
-                        {/* <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                {t('address.addressLine1', 'Address Line 1')} *
-                            </label>
-                            <div className="relative">
-                                <FiMapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                                <input
-                                    type="text"
-                                    placeholder={t('address.addressLine1Placeholder', 'Street address, building name')}
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                    value={formik.values.address_line1}
-                                    name='address_line1'
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                        </div> */}
+                       
                         <Custom_Input 
                           label={t('address.addressLine1')} 
                           name='address_line1' 
@@ -249,36 +234,9 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                           onChange={formik.handleChange} 
                           value={formik.values.address_line2} />
 
-                        {/* <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                {t('address.addressLine2', 'Address Line 2')} ({t('address.optional', 'Optional')})
-                            </label>
-                            <textarea
-                                placeholder={t('address.addressLine2Placeholder', 'Apartment, suite, unit, building, floor, etc.')}
-                                rows={3}
-                                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
-                                value={formik.values.address_line2}
-                                onChange={formik.handleChange}
-                                name='address_line2'
-                            />
-                        </div> */}
+                        
 
-                        {/* <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                {t('address.city', 'City')} *
-                            </label>
-                            <div className="relative">
-                                <FiMapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                                <input
-                                    type="text"
-                                    placeholder={t('address.cityPlaceholder', 'Enter your city')}
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                    value={formik.values.city}
-                                    name='city'
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                        </div> */}
+                        
                          <Custom_Input 
                           label={t('address.city')} 
                           name='city' 
