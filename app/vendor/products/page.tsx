@@ -22,7 +22,7 @@ interface ImageFile {
 interface Attribute {
   id: number;
   name: string;
-  values: string[];
+  values: (string | { name: string; image?: string | null })[];
 }
 
 interface AttributeVariation {
@@ -42,6 +42,20 @@ interface Variation {
 
 function AddProduct() {
   const { t } = useTranslation();
+  
+  // Helper functions for handling mixed value types
+  const getValueName = (value: string | { name: string; image?: string | null }): string => {
+    return typeof value === 'string' ? value : value.name;
+  };
+
+  const getValueImage = (value: string | { name: string; image?: string | null }): string | null => {
+    return typeof value === 'object' && value.image ? value.image : null;
+  };
+
+  const hasValidValue = (value: string | { name: string; image?: string | null }): boolean => {
+    return getValueName(value).trim().length > 0;
+  };
+
   const [images, setImages] = useState<ImageFile[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -85,7 +99,7 @@ function AddProduct() {
     }
 
     const hasValidAttributes = attributes.some(attr =>
-      attr.name.trim() && attr.values.some(val => val.trim())
+      attr.name.trim() && attr.values.some(val => hasValidValue(val))
     );
 
     if (!hasValidAttributes) {
@@ -128,12 +142,39 @@ function AddProduct() {
     }
   };
 
-  const createAttributeValue = async (value: string, attributeId: number) => {
+  const createAttributeValue = async (value: string, attributeId: number, image?: string | null) => {
     try {
+      let imageId = null;
+      
+      // Upload image to Strapi if provided
+      if (image) {
+        try {
+          // Convert base64 to blob
+          const response = await fetch(image);
+          const blob = await response.blob();
+          const file = new File([blob], `attribute-value-${Date.now()}.jpg`, { type: blob.type });
+          
+          // Upload single image
+          const uploadedImages = await uploadImagesToStrapi([{
+            id: Date.now(),
+            url: image,
+            file: file
+          }]);
+          
+          if (uploadedImages && uploadedImages.length > 0) {
+            imageId = uploadedImages[0];
+          }
+        } catch (imageError) {
+          console.error('Error uploading attribute value image:', imageError);
+          // Continue without image if upload fails
+        }
+      }
+
       const response = await axios.post(`${config.url}/api/values`, {
         data: {
           value: value,
-          attribute: attributeId
+          attribute: attributeId,
+          image: imageId
         }
       }, {
         headers: {
@@ -210,9 +251,11 @@ function AddProduct() {
                 console.log('Created attribute:', createdAttribute);
 
                 // Create attribute values
-                const validValues = attribute.values.filter(val => val.trim());
+                const validValues = attribute.values.filter(val => hasValidValue(val));
                 for (const value of validValues) {
-                  const createdValue = await createAttributeValue(value.trim(), createdAttribute.id);
+                  const valueName = getValueName(value);
+                  const valueImage = getValueImage(value);
+                  const createdValue = await createAttributeValue(valueName, createdAttribute.id, valueImage);
                   console.log('Created value:', createdValue);
                 }
               } catch (error: any) {
@@ -381,7 +424,7 @@ function AddProduct() {
     );
   };
 
-  const updateAttributeValue = (attributeId: number, valueIndex: number, value: string) => {
+  const updateAttributeValue = (attributeId: number, valueIndex: number, value: string | { name: string; image?: string | null }) => {
     setAttributes(prev =>
       prev.map(attr =>
         attr.id === attributeId
@@ -416,7 +459,7 @@ function AddProduct() {
     }
 
     const validAttributes = attributes.filter(attr =>
-      attr.name.trim() && attr.values.some(val => val.trim())
+      attr.name.trim() && attr.values.some(val => hasValidValue(val))
     );
 
     if (validAttributes.length === 0) {
@@ -437,9 +480,9 @@ function AddProduct() {
     };
 
     const attributeValues = validAttributes.map(attr =>
-      attr.values.filter(val => val.trim()).map(val => ({
+      attr.values.filter(val => hasValidValue(val)).map(val => ({
         attributeName: attr.name,
-        value: val.trim(),
+        value: getValueName(val),
         attributeId: attr.id // Store attribute ID for API calls
       }))
     );

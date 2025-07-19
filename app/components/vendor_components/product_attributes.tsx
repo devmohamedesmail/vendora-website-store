@@ -50,24 +50,85 @@ export default function Product_Attributes(
                                 </label>
 
                                 {attribute.values.map((value, valueIndex) => (
-                                    <div key={valueIndex} className="flex items-center gap-2">
-                                        <CustomInput
-                                            icon={FiSettings}
-                                            type="text"
-                                            placeholder={t('vendor.addProduct.valuePlaceholder', 'Value (e.g., Large, Red)')}
-                                            value={value}
-                                            onChange={(e) => updateAttributeValue(attribute.id, valueIndex, e.target.value)}
-                                            className="flex-1"
-                                        />
-                                        {attribute.values.length > 1 && (
-                                            <button
-                                                type="button"
-                                                onClick={() => removeAttributeValue(attribute.id, valueIndex)}
-                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                                            >
-                                                <FiX className="w-4 h-4" />
-                                            </button>
-                                        )}
+                                    <div key={valueIndex} className="space-y-3 border border-gray-100 rounded-lg p-3">
+                                        <div className="flex items-center gap-2">
+                                            <CustomInput
+                                                icon={FiSettings}
+                                                type="text"
+                                                placeholder={t('vendor.addProduct.valuePlaceholder', 'Value (e.g., Large, Red)')}
+                                                value={typeof value === 'string' ? value : value.name || ''}
+                                                onChange={(e) => updateAttributeValue(attribute.id, valueIndex, e.target.value)}
+                                                className="flex-1"
+                                            />
+                                            {attribute.values.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeAttributeValue(attribute.id, valueIndex)}
+                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                                                >
+                                                    <FiX className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
+                                        
+                                        {/* Image upload for attribute value */}
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex-1">
+                                                <label className="block text-xs font-medium text-gray-700 mb-1">
+                                                    {t('vendor.addProduct.valueImage', 'Value Image (Optional)')}
+                                                </label>
+                                                <div className="flex items-center gap-2">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => {
+                                                            const file = e.target.files?.[0];
+                                                            if (file) {
+                                                                // Handle image upload for attribute value
+                                                                const reader = new FileReader();
+                                                                reader.onload = (event) => {
+                                                                    updateAttributeValue(attribute.id, valueIndex, {
+                                                                        name: typeof value === 'string' ? value : value.name || '',
+                                                                        image: event.target?.result
+                                                                    });
+                                                                };
+                                                                reader.readAsDataURL(file);
+                                                            }
+                                                        }}
+                                                        className="hidden"
+                                                        id={`value-image-${attribute.id}-${valueIndex}`}
+                                                    />
+                                                    <label
+                                                        htmlFor={`value-image-${attribute.id}-${valueIndex}`}
+                                                        className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                                                    >
+                                                        <FiImage className="w-4 h-4" />
+                                                        {t('vendor.addProduct.chooseImage', 'Choose Image')}
+                                                    </label>
+                                                    
+                                                    {/* Preview uploaded image */}
+                                                    {(typeof value === 'object' && value.image) && (
+                                                        <div className="relative">
+                                                            <img
+                                                                src={value.image}
+                                                                alt={t('vendor.addProduct.valueImageAlt', 'Value')}
+                                                                className="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => updateAttributeValue(attribute.id, valueIndex, {
+                                                                    name: value.name || '',
+                                                                    image: null
+                                                                })}
+                                                                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200"
+                                                            >
+                                                                <FiX className="w-3 h-3" />
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
 
