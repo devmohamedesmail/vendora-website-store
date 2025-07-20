@@ -20,6 +20,7 @@ import PWAInstallPrompt from './components/user_components/pwa_install_prompt';
 
 
 
+
 export default function Home() {
   const { t } = useTranslation();
 
@@ -50,16 +51,18 @@ export default function Home() {
 
       {/* Mobile Products Grid - Shown below slideshow on mobile */}
 
-      <div className='bg-red-700'>
+      {/* <div className='bg-red-700'>
         <video autoPlay muted loop className="w-full h-auto">
           <source src="/images/video.mp4" type="video/mp4" />
           {t('home.videoFallback', 'Your browser does not support the video tag.')}
         </video>
-      </div>
+      </div> */}
+    
      
       {/* <Banner /> */}
-      <Deals_Section />
       <Categories_Section />
+      <Deals_Section />
+      
       <Vendors_Section />
       <Products_Slideshow_Section />
       <Products_Section />

@@ -6,6 +6,8 @@ import { useCart } from '../../redux/hooks/useCart';
 import { useWishlist } from '../../redux/hooks/useWishlist';
 import { toast } from 'react-toastify';
 import Product_Attributes_Selection from './product_attributes_selection';
+import { FaPlus } from "react-icons/fa6";
+import { FiMinus } from "react-icons/fi";
 
 export default function Product_Details({ product }: any) {
     const { t, i18n } = useTranslation();
@@ -93,7 +95,7 @@ export default function Product_Details({ product }: any) {
 
                 {/* Status Badges */}
                 <div className="flex flex-wrap items-center gap-3 mb-6">
-                    <span className="bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold border border-indigo-300">
+                    <span className="bg-gradient-to-r from-main to-main text-white px-4 py-2 rounded-full text-sm font-semibold ">
                         <svg className="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
                         </svg>
@@ -111,15 +113,8 @@ export default function Product_Details({ product }: any) {
                 </div>
 
                 {/* Description */}
-                <div className="mb-6 p-4 bg-gray-50 rounded-lg border-l-4 border-indigo-500">
+                <div className="mb-6 p-4 bg-gray-50 rounded-lg border-l-4 border-main">
                     <p className="text-gray-700 leading-relaxed text-base">{product.description}</p>
-                    {product.long_description && (
-                        <div className="mt-3 pt-3 border-t border-gray-200">
-                            <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
-                                {product.long_description}
-                            </p>
-                        </div>
-                    )}
                 </div>
 
                 {/* Price Section */}
@@ -182,47 +177,98 @@ export default function Product_Details({ product }: any) {
                     })}
                 </div>
 
-                {/* Quantity Selector */}
+                {/* Professional Quantity Selector */}
                 {product.stock > 0 && (
-                    <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-                            <svg className="w-5 h-5 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                            {t('productDetails.quantity')}
+                    <div className="mb-6 p-6  rounded-2xl  relative overflow-hidden">
+                        {/* Background decoration */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-indigo-100/30 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
+                        
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center relative z-10">
+                            {/* <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-lg mr-3 shadow-lg">
+                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                                </svg>
+                            </div> */}
+                            <span className="text-main">
+                                {t('productDetails.quantity')}
+                            </span>
                         </h3>
-                        <div className="flex items-center space-x-3">
-                            <button
-                                onClick={decreaseQuantity}
-                                disabled={quantity <= 1}
-                                className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg shadow-sm transition"
-                            >
-                                −
-                            </button>
-                            <div className="bg-white border border-gray-300 px-4 py-2 rounded-lg min-w-[60px] text-center font-semibold text-lg">
-                                {quantity}
+                        
+                        <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/50 shadow-inner relative z-10">
+                            <div className="flex items-center gap-4">
+                                <button
+                                    onClick={decreaseQuantity}
+                                    disabled={quantity <= 1}
+                                    className="bg-main p-2 rounded-full w-8 h-8 "
+                                >
+                                    <FiMinus color='white' />
+                                    
+                                    {/* <span className="group-hover:scale-125 transition-transform duration-200 text-white">−</span> */}
+                                </button>
+                                
+                                {/* <div className="bg-gradient-to-r from-gray-100 to-gray-200  px-6 rounded-xl min-w-[80px] text-center font-bold text-2xl text-gray-800 shadow-inner relative">
+                                    <div className="absolute inset-0 l"></div>
+                                    <span className="relative text-sm z-10">{quantity}</span>
+                                </div> */}
+                                <span className="relative text-sm z-10">{quantity}</span>
+                                <button
+                                    onClick={increaseQuantity}
+                                    disabled={quantity >= (product.stock || 999)}
+                                    className="bg-main p-2 rounded-full w-8 h-8"
+                                >
+                                    {/* <span className="group-hover:scale-125 transition-transform duration-200 text-white">+</span> */}
+                                    <FaPlus color='white' />
+                                </button>
                             </div>
-                            <button
-                                onClick={increaseQuantity}
-                                disabled={quantity >= (product.stock || 999)}
-                                className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg shadow-sm transition"
-                            >
-                                +
-                            </button>
-                            <div className="ml-4 text-sm text-gray-600">
+                            
+                            {/* Cart Status Badge */}
+                            <div className="flex items-center gap-3">
                                 {isInCart && (
-                                    <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-                                        {cartQuantity} {t('productDetails.inCart')}
-                                    </span>
+                                    <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                            <span className="text-sm font-bold">
+                                                {cartQuantity} {t('productDetails.inCart')}
+                                            </span>
+                                        </div>
+                                    </div>
                                 )}
+                                
+                                {/* Stock indicator */}
+                                <div className="text-right">
+                                    <div className="text-xs text-gray-500 font-medium">Available</div>
+                                    <div className="text-sm font-bold text-indigo-600">{product.stock} units</div>
+                                </div>
                             </div>
                         </div>
+                        
+                        {/* Enhanced Total Price Display */}
                         {quantity > 1 && (
-                            <p className="mt-2 text-sm text-gray-600">
-                                {t('productDetails.totalPrice')}: <span className="font-semibold text-indigo-600">
-                                    {((product.sale || product.price) * quantity).toFixed(2)} {config.currency_en}
-                                </span>
-                            </p>
+                            <div className="mt-4 p-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl text-white relative overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"></div>
+                                <div className="flex items-center justify-between relative z-10">
+                                    <div className="flex items-center gap-3">
+                                        <div className="bg-white/20 p-2 rounded-lg">
+                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
+                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div className="text-sm opacity-90">{t('productDetails.totalPrice')}</div>
+                                            <div className="text-xl font-bold">
+                                                {((product.sale || product.price) * quantity).toFixed(2)} {config.currency_en}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className="text-sm opacity-90">Per item</div>
+                                        <div className="text-lg font-semibold">
+                                            {(product.sale || product.price).toFixed(2)} {config.currency_en}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         )}
                     </div>
                 )}

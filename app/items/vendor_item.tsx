@@ -23,7 +23,7 @@ export default function Vendor_Item({ vendor }: any) {
   return (
     <div
 
-      className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group"
+      className="bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group"
     >
       {/* Vendor Image */}
       <div className="relative h-48 overflow-hidden">
@@ -40,22 +40,22 @@ export default function Vendor_Item({ vendor }: any) {
       <div className="p-6">
         {/* Name and Rating */}
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-lg font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+          <h3 className="text-sm md:text-md  text-gray-800 group-hover:text-second transition-colors">
             {vendor.store_name}
           </h3>
-          <div className="flex items-center gap-1">
+          {/* <div className="flex items-center gap-1">
             {renderStars(vendor.rating)}
             <span className="text-sm text-gray-600 ml-1">
               ({vendor.reviewCount})
             </span>
-          </div>
+          </div> */}
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-         
+        {/* <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+
           {getLimitedWords(vendor.description, 7)}
-        </p>
+        </p> */}
 
 
         {/* Action Buttons */}
@@ -65,7 +65,7 @@ export default function Vendor_Item({ vendor }: any) {
             className="flex-1 bg-main text-white py-2 px-4 rounded-xl text-center font-medium hover:bg-second transition-colors flex items-center justify-center gap-2"
           >
             <FaStore className="w-4 h-4" />
-            {t('vendors.visitStore', 'Visit Store')}
+            {t('vendors.visitStore')}
           </Link>
 
         </div>

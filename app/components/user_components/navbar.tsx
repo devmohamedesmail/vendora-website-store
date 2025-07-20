@@ -38,7 +38,8 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="hidden  md:flex items-center space-x-4">
-            <Link href={auth ? "/front/account" : "/auth/login"} className="p-2 rounded-full hover:bg-gray-100 transition">
+            <Link href={auth ? "/front/account" : "/auth/login"} 
+             className="p-2 rounded-full hover:bg-gray-100 transition">
               
               {auth ? (<FiUser size={22} className="text-gray-600" />):(<p className="flex items-center text-xs">{t('auth.login')}<CiLogin size={25} /></p>)}
             </Link>

@@ -8,6 +8,7 @@ import Image from 'next/image'
 import axios from 'axios'
 import { config } from '../config/api'
 import Vendor_Item from '../items/vendor_item'
+import CustomSectionTitle from '../custom/CustomSectionTitle'
 
 interface Vendor {
   id: string
@@ -105,18 +106,11 @@ useEffect(()=>{
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            {t('vendors.title', 'Our Trusted Vendors')}
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            {t('vendors.subtitle', 'Discover amazing products from our verified vendor partners')}
-          </p>
-        </div>
+        
+        <CustomSectionTitle title={t('vendors.title')} description={t('vendors.subtitle')} />
 
         {/* Vendors Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
           {vendors.map((vendor) => (
            <Vendor_Item key={vendor.id} vendor={vendor} />
           ))}

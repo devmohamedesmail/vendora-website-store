@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 export default function Store_Features() {
     const { t } = useTranslation();
     return (
-        <div className='bg-black py-4'>
+        <div className='bg-gradient-to-r from-main/80 via-main to-main/80 py-4'>
             <div className="container m-auto grid grid-cols-4">
                 <div className="item flex flex-col items-center gap-2">
                     <TbTruckDelivery color='white' size={40} />

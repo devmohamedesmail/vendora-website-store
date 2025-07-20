@@ -14,7 +14,7 @@ export default function Footer() {
   const {auth} = useContext(AuthContext);
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-900 text-white py-12 pb-20">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-5">
         {/* Useful Pages Section */}
         <div>
@@ -24,6 +24,7 @@ export default function Footer() {
             <li><Link href={auth ? "/front/account" : "/auth/login"} className="hover:text-gray-400 transition-colors">{t('footer.account')}</Link></li>
             <li><Link href="/front/cart" className="hover:text-gray-400 transition-colors">{t('footer.cart')}</Link></li>
             <li><Link href="/front/wishlist" className="hover:text-gray-400 transition-colors">{t('footer.wishlist')}</Link></li>
+            <li><Link href="/front/create-vendor" className="hover:text-gray-400 transition-colors">{t('footer.become_seller')}</Link></li>
           </ul>
         </div>
 

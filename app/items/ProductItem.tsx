@@ -127,12 +127,12 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
             {product.sale ? (
               <div className="flex items-center  w-full">
                 <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
-                <p className='line-through text-red-600 text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                <p className='line-through text-red-600 font-bold text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
 
               </div>
             ) : (
               <div className="flex items-center w-full">
-                <p className='text-second font-bold text-md  mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                <p className='text-second font-extrabold text-md  mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
               </div>
             )}
 
@@ -145,7 +145,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
                 disabled={product.stock === 0}
               >
                 <FiShoppingCart className="w-4 h-4" />
-                <span className='text-sm'>{t('productDetails.addToCart')}</span>
+                <span className='text-sm font-semibold'>{t('productDetails.addToCart')}</span>
               </button>
             )}
           </div>

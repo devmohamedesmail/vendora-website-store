@@ -801,7 +801,15 @@
 		"vendor2": "ماكس النكهات",
 		"vendor3": "فيب المبتدئين",
 		"vendor4": "تكنولوجيا الفيب المحترفة",
-		"noFeaturedProducts": "لا توجد منتجات مميزة متاحة"
+		"noFeaturedProducts": "لا توجد منتجات مميزة متاحة",
+		"categories": {
+			"title": "تسوق حسب الفئة",
+			"description": "استكشف مجموعتنا الواسعة من منتجات الفيب عبر فئات متنوعة"
+		},
+		"products":{
+			"title": " المنتجات الجديدة",
+			"description": " اكتشف أحدث المنتجات في عالم الفيب. من الأجهزة إلى النكهات، لدينا كل ما تحتاجه لتجربة تدخين مثالية."
+		}
 	},
 	"deals": {
 		"title": "عروض حصرية",
@@ -816,7 +824,8 @@
 		"noDealsTitle": "لا توجد عروض حصرية متاحة",
 		"noDealsMessage": "حالياً، لا توجد عروض حصرية متوفرة. يرجى التحقق مرة أخرى لاحقًا أو تصفح منتجاتنا العادية.",
 		"browseProducts": "تصفح المنتجات",
-		"newsletter": "اشترك في نشرتنا الإخبارية للحصول على عروض حصرية وتحديثات"
+		"newsletter": "اشترك في نشرتنا الإخبارية للحصول على عروض حصرية وتحديثات",
+				"description":" اشترك في نشرتنا الإخبارية للحصول على أحدث العروض والخصومات"
 	},
 	"footer": {
 		"home": "الرئيسية",
@@ -839,7 +848,8 @@
 		"useful_links": "روابط مفيدة",
 		"support": "الدعم",
 		"terms": "الشروط",
-		"privacy": "سياسة الخصوصية"
+		"privacy": "سياسة الخصوصية",
+		"become_seller": " كن بائعًا "
 	},
 	"vendorDashboard": {
 		"welcomeBack": "أهلاً بك مرة أخرى",
@@ -868,6 +878,100 @@
 			"installing": "جاري التثبيت...",
 			"laterButton": "لاحقاً",
 			"smallPrint": "مجاني • بدون إعلانات • آمن"
+		}
+	},
+	"createVendor": {
+		"header": {
+			"title": "كن بائعاً",
+			"subtitle": "انضم إلى منصتنا وابدأ ببيع منتجاتك اليوم"
+		},
+		"steps": {
+			"account": "الحساب",
+			"store": "تفاصيل المتجر",
+			"complete": "مكتمل"
+		},
+		"account": {
+			"title": "إنشاء حسابك",
+			"subtitle": "ابدأ بإنشاء حساب البائع الخاص بك",
+			"username": "اسم المستخدم",
+			"usernamePlaceholder": "أدخل اسم المستخدم",
+			"email": "عنوان البريد الإلكتروني",
+			"emailPlaceholder": "أدخل بريدك الإلكتروني",
+			"password": "كلمة المرور",
+			"passwordPlaceholder": "أدخل كلمة المرور",
+			"confirmPassword": "تأكيد كلمة المرور",
+			"confirmPasswordPlaceholder": "أكد كلمة المرور",
+			"createAccount": "إنشاء الحساب",
+			"creating": "جاري إنشاء الحساب..."
+		},
+		"store": {
+			"title": "إعداد متجرك",
+			"subtitle": "أضف تفاصيل متجرك والعلامة التجارية",
+			"storeImages": "صور المتجر",
+			"storeLogo": "شعار المتجر",
+			"chooseLogo": "اختر الشعار",
+			"logoFormat": "PNG، JPG حتى 10 ميجابايت",
+			"storeBanner": "بانر المتجر",
+			"chooseBanner": "اختر البانر",
+			"bannerFormat": "PNG، JPG حتى 10 ميجابايت (1200x400 مُوصى به)",
+			"businessLicence": "رخصة الأعمال",
+			"optional": "اختياري",
+			"licenceFormat": "PDF، DOC، JPG حتى 10 ميجابايت",
+			"selectedFile": "الملف المحدد",
+			"storeInformation": "معلومات المتجر",
+			"storeName": "اسم المتجر",
+			"storeNamePlaceholder": "أدخل اسم متجرك",
+			"phoneNumber": "رقم الهاتف",
+			"phonePlaceholder": "أدخل رقم هاتفك",
+			"address": "عنوان المتجر",
+			"addressPlaceholder": "أدخل عنوان متجرك",
+			"facebook": "صفحة الفيسبوك",
+			"facebookPlaceholder": "https://facebook.com/yourstore",
+			"instagram": "الإنستغرام",
+			"instagramPlaceholder": "https://instagram.com/yourstore",
+			"tiktok": "التيك توك",
+			"tiktokPlaceholder": "https://tiktok.com/@yourstore",
+			"storeDescription": "وصف المتجر",
+			"descriptionPlaceholder": "اوصف متجرك ومنتجاتك...",
+			"back": "السابق",
+			"createStore": "إنشاء المتجر",
+			"creating": "جاري إنشاء المتجر..."
+		},
+		"success": {
+			"title": "تم إنشاء المتجر بنجاح!",
+			"message": "تم إنشاء متجرك بنجاح. يمكنك الآن البدء في إضافة المنتجات وإدارة المخزون.",
+			"pendingTitle": "في انتظار الموافقة",
+			"pendingMessage": "متجرك في انتظار موافقة المدير. سيتم إشعارك عند تفعيله.",
+			"loginButton": "تسجيل الدخول للوحة التحكم",
+			"homeButton": "الذهاب للصفحة الرئيسية"
+		},
+		"validation": {
+			"usernameMin": "اسم المستخدم يجب أن يكون على الأقل 3 أحرف",
+			"usernameMax": "اسم المستخدم يجب أن يكون على الأكثر 20 حرف",
+			"usernameInvalid": "اسم المستخدم يمكن أن يحتوي فقط على أحرف وأرقام وشرطات سفلية",
+			"usernameRequired": "اسم المستخدم مطلوب",
+			"emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+			"emailRequired": "البريد الإلكتروني مطلوب",
+			"passwordMin": "كلمة المرور يجب أن تكون على الأقل 6 أحرف",
+			"passwordRequired": "كلمة المرور مطلوبة",
+			"passwordMatch": "كلمات المرور يجب أن تتطابق",
+			"confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+			"storeNameMin": "اسم المتجر يجب أن يكون على الأقل حرفين",
+			"storeNameMax": "اسم المتجر يجب أن يكون على الأكثر 50 حرف",
+			"storeNameRequired": "اسم المتجر مطلوب",
+			"phoneInvalid": "يرجى إدخال رقم هاتف صالح",
+			"phoneRequired": "رقم الهاتف مطلوب",
+			"descriptionMin": "الوصف يجب أن يكون على الأقل 10 أحرف",
+			"descriptionMax": "الوصف يجب أن يكون على الأكثر 500 حرف",
+			"descriptionRequired": "وصف المتجر مطلوب",
+			"addressMin": "العنوان يجب أن يكون على الأقل 5 أحرف",
+			"addressRequired": "عنوان المتجر مطلوب"
+		},
+		"alerts": {
+			"accountCreated": "تم إنشاء الحساب بنجاح!",
+			"registrationError": "فشل في إنشاء الحساب. حاول مرة أخرى.",
+			"storeCreated": "تم إنشاء المتجر بنجاح!",
+			"storeCreationError": "فشل في إنشاء المتجر. حاول مرة أخرى."
 		}
 	}
 }

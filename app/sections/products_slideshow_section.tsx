@@ -7,18 +7,20 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import ProductItem from '../items/ProductItem';
+import { useTranslation } from 'react-i18next';
 
 export default function Products_Slideshow_Section() {
     const {products}=useContext(DataContext)
+    const { t } = useTranslation();
   return (
     <div className='container mx-auto px-4 py-8'>
-        <CustomSectionTitle title={"New Arrivals"} />
+        <CustomSectionTitle title={t("home.products.title")} description={t("home.products.description")} />
            <Swiper
                     spaceBetween={20}
                     slidesPerView={1}
                     speed={600}
                     modules={[Navigation, Pagination, Autoplay]}
-                    navigation={true}
+                    navigation={false}
                     autoplay={{
                         delay: 4000,
                         disableOnInteraction: false,

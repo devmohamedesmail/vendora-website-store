@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FiEdit, FiLogOut, FiPlus, FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiSave, FiPackage, FiPhone, FiMail } from "react-icons/fi";
 
 export default function Profile_User_Tab({auth}:any) {
+  console.log("auth", auth);
   return (
      <div className="space-y-6">
                 {/* Profile Header */}
@@ -11,8 +12,8 @@ export default function Profile_User_Tab({auth}:any) {
                       <FiUser size={32} />
                     </div>
                     <div className="text-center sm:text-left">
-                      <h2 className="text-2xl font-bold">{auth?.user?.username}</h2>
-                      <p className="opacity-90">{auth?.user?.email}</p>
+                      <h2 className="text-2xl font-bold">{auth?.username}</h2>
+                      <p className="opacity-90">{auth?.email}</p>
                       {/* <p className="text-sm opacity-75">Member since {new Date(user.joinDate).getFullYear()}</p> */}
                     </div>
                   </div>

@@ -103,7 +103,7 @@ export default function Deals_Section() {
         <div className="py-8">
             <div className="container mx-auto px-4">
                
-                <CustomSectionTitle title={t('deals.title')} />
+                <CustomSectionTitle title={t('deals.title')} description={t('deals.description')} />
                 
                 {/* Loading State */}
                 {isLoading ? (
