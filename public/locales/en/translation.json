@@ -762,7 +762,11 @@
 		"errorFetchingProductDetails": "Error fetching product details",
 		"orderPlaced": "Order placed successfully!",
 		"orderFailed": "Failed to place order. Please try again.",
-		"siteName":"VapeToon"
+		"siteName":"VapeToon",
+		"fastdelivery": "Fast Delivery",
+		"bestoffer": "Best Offer",
+		"easyreturn": "Easy Return",
+		"securepayment": "Secure Payment"
 	},
 	"introModal": {
 		"welcome": "Welcome to Vendora!",
@@ -810,7 +814,11 @@
 		"discountedProducts": "Discounted Products",
 		"shopNow": "Shop Now",
 		"noDeals": "No deals found",
-		"checkBackLater": "Check back later for new deals!"
+		"checkBackLater": "Check back later for new deals!",
+		"noDealsTitle": "No Exclusive Deals Available",
+		"noDealsMessage": "Currently, there are no exclusive deals available. Please check back later or explore our regular products.",
+		"browseProducts": "Browse Products",
+		"newsletter": "Subscribe to our newsletter for exclusive deals and updates"
 	},
 	"footer":{
 		"home": "Home",

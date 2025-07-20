@@ -17,17 +17,17 @@ export default function Slide_Show() {
     const { t } = useTranslation();
 
     const slides = [
-        { id: 1, content: 'Special Offer 1', image: '/images/slide1.jpg' },
-        { id: 2, content: 'New Products', image: '/images/slide2.jpg' },
-        { id: 3, content: 'Best Sellers', image: '/images/slide3.jpg' },
-        { id: 4, content: 'Limited Time', image: '/images/slide4.jpg' },
-        { id: 5, content: 'Limited Time 3', image: '/images/slide1.jpg' },
+        { id: 1, content: 'Special Offer 1', image: '/images/slide5.jpg' },
+        { id: 2, content: 'New Products', image: '/images/slide6.jpg' },
+        { id: 3, content: 'Best Sellers', image: '/images/slide7.jpg' },
+        { id: 4, content: 'Limited Time', image: '/images/slide8.jpg' },
+       
     ];
 
     return (
         <Swiper
             // Basic Configuration
-            spaceBetween={30}
+            spaceBetween={20}
             slidesPerView={1}
             speed={600}
             loop={true}
@@ -89,42 +89,7 @@ export default function Slide_Show() {
                 },
             }}
 
-            // Effects (uncomment one at a time)
-            // effect="fade"
-            // fadeEffect={{
-            //     crossFade: true
-            // }}
-
-            // effect="cube"
-            // cubeEffect={{
-            //     shadow: true,
-            //     slideShadows: true,
-            //     shadowOffset: 20,
-            //     shadowScale: 0.94,
-            // }}
-
-            // effect="flip"
-            // flipEffect={{
-            //     slideShadows: true,
-            //     limitRotation: true,
-            // }}
-
-            // effect="coverflow"
-            // coverflowEffect={{
-            //     rotate: 50,
-            //     stretch: 0,
-            //     depth: 100,
-            //     modifier: 1,
-            //     slideShadows: true,
-            // }}
-
-            // Event Handlers
-            // onSlideChange={(swiper) => console.log('Slide changed to:', swiper.activeIndex)}
-            // onSwiper={(swiper) => console.log('Swiper initialized:', swiper)}
-            // onReachBeginning={() => console.log('Reached beginning')}
-            // onReachEnd={() => console.log('Reached end')}
-            // onAutoplayStart={() => console.log('Autoplay started')}
-            // onAutoplayStop={() => console.log('Autoplay stopped')}
+         
 
             // Touch/Mouse Settings
             touchRatio={1}
@@ -145,12 +110,7 @@ export default function Slide_Show() {
                 sensitivity: 1,
             }}
 
-            // Lazy Loading
-            // lazy={{
-            //     enabled: true,
-            //     loadOnTransitionStart: false,
-            //     loadPrevNext: false,
-            // }}
+            
 
             // Zoom
             zoom={{
@@ -165,21 +125,17 @@ export default function Slide_Show() {
             // Direction
             direction="horizontal" // 'horizontal' | 'vertical'
 
-            className="w-full h-[250px] md:h-[400px] lg:h-[400px]"
+            className="w-full h-[250px] md:h-[450px] lg:h-[450px]"
         >
             {slides.map((slide) => (
-                <SwiperSlide key={slide.id} className="relative">
+                <SwiperSlide key={slide.id} className="relative ">
                     <img
-                        className="w-full h-full "
+                        className="w-full h-full  object-cover"
                         src={slide.image}
                         alt={slide.content}
-                    // loading="lazy"
+                    
                     />
-                    <div className="absolute inset-0 bg-gray-100  opacity-10 flex items-center justify-center">
-                        <h2 className="text-black text-2xl md:text-4xl font-bold text-center">
-                            {t(slide.content)}
-                        </h2>
-                    </div>
+                 
                 </SwiperSlide>
             ))}
         </Swiper>

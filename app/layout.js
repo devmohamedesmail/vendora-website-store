@@ -5,7 +5,7 @@ import "./globals.css";
 
 import { AuthProvider } from "./context/auth_context";
 import { ToastContainer } from "react-toastify";
-import ClientWrapper from "./components/ClientWrapper";
+import ClientWrapper from "./components/common/client_wrapper";
 import { DataProvider } from "./context/data_context";
 import { ReduxProvider } from "./redux/ReduxProvider";
 import PWAInstallPrompt from "./components/user_components/pwa_install_prompt";
@@ -119,7 +119,7 @@ export default function RootLayout({ children }) {
             </DataProvider>
           </AuthProvider>
         </ReduxProvider>
-         <PWAInstallPrompt />
+         {/* <PWAInstallPrompt /> */}
       </body>
     </html>
   );

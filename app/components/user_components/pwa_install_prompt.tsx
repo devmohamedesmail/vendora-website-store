@@ -1,8 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { FiDownload, FiX, FiSmartphone, FiStar, FiWifi, FiZap, FiShare, FiPlus } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 export default function PWAInstallPrompt() {
+
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -130,14 +132,14 @@ export default function PWAInstallPrompt() {
         <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200/60 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-lg">
           
           {/* Header with gradient */}
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-0.5">
+          <div className=" p-0.5">
             <div className="bg-white rounded-t-2xl">
               <div className="p-4 pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     {/* Animated icon */}
                     <div className="relative">
-                      <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <div className="w-14 h-14 bg-gradient-to-br from-main to-main/90 rounded-xl flex items-center justify-center shadow-lg">
                         {isIOS ? (
                           <FiShare className="w-7 h-7 text-white" />
                         ) : (
@@ -149,8 +151,9 @@ export default function PWAInstallPrompt() {
                     </div>
                     
                     <div>
-                      <h4 className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                      <h4 className="text-lg font-bold bg-gradient-to-r from-main to-main/90 bg-clip-text text-transparent">
                         {isArabic ? translations.titleAr : translations.title}
+                        
                       </h4>
                       <div className="flex items-center gap-1 mt-1">
                         <div className="flex">
@@ -217,7 +220,7 @@ export default function PWAInstallPrompt() {
 
                 <button
                   onClick={hidePrompt}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
+                  className="w-full bg-gradient-to-r from-main to-main/80 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
                 >
                   {isArabic ? translations.gotItButtonAr : translations.gotItButton}
                 </button>
@@ -260,7 +263,7 @@ export default function PWAInstallPrompt() {
                 <div className="flex gap-2">
                   <button
                     onClick={handleInstall}
-                    className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2"
+                    className="flex-1 bg-gradient-to-r from-main to-main/90 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2"
                   >
                     <FiDownload className="w-4 h-4" />
                     {isArabic ? translations.installButtonAr : translations.installButton}

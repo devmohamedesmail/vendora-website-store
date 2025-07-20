@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useCart } from '../../redux/hooks/useCart';
 import { useWishlist } from '../../redux/hooks/useWishlist';
 import { toast } from 'react-toastify';
+import Product_Attributes_Selection from './product_attributes_selection';
 
 export default function Product_Details({ product }: any) {
     const { t, i18n } = useTranslation();
@@ -147,6 +148,9 @@ export default function Product_Details({ product }: any) {
                     </div>
                     <p className="text-sm text-gray-600">{t('productDetails.priceIncludesTax')}</p>
                 </div>
+
+
+                <Product_Attributes_Selection product={product} />
 
                 {/* Vendor Information */}
                 <div className="mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">

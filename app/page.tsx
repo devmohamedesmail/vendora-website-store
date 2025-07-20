@@ -13,6 +13,8 @@ import Intro_Modal from './components/user_components/intro_modal';
 import { useTranslation } from 'react-i18next';
 import { config } from './config/api';
 import Home_Featured_Products from './components/user_components/hero_featured_products';
+import Store_Features from './components/user_components/store_features';
+import PWAInstallPrompt from './components/user_components/pwa_install_prompt';
 
 
 
@@ -30,7 +32,7 @@ export default function Home() {
      <Intro_Modal />
       <Navbar />
      
-      <div className='grid grid-cols-1 lg:grid-cols-5 gap-4 container mx-auto px-4 py-8'>
+      <div className='grid grid-cols-1 lg:grid-cols-5  container mx-auto  '>
        
         <Home_Featured_Products  />
 
@@ -44,8 +46,16 @@ export default function Home() {
         {/* Right Products Grid - Hidden on mobile, shown on desktop */}
        <Home_Featured_Products  />
       </div>
+      <Store_Features />
 
       {/* Mobile Products Grid - Shown below slideshow on mobile */}
+
+      <div className='bg-red-700'>
+        <video autoPlay muted loop className="w-full h-auto">
+          <source src="/images/video.mp4" type="video/mp4" />
+          {t('home.videoFallback', 'Your browser does not support the video tag.')}
+        </video>
+      </div>
      
       {/* <Banner /> */}
       <Deals_Section />
@@ -55,6 +65,7 @@ export default function Home() {
       <Products_Section />
       <Footer />
       <BottomNavbar />
+      <PWAInstallPrompt />
     </>
   );
 }

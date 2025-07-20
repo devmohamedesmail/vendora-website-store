@@ -72,10 +72,10 @@ export default function Deals_Section() {
                 {/* Creative Message */}
                 <div className="space-y-4">
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                        {t('deals.noDealsTitle') || '🎯 No Hot Deals Right Now!'}
+                        {t('deals.noDealsTitle')}
                     </h3>
                     <p className="text-gray-600 text-lg leading-relaxed">
-                        {t('deals.noDealsMessage') || 'Our deal hunters are working around the clock to bring you amazing discounts. Check back soon for explosive savings!'}
+                        {t('deals.noDealsMessage')}
                     </p>
                     
                     {/* Call to Action */}
@@ -84,7 +84,7 @@ export default function Deals_Section() {
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                             </svg>
-                            {t('deals.browseProducts') || 'Browse All Products'}
+                            {t('deals.browseProducts')}
                         </Link>
                     </div>
 

@@ -51,6 +51,7 @@ export default function CustomInput({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          defaultValue={value}
           disabled={disabled}
           required={required}
           className={`w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 border border-gray-300 rounded-xl  focus:border-second outline-none  transition-colors ${className} ${

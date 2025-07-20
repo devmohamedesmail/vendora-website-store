@@ -32,7 +32,7 @@ export default function Hero_Featured_Products() {
                     ) : (
                         // Actual products
                         featuredProducts.slice(0, 4).map((product:any, index:any) => (
-                            <Featured_Product_Item  product={product} i18n={i18n} />
+                            <Featured_Product_Item key={index}  product={product} i18n={i18n} />
                         ))
                     )}
                 </div>

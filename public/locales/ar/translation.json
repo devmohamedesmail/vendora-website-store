@@ -760,7 +760,11 @@
 		"errorFetchingProductDetails": " خطأ في جلب تفاصيل المنتج",
 		"orderPlaced": " تم تقديم الطلب بنجاح!",
 		"orderFailed": " فشل في تقديم الطلب. يرجى المحاولة مرة أخرى.",
-		"siteName": " فيب تون"
+		"siteName": " فيب تون",
+		"fastdelivery": "توصيل سريع",
+		"bestoffer": "أفضل عرض",
+		"easyreturn": "إرجاع سهل",
+		"securepayment": "دفع آمن"
 	},
 	"introModal": {
 		"welcome": "أهلاً بك في فيندورا!",
@@ -808,7 +812,11 @@
 		"discountedProducts": "منتجات مخفضة",
 		"shopNow": "تسوق الآن",
 		"noDeals": "لم يتم العثور على عروض",
-		"checkBackLater": "عد لاحقًا لمزيد من العروض!"
+		"checkBackLater": "عد لاحقًا لمزيد من العروض!",
+		"noDealsTitle": "لا توجد عروض حصرية متاحة",
+		"noDealsMessage": "حالياً، لا توجد عروض حصرية متوفرة. يرجى التحقق مرة أخرى لاحقًا أو تصفح منتجاتنا العادية.",
+		"browseProducts": "تصفح المنتجات",
+		"newsletter": "اشترك في نشرتنا الإخبارية للحصول على عروض حصرية وتحديثات"
 	},
 	"footer": {
 		"home": "الرئيسية",
