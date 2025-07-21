@@ -1,10 +1,12 @@
 'use client'
-import React, { useState , useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, use } from 'react'
 import Vendor_Sidebar from '../components/vendor_components/vendor_sidebar';
 import Vendor_Header from '../components/vendor_components/vendor_header';
 import { config } from '../config/api';
 import axios from 'axios';
 import { AuthContext } from '../context/auth_context';
+import toast from 'react-hot-toast';
+import { VendorContext } from '../context/vendor_context';
 
 interface StoreData {
     id: number;
@@ -40,15 +42,16 @@ interface StoreData {
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-     const [sidebarOpen, setSidebarOpen] = useState(false);
-     const [language, setLanguage] = useState('en');
-     const [store, setStore] = useState<StoreData | null>(null);
-     const [loading, setLoading] = useState(true);
-     const { auth } = useContext(AuthContext);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [language, setLanguage] = useState('en');
+    const [store, setStore] = useState<StoreData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const { auth } = useContext(AuthContext);
+    const { storeDetails, setStoreDetails, fetchStoreDetails } = useContext(VendorContext);
 
-     console.log("store details", store);
+console.log("Ayth ", auth);
 
-  const fetchStoreSettings = async () => {
+    const fetchStoreSettings = async () => {
         // Check if auth is available and has an id
         if (!auth?.id) {
             console.log('Auth not available or no user ID');
@@ -69,29 +72,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             const storeData = response.data.data[0];
             setStore(storeData);
-
-            // Update formik values
-            // formik.setValues({
-            //     store_name: storeData.store_name || '',
-            //     phone: storeData.phone || '',
-            //     description: storeData.description || '',
-            // });
-
-           
-            // if (storeData.logo?.url) {
-            //     setLogoPreview(storeData.logo.url);
-            // }
-            // if (storeData.banner?.url) {
-            //     setBannerPreview(storeData.banner.url);
-            // }
         } catch (error) {
-            console.error('Error fetching store settings:', error);
-            if (axios.isAxiosError(error)) {
-                console.error('Store settings API error status:', error.response?.status);
-                console.error('Store settings API error data:', error.response?.data);
-                console.error('Store settings API error message:', error.message);
-            }
-            // Don't throw the error, just log it and continue
+            toast.error('Failed to fetch store settings. Please try again later.');
             setStore(null);
         } finally {
             setLoading(false);
@@ -99,19 +81,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
 
 
-
-
-
-
-
 useEffect(() => {
-    // Only fetch store settings when auth is loaded and has an id, and we haven't already loaded the store
-    if (auth?.id && !store && !loading) {
-        fetchStoreSettings();
-    } else if (!auth?.id) {
-        setLoading(false);
+  const fetchData = async () => {
+    console.log("Fetching for ID:", auth?.id);
+    try {
+      await fetchStoreDetails(auth?.id);
+    } catch (error) {
+      console.error('Failed to fetch store details:', error);
     }
-}, [auth?.id, store])  // Include store in dependencies to prevent unnecessary calls
+  };
+
+  fetchData();
+}, []);
+
+
+
+
+    useEffect(() => {
+        // Only fetch store settings when auth is loaded and has an id, and we haven't already loaded the store
+        if (auth?.id && !store && !loading) {
+            fetchStoreSettings();
+        } else if (!auth?.id) {
+            setLoading(false);
+        }
+    }, [auth?.id, store])  // Include store in dependencies to prevent unnecessary calls
 
 
 
@@ -124,12 +117,12 @@ useEffect(() => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-indigo-50 flex">
-            <Vendor_Sidebar 
-              setSidebarOpen={setSidebarOpen} 
-              sidebarOpen={sidebarOpen}
-              store={store}
-              auth={auth}
-              />
+            <Vendor_Sidebar
+                setSidebarOpen={setSidebarOpen}
+                sidebarOpen={sidebarOpen}
+                store={store}
+                auth={auth}
+            />
 
 
 
@@ -137,11 +130,11 @@ useEffect(() => {
             {/* Main Content Area - Positioned to account for fixed sidebar */}
             <div className="flex-1 flex flex-col md:ml-72">
                 {/* Navbar - Fixed at top */}
-              
-                <Vendor_Header 
-                   setSidebarOpen={setSidebarOpen} 
-                   language={language} 
-                   setLanguage={setLanguage} />
+
+                <Vendor_Header
+                    setSidebarOpen={setSidebarOpen}
+                    language={language}
+                    setLanguage={setLanguage} />
                 {/* Main Content - Scrollable */}
                 <main className="flex-1 overflow-y-auto bg-transparent p-6 md:p-8">
                     {children}

@@ -9,6 +9,7 @@ import ClientWrapper from "./components/common/client_wrapper";
 import { DataProvider } from "./context/data_context";
 import { ReduxProvider } from "./redux/ReduxProvider";
 import PWAInstallPrompt from "./components/user_components/pwa_install_prompt";
+import { VendorProvider } from "./context/vendor_context";
 
 
 
@@ -73,22 +74,22 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-       <head>
+      <head>
         {/* PWA meta tags for all platforms */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#6366f1" />
-        
+
         {/* iOS PWA meta tags */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Vendora" />
         <meta name="mobile-web-app-capable" content="yes" />
-        
+
         {/* iOS icons */}
         <link rel="apple-touch-icon" href="/images/logo.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png" />
         <link rel="apple-touch-startup-image" href="/images/logo.png" />
-        
+
         {/* Prevent zooming on iOS */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
       </head>
@@ -98,28 +99,28 @@ export default function RootLayout({ children }) {
         <ReduxProvider>
           <AuthProvider>
             <DataProvider>
+              <VendorProvider>
+                <ClientWrapper>
+                  {children}
+                  <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
 
-              <ClientWrapper>
-                {children}
-                <ToastContainer
-                  position="top-right"
-                  autoClose={3000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-
-                />
-              </ClientWrapper>
-
+                  />
+                </ClientWrapper>
+              </VendorProvider>
             </DataProvider>
           </AuthProvider>
         </ReduxProvider>
-         {/* <PWAInstallPrompt /> */}
+        {/* <PWAInstallPrompt /> */}
       </body>
     </html>
   );
