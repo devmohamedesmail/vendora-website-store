@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { FiShoppingBag,FiPhone,FiMail,FiFileText,FiUpload,FiSave,FiUser,FiShield,FiImage,FiLock, FiEye,FiEyeOff,FiCheckCircle,FiArrowRight,FiArrowLeft} from 'react-icons/fi';
+import { FiShoppingBag, FiPhone, FiMail, FiFileText, FiUpload, FiSave, FiUser, FiShield, FiImage, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 import { FaFacebookF, FaInstagramSquare, FaTiktok } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { config } from '../../config/api';
@@ -13,24 +13,14 @@ import Custom_Spinner from '../../custom/custom_spinner';
 import { uploadImagesToStrapi } from '../../ultilites/uploadImagesToStrapi';
 import { toast } from 'react-toastify';
 import Custom_Textarea from '../../custom/custom_textarea';
-
 import { AuthContext } from '../../context/auth_context';
 
-interface UserRegistrationData {
-    jwt: string;
-    user: {
-        id: number;
-        username: string;
-        email: string;
-    };
-}
+
 
 export default function CreateVendor() {
     const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [userToken, setUserToken] = useState<string | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
     const [logo, setLogo] = useState<File | null>(null);
     const [banner, setBanner] = useState<File | null>(null);
@@ -38,7 +28,8 @@ export default function CreateVendor() {
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
     const [bannerPreview, setBannerPreview] = useState<string | null>(null);
     const { t } = useTranslation();
-    const { handle_login, handle_register}=useContext(AuthContext)
+    const { handle_login, handle_register , updateUserType } = useContext(AuthContext)
+    const {auth}=useContext(AuthContext)
 
     // Step 1: Account Registration Validation
     const accountValidationSchema = Yup.object({
@@ -53,7 +44,7 @@ export default function CreateVendor() {
         password: Yup.string()
             .min(6, t('createVendor.validation.passwordMin'))
             .required(t('createVendor.validation.passwordRequired')),
-      
+
     });
 
     // Step 2: Store Details Validation
@@ -62,9 +53,11 @@ export default function CreateVendor() {
             .min(2, t('createVendor.validation.storeNameMin'))
             .max(50, t('createVendor.validation.storeNameMax'))
             .required(t('createVendor.validation.storeNameRequired')),
-        phone: Yup.string()
-            .matches(/^\+?[1-9]\d{1,14}$/, t('createVendor.validation.phoneInvalid'))
-            .required(t('createVendor.validation.phoneRequired')),
+        countryCode: Yup.string()
+            .required(t('createVendor.validation.countryCodeRequired')),
+        phoneNumber: Yup.string()
+            .matches(/^[0-9]{7,10}$/, t('createVendor.validation.phoneNumberInvalid'))
+            .required(t('createVendor.validation.phoneNumberRequired')),
         description: Yup.string()
             .min(10, t('createVendor.validation.descriptionMin'))
             .max(500, t('createVendor.validation.descriptionMax'))
@@ -87,24 +80,7 @@ export default function CreateVendor() {
             try {
                 setSubmitting(true);
                 setLoading(true);
-
-                // const response = await axios.post(`${config.url}/api/auth/local/register`, {
-                //     headers: {
-                //         Authorization: `Bearer ${config.token}`,
-                //     }
-                // },
-                //     {
-                //         username: values.username,
-                //         email: values.email,
-                //         password: values.password
-                //     }
-                // );
-
-                // const userData: UserRegistrationData = response.data;
-                // setUserToken(userData.jwt);
-                // setUserId(userData.user.id);
-
-                 const res = await handle_register(values.username, values.email, values.password)    
+                const res = await handle_register(values.username, values.email, values.password)
                 toast.success(t('createVendor.alerts.accountCreated'));
                 setCurrentStep(2);
             } catch (error: any) {
@@ -125,7 +101,9 @@ export default function CreateVendor() {
     const storeFormik = useFormik({
         initialValues: {
             store_name: '',
-            phone: '',
+          
+            countryCode: '+971', // Default to UAE
+            phoneNumber: '',
             description: '',
             facebook: '',
             instagram: '',
@@ -137,7 +115,7 @@ export default function CreateVendor() {
             try {
                 setSubmitting(true);
                 setLoading(true);
-
+                const fullPhoneNumber = values.countryCode + values.phoneNumber;
                 const logoIds = logo ? await uploadImagesToStrapi([logo]) : [];
                 const bannerIds = banner ? await uploadImagesToStrapi([banner]) : [];
                 const licenceIds = licence ? await uploadImagesToStrapi([licence]) : [];
@@ -145,18 +123,19 @@ export default function CreateVendor() {
                 const payload = {
                     data: {
                         store_name: values.store_name,
-                        phone: values.phone,
+                        phone: fullPhoneNumber,
                         description: values.description,
                         facebook: values.facebook,
                         instagram: values.instagram,
                         tiktok: values.tiktok,
                         address: values.address,
-                        user_id: userId,
+                        user_id: auth?.id,
                         logo: logoIds.length ? logoIds[0] : null,
                         banner: bannerIds.length ? bannerIds[0] : null,
                         licence: licenceIds.length ? licenceIds[0] : null,
                         isActive: false,
-                        isVarified: false
+                        isVarified: false,
+                        
                     }
                 };
 
@@ -169,6 +148,21 @@ export default function CreateVendor() {
                         }
                     }
                 );
+
+                // const update_user_type = await axios.put(`${config.url}/api/users/${auth?.id}`,{    
+                //         type: 'vendor'    
+                // }, {
+                //     headers: {
+                //         Authorization: `Bearer ${config.token}`,
+                //     }
+                // })
+
+
+                // Update user type and automatically update auth context + localStorage
+                if (auth?.id) {
+                    await updateUserType(auth.id, 'vendor');
+                    console.log('User type updated successfully');
+                }
 
                 toast.success(t('createVendor.alerts.storeCreated'));
                 setCurrentStep(3);
@@ -213,8 +207,8 @@ export default function CreateVendor() {
                 {[1, 2, 3].map((step) => (
                     <React.Fragment key={step}>
                         <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 ${currentStep >= step
-                                ? 'bg-indigo-600 border-indigo-600 text-white'
-                                : 'border-gray-300 text-gray-400'
+                            ? 'bg-indigo-600 border-indigo-600 text-white'
+                            : 'border-gray-300 text-gray-400'
                             }`}>
                             {currentStep > step ? <FiCheckCircle className="w-6 h-6" /> : step}
                         </div>
@@ -302,26 +296,6 @@ export default function CreateVendor() {
                     </button>
                 </div>
 
-                {/* <div className="relative">
-          <CustomInput
-            label={t('createVendor.account.confirmPassword')}
-            type={showConfirmPassword ? "text" : "password"}
-            name="confirmPassword"
-            placeholder={t('createVendor.account.confirmPasswordPlaceholder')}
-            value={accountFormik.values.confirmPassword}
-            onChange={accountFormik.handleChange}
-            error={accountFormik.touched.confirmPassword && accountFormik.errors.confirmPassword}
-            icon={FiShield}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-9 text-gray-400 hover:text-gray-600"
-          >
-            {showConfirmPassword ? <FiEyeOff className="w-5 h-5" /> : <FiEye className="w-5 h-5" />}
-          </button>
-        </div> */}
 
                 <button
                     type="submit"
@@ -478,7 +452,7 @@ export default function CreateVendor() {
                             required
                         />
 
-                        <CustomInput
+                        {/* <CustomInput
                             label={t('createVendor.store.phoneNumber')}
                             type="tel"
                             name="phone"
@@ -488,7 +462,64 @@ export default function CreateVendor() {
                             error={storeFormik.touched.phone && storeFormik.errors.phone}
                             icon={FiPhone}
                             required
-                        />
+                        /> */}
+
+                        {/* Phone Number with Country Code */}
+                        <div className="space-y-2">
+                            <label className="block text-sm font-medium text-gray-700">
+                                {t('createVendor.store.phoneNumber')}
+                                <span className="text-red-500 ml-1">*</span>
+                            </label>
+                            <div className="flex space-x-2">
+                                {/* Country Code Dropdown */}
+                                <div className="relative w-32">
+                                    <select
+                                        name="countryCode"
+                                        value={storeFormik.values.countryCode || '+971'}
+                                        onChange={storeFormik.handleChange}
+                                        className="w-full pl-3 pr-8 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-white text-sm font-medium appearance-none"
+                                    >
+                                        <option value="+971">🇦🇪 +971</option>
+                                        <option value="+973">🇧🇭 +973</option>
+                                        <option value="+965">🇰🇼 +965</option>
+                                        <option value="+968">🇴🇲 +968</option>
+                                        <option value="+974">🇶🇦 +974</option>
+                                        <option value="+966">🇸🇦 +966</option>
+                                    </select>
+                                    {/* Dropdown Arrow */}
+                                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                {/* Phone Number Input */}
+                                <div className="flex-1 relative">
+                                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                        <FiPhone className="w-5 h-5" />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="phoneNumber"
+                                        placeholder={t('createVendor.store.phonePlaceholder')}
+                                        value={storeFormik.values.phoneNumber || ''}
+                                        onChange={storeFormik.handleChange}
+                                        className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:border-second focus:outline-none transition-colors ${storeFormik.touched.phoneNumber && storeFormik.errors.phoneNumber
+                                            ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+                                            : 'border-gray-300 focus:border-indigo-500'
+                                            }`}
+                                        disabled={storeFormik.isSubmitting}
+                                    />
+                                </div>
+                            </div>
+                            {/* {storeFormik.touched.phoneNumber && storeFormik.errors.phoneNumber && (
+                                <p className="text-red-500 text-sm mt-1">{storeFormik.errors.phoneNumber}</p>
+                            )} */}
+                            <p className="text-xs text-gray-500">
+                                {t('createVendor.store.phoneHint')}
+                            </p>
+                        </div>
 
                         <CustomInput
                             label={t('createVendor.store.address')}

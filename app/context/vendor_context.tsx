@@ -5,20 +5,18 @@ import { config } from '../config/api';
 
 // Define types for the vendor context
 interface VendorContextType {
-    storeDetails: any;
-    setStoreDetails: (details: any) => void;
+    vendor: any;
+    setVendor: (details: any) => void;
     fetchStoreDetails: (userId: number) => Promise<void>;
-    loading: boolean;
-    error: string | null;
+   
 }
 
 // Create VendorContext with proper default value
 const VendorContext = createContext<VendorContextType>({
-    storeDetails: null,
-    setStoreDetails: () => {},
+    vendor: null,
+    setVendor: () => {},
     fetchStoreDetails: async () => {},
-    loading: false,
-    error: null,
+    
 });
 
 interface VendorProviderProps {
@@ -26,14 +24,12 @@ interface VendorProviderProps {
 }
 
 const VendorProvider: React.FC<VendorProviderProps> = ({ children }) => {
-    const [storeDetails, setStoreDetails] = useState<any>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const [vendor, setVendor] = useState<any>(null);
+    
 
     const fetchStoreDetails = async (userId: number): Promise<void> => {
-        setLoading(true);
-        setError(null);
-        console.log('Fetching store details for user ID:', userId);
+       
+        
         try {
             const response = await axios.get(
                 `${config.url}/api/vendors?filters[user_id][$eq]=${userId}&populate[logo]=true&populate[banner]=true`,
@@ -44,13 +40,12 @@ const VendorProvider: React.FC<VendorProviderProps> = ({ children }) => {
                 }
             );
             const storeData = response.data.data[0];
-            setStoreDetails(storeData || null);
+            setVendor(storeData || null);
         } catch (error) {
-            console.log('Error fetching store details:', error);
-            setError('Failed to fetch store details');
-            setStoreDetails(null);
+            console.log('Error fetching store details: from context', error);
+            setVendor(null);
         } finally {
-            setLoading(false);
+            
         }
     };
     
@@ -58,11 +53,10 @@ const VendorProvider: React.FC<VendorProviderProps> = ({ children }) => {
 
     return (
         <VendorContext.Provider value={{ 
-            storeDetails, 
-            setStoreDetails, 
+            vendor, 
+            setVendor, 
             fetchStoreDetails,
-            loading,
-            error 
+           
         }}>
             {children}
         </VendorContext.Provider>

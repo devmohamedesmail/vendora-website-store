@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import Custom_Textarea from '../../custom/custom_textarea';
 import Setting_Header from '../../components/vendor_components/setting_header';
 import Store_Status from '../../components/vendor_components/store_status';
+import { VendorContext } from '../../context/vendor_context';
 
 interface StoreData {
     id: number;
@@ -59,6 +60,7 @@ export default function Store_Settings() {
     const [bannerPreview, setBannerPreview] = useState<string | null>(null);
     const { auth } = useContext(AuthContext);
     const { t } = useTranslation();
+    const { vendor, fetchStoreDetails } = useContext(VendorContext);
 
     // Validation schema
     const validationSchema = Yup.object({
@@ -122,7 +124,7 @@ export default function Store_Settings() {
                 };
 
                 const response = await axios.put(
-                    `${config.url}/api/vendors/${store?.documentId}`,
+                    `${config.url}/api/vendors/${vendor?.documentId}`,
                     payload,
                     {
                         headers: {
@@ -134,8 +136,8 @@ export default function Store_Settings() {
 
                 toast.success(t('vendorSettings.alerts.updateSuccess'));
 
-                // Refresh store data
-                fetchStoreSettings();
+
+                fetchStoreDetails(auth?.id);
             } catch (error) {
                 toast.error(t('vendorSettings.alerts.updateError'));
             } finally {
@@ -144,47 +146,47 @@ export default function Store_Settings() {
         },
     });
 
-    const fetchStoreSettings = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get(
-                `${config.url}/api/vendors?filters[user_id][$eq]=${auth?.id}&populate[logo]=true&populate[banner]=true`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${config.token}`,
-                    }
-                }
-            );
+    // const fetchStoreSettings = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await axios.get(
+    //             `${config.url}/api/vendors?filters[user_id][$eq]=${auth?.id}&populate[logo]=true&populate[banner]=true`,
+    //             {
+    //                 headers: {
+    //                     Authorization: `Bearer ${config.token}`,
+    //                 }
+    //             }
+    //         );
 
-            const storeData = response.data.data[0];
-            console.log('Store settings:', storeData);
-            setStore(storeData);
+    //         const storeData = response.data.data[0];
 
-            // Update formik values
-            formik.setValues({
-                store_name: storeData.store_name || '',
-                phone: storeData.phone || '',
-                description: storeData.description || '',
-                facebook: storeData.facebook || '',
-                instagram: storeData.instagram || '',
-                tiktok: storeData.tiktok || '',
-                address: storeData.address || '',
+    //         setStore(storeData);
 
-            });
+    //         // Update formik values
+    //         formik.setValues({
+    //             store_name: storeData.store_name || '',
+    //             phone: storeData.phone || '',
+    //             description: storeData.description || '',
+    //             facebook: storeData.facebook || '',
+    //             instagram: storeData.instagram || '',
+    //             tiktok: storeData.tiktok || '',
+    //             address: storeData.address || '',
 
-            // Set image previews
-            if (storeData.logo?.url) {
-                setLogoPreview(storeData.logo.url);
-            }
-            if (storeData.banner?.url) {
-                setBannerPreview(storeData.banner.url);
-            }
-        } catch (error) {
-            console.error('Error fetching store settings:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    //         });
+
+    //         // Set image previews
+    //         if (storeData.logo?.url) {
+    //             setLogoPreview(storeData.logo.url);
+    //         }
+    //         if (storeData.banner?.url) {
+    //             setBannerPreview(storeData.banner.url);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching store settings:', error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>, type: 'logo' | 'banner') => {
         const file = event.target.files?.[0];
@@ -210,10 +212,41 @@ export default function Store_Settings() {
     };
 
     useEffect(() => {
-        fetchStoreSettings();
-    }, [auth]);
+        // fetchStoreDetails(auth?.id);
+        if (auth?.id && !vendor) {
+            fetchStoreDetails(auth?.id);
+        }
+       
+    }, [auth?.id, vendor, fetchStoreDetails]);
 
-    if (loading) {
+
+
+
+useEffect(() => {
+    if (vendor) {
+        formik.setValues({
+            store_name: vendor.store_name || '',
+            phone: vendor.phone || '',
+            description: vendor.description || '',
+            facebook: vendor.facebook || '',
+            instagram: vendor.instagram || '',
+            tiktok: vendor.tiktok || '',
+            address: vendor.address || '',
+        });
+
+        // Set image previews
+        if (vendor.logo?.url) {
+            setLogoPreview(vendor.logo.url);
+        }
+        if (vendor.banner?.url) {
+            setBannerPreview(vendor.banner.url);
+        }
+    }
+}, [vendor]); 
+
+
+
+    if (!vendor) {
         return (
             <Custom_Spinner />
         );
@@ -226,7 +259,7 @@ export default function Store_Settings() {
                 <Setting_Header t={t} />
 
                 {/* Store Status */}
-                 <Store_Status t={t} store={store} />
+                <Store_Status t={t}  vendor={vendor} />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Store Images */}
@@ -375,7 +408,7 @@ export default function Store_Settings() {
 
                             />
 
-                            
+
                             <Custom_Textarea
                                 label={t('vendorSettings.settings.storeDescription')}
                                 name="description"

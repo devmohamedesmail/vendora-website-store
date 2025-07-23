@@ -11,14 +11,32 @@ import Toggle_Lng from "../common/toggle_lng";
 import User_Drawer from "./user_drawer";
 import { CiLogin } from "react-icons/ci";
 import Logo from "../common/logo";
+import { useRouter } from "next/navigation";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { auth } = useContext(AuthContext);
   const { t } = useTranslation();
-  
+   const router = useRouter();
   // Redux hooks for cart and wishlist counts
   const { totalItems: cartItemsCount } = useCart();
   const { totalItems: wishlistItemsCount } = useWishlist();
+
+
+  const handleLoginUser = () => {
+    console.log(auth);
+    if (!auth) {
+      router.push("/auth/login");
+    } else if (auth.type === "user") {
+      router.push("/front/account");
+    } else if (auth.type === "vendor") {
+      router.push("/vendor");
+    } else if (auth.type === "admin") {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/");
+    }
+  }
+
 
   return (
 
@@ -28,7 +46,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-         
+
           <Logo />
 
           {/* Desktop Search */}
@@ -38,11 +56,11 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="hidden  md:flex items-center space-x-4">
-            <Link href={auth ? "/front/account" : "/auth/login"} 
-             className="p-2 rounded-full hover:bg-gray-100 transition">
-              
-              {auth ? (<FiUser size={22} className="text-gray-600" />):(<p className="flex items-center text-xs">{t('auth.login')}<CiLogin size={25} /></p>)}
-            </Link>
+            <button onClick={handleLoginUser}
+              className="p-2 rounded-full hover:bg-gray-100 transition">
+
+              {auth ? (<FiUser size={22} className="text-gray-600" />) : (<p className="flex items-center text-xs">{t('auth.login')}<CiLogin size={25} /></p>)}
+            </button>
 
             <Link href="/front/wishlist" className="relative p-2 rounded-full hover:bg-gray-100 transition">
               <FiHeart size={22} className="text-gray-600" />
@@ -61,24 +79,24 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-           
+
           </div>
-            <div className="hidden md:flex items-center space-x-2 mx-10">
-              <Toggle_Lng />
-            </div>
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 rounded-full hover:bg-gray-100 transition"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
+          <div className="hidden md:flex items-center space-x-2 mx-10">
+            <Toggle_Lng />
+          </div>
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden p-2 rounded-full hover:bg-gray-100 transition"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {mobileOpen && (
-       <User_Drawer auth={auth} setMobileOpen={setMobileOpen} wishlistItemsCount={wishlistItemsCount} cartItemsCount={cartItemsCount} />
+        <User_Drawer auth={auth} setMobileOpen={setMobileOpen} wishlistItemsCount={wishlistItemsCount} cartItemsCount={cartItemsCount} />
       )}
     </nav>
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { FiMenu} from 'react-icons/fi';
 import Toggle_Lng from '../common/toggle_lng';
 import Logout_Btn from '../common/logout_btn';
-export default function Vendor_Header({ setSidebarOpen, language, setLanguage }) {
+export default function Vendor_Header({ setSidebarOpen }: any) {
     return (
         <header className="w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 py-4 px-4 flex items-center justify-between sticky top-0 z-20">
             <div className="flex items-center gap-3">
@@ -12,15 +12,10 @@ export default function Vendor_Header({ setSidebarOpen, language, setLanguage })
                 >
                     <FiMenu size={24} />
                 </button>
-                {/* <div>
-                    <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Dashboard</h1>
-                    <p className="text-sm text-gray-500">Welcome back to your vendor portal</p>
-                </div> */}
+               
             </div>
             <div className="flex items-center gap-3">
-              
                 <Toggle_Lng />
-              
                 <Logout_Btn />
             </div>
         </header>

@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 function Vendor_Sidebar(
     { setSidebarOpen,
         sidebarOpen,
-        store,
-        auth
-    }: { setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean, store: any, auth: any }) {
+        auth,
+        vendor
+    }: { setSidebarOpen: (open: boolean) => void, sidebarOpen: boolean, auth: any, vendor: any }) {
     const { t } = useTranslation();
     const pathname = usePathname();
 
@@ -25,7 +25,7 @@ function Vendor_Sidebar(
             disabled: false
         },
         // Conditional items based on store verification and active status
-        ...(store?.isVarified && store?.isActive ? [
+        ...(vendor?.isVarified && vendor?.isActive ? [
             {
                 key: 'dashboard',
                 label: t('vendor.sidebar.dashboard', 'Dashboard'),
@@ -122,10 +122,10 @@ function Vendor_Sidebar(
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
-                            <span className="text-white font-bold text-lg">{store?.store_name[0]}</span>
+                            <span className="text-white font-bold text-lg">{vendor?.store_name[0]}</span>
                         </div>
                         <div>
-                            <h2 className="text-lg font-bold text-white">{store?.store_name}</h2>
+                            <h2 className="text-lg font-bold text-white">{vendor?.store_name}</h2>
                             <p className="text-indigo-100 text-sm font-medium">{t('vendor.sidebar.vendorPortal')}</p>
                         </div>
                     </div>

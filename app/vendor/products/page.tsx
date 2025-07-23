@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import CustomInput from '../../custom/custom_input';
 import Custom_Textarea from '../../custom/custom_textarea';
 import Product_Attributes from '../../components/vendor_components/product_attributes';
+import { VendorContext } from '../../context/vendor_context';
 // Define types for the component
 interface ImageFile {
   id: number;
@@ -66,6 +67,7 @@ function AddProduct() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { categories } = useContext(DataContext);
   const { auth } = useContext(AuthContext);
+  const {vendor}=useContext(VendorContext)
 
 
   const showNotification = (type: 'success' | 'error', message: string) => {
@@ -219,6 +221,7 @@ function AddProduct() {
       price: '',
       stock: '',
       sale: '',
+      isSimple: true
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -274,10 +277,14 @@ function AddProduct() {
             price: hasVariations ? 0 : Number(values.price),
             stock: hasVariations ? 0 : Number(values.stock),
             sale: values.sale && !hasVariations ? Number(values.sale) : null,
-            vendor_id: auth?.id || "3", // Use auth context or fallback
+            vendor_id: vendor?.id,
+            vendor: vendor?.id,
             category: Number(values.category),
             images: imageIds,
-            attributes: createdAttributeIds
+            attributes: createdAttributeIds,
+           
+
+           
           },
         };
 
@@ -513,8 +520,7 @@ function AddProduct() {
 
 
 
-  console.log("Variations:", variations);
-  console.log("Attributes:", attributes);
+ 
 
 
   return (

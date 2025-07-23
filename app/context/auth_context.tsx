@@ -19,6 +19,7 @@ interface AuthContextType {
     handle_login: (identifier: string, password: string) => Promise<User | undefined>;
     handle_register: (username: string, email: string, password: string) => Promise<User | undefined>;
     handle_logout: () => Promise<void>;
+    updateUserType: (userId: number, type: string) => Promise<User | undefined>;
 }
 
 interface AuthProviderProps {
@@ -118,9 +119,40 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     };
 
+   const updateUserType = async (userId: number, type: string) => {
+        try {
+            const response = await axios.put(`${config.url}/api/users/${userId}`, {
+                type: type
+            }, {
+                headers: {
+                    Authorization: `Bearer ${config.token}`,
+                }
+            });
 
+            const updatedUser = response.data;
+            
+
+            // Update the auth state with the new user type
+            if (auth) {
+                const updatedAuthUser = { ...auth, type: updatedUser.type };
+                
+                // Update localStorage
+                localStorage.setItem('user', JSON.stringify(updatedAuthUser));
+                
+                // Update auth state
+                setAuth(updatedAuthUser);
+                
+                return updatedAuthUser;
+            }
+            
+            return updatedUser;
+        } catch (error) {
+            console.log('Error updating user type', error.response?.data || error.message);
+            throw error;
+        }
+    };
     return (
-        <AuthContext.Provider value={{ auth, setAuth, handle_login, handle_register, handle_logout }}>
+        <AuthContext.Provider value={{ auth, setAuth, handle_login, handle_register, handle_logout, updateUserType }}>
             {children}
         </AuthContext.Provider>
     );
