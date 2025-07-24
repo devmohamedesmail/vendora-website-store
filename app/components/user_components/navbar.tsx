@@ -23,7 +23,7 @@ export default function Navbar() {
 
 
   const handleLoginUser = () => {
-    console.log(auth);
+    
     if (!auth) {
       router.push("/auth/login");
     } else if (auth.type === "user") {

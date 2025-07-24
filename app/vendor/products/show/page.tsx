@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FiSearch, FiEdit, FiTrash2, FiEye, FiPlus, FiFilter, FiGrid, FiList, FiPackage, FiDollarSign, FiShoppingCart } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +11,7 @@ import Custom_Spinner from '../../../custom/custom_spinner';
 import Show_Products_Header from '../../../components/vendor_components/show_products_header';
 import Products_Stats from '../../../components/vendor_components/products_stats';
 import Filter_Search_Products from '../../../components/vendor_components/filter_search_products';
+import { VendorContext } from '../../../context/vendor_context';
 
 interface Product {
   id: number;
@@ -72,7 +73,7 @@ interface Product {
 }
 
 export default function Show_Product() {
-  const { t , i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -81,13 +82,13 @@ export default function Show_Product() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
+  const { vendor } = useContext(VendorContext)
 
-  // Mock vendor ID - replace with actual vendor ID from auth context
-  const vendorId = 22;
+  
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [vendor?.id]);
 
   useEffect(() => {
     filterAndSortProducts();
@@ -97,14 +98,14 @@ export default function Show_Product() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${config.url}/api/products?filters[vendor_id][$eq]=44&populate=*`,
+        `${config.url}/api/products?filters[vendor_id][$eq]=${vendor?.id}&populate=*`,
         {
           headers: {
             Authorization: `Bearer ${config.token}`,
           },
         }
       );
-      
+
       setProducts(response.data.data || []);
       setError(null);
     } catch (err) {
@@ -119,13 +120,13 @@ export default function Show_Product() {
     let filtered = products.filter(product => {
       const title = product.title || '';
       const description = product.description || '';
-      
+
       const matchesSearch = title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           description.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesCategory = selectedCategory === 'all' || 
-                             product.category?.title === selectedCategory;
-      
+        description.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesCategory = selectedCategory === 'all' ||
+        product.category?.title === selectedCategory;
+
       return matchesSearch && matchesCategory;
     });
 
@@ -163,7 +164,7 @@ export default function Show_Product() {
             Authorization: `Bearer ${config.token}`,
           },
         });
-        
+
         setProducts(products.filter(product => product.id !== productId));
       } catch (err) {
         alert(t('vendor.products.errors.deleteFailed', 'Failed to delete product'));
@@ -192,204 +193,204 @@ export default function Show_Product() {
 
   if (loading) {
     return (
-        <Custom_Spinner /> 
+      <Custom_Spinner />
     );
   }
 
   if (error) {
     return (
-      
-        <div className="text-center py-12">
-          <div className="text-red-600 mb-4">
-            <FiPackage size={48} className="mx-auto mb-2" />
-            <p className="text-lg font-semibold">{error}</p>
-          </div>
-          <button
-            onClick={fetchProducts}
-            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
-          >
-            {t('vendor.products.tryAgain', 'Try Again')}
-          </button>
+
+      <div className="text-center py-12">
+        <div className="text-red-600 mb-4">
+          <FiPackage size={48} className="mx-auto mb-2" />
+          <p className="text-lg font-semibold">{error}</p>
         </div>
-      
+        <button
+          onClick={fetchProducts}
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
+        >
+          {t('vendor.products.tryAgain', 'Try Again')}
+        </button>
+      </div>
+
     );
   }
 
   return (
-  
-      <div className="space-y-6">
-        {/* Header */}
-       <Show_Products_Header t={t} filteredProducts={filteredProducts} />
 
-        {/* Stats Cards */}
-        <Products_Stats t={t} products={products} formatPrice={formatPrice} />
+    <div className="space-y-6">
+      {/* Header */}
+      <Show_Products_Header t={t} filteredProducts={filteredProducts} />
 
-        {/* Filters and Search */}
-        <Filter_Search_Products 
-          searchTerm={searchTerm} 
-          setSearchTerm={setSearchTerm} 
-          selectedCategory={selectedCategory} 
-          setSelectedCategory={setSelectedCategory} 
-          sortBy={sortBy} 
-          setSortBy={setSortBy} 
-          t={t} 
-          getUniqueCategories={getUniqueCategories}  
-          viewMode={viewMode} 
-          setViewMode={setViewMode} />
-       
+      {/* Stats Cards */}
+      <Products_Stats t={t} products={products} formatPrice={formatPrice} />
+
+      {/* Filters and Search */}
+      <Filter_Search_Products
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        t={t}
+        getUniqueCategories={getUniqueCategories}
+        viewMode={viewMode}
+        setViewMode={setViewMode} />
 
 
-        {/* Products Display */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-            <FiPackage size={48} className="mx-auto text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {t('vendor.products.noProducts', 'No products found')}
-            </h3>
-            <p className="text-gray-600 mb-6">
-              {searchTerm ? 
-                t('vendor.products.noSearchResults', 'No products match your search criteria') :
-                t('vendor.products.getStarted', 'Get started by adding your first product')
-              }
-            </p>
-            <a
-              href="/vendor/products"
-              className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700"
-            >
-              <FiPlus size={20} />
-              {t('vendor.products.addFirstProduct', 'Add Your First Product')}
-            </a>
-          </div>
-        ) : (
-          <div className={viewMode === 'grid' ? 
-            'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 
-            'space-y-4'
-          }>
-            {filteredProducts.map((product) => {
-              const stockStatus = getStockStatus(product.stock);
-              
-              if (viewMode === 'grid') {
-                return (
-                  <div key={product.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="relative">
-                      <img
-                        src={getProductImage(product)}
-                        alt={product.title}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="absolute top-3 right-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
+
+      {/* Products Display */}
+      {filteredProducts.length === 0 ? (
+        <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+          <FiPackage size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {t('vendor.products.noProducts', 'No products found')}
+          </h3>
+          <p className="text-gray-600 mb-6">
+            {searchTerm ?
+              t('vendor.products.noSearchResults', 'No products match your search criteria') :
+              t('vendor.products.getStarted', 'Get started by adding your first product')
+            }
+          </p>
+          <a
+            href="/vendor/products"
+            className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700"
+          >
+            <FiPlus size={20} />
+            {t('vendor.products.addFirstProduct', 'Add Your First Product')}
+          </a>
+        </div>
+      ) : (
+        <div className={viewMode === 'grid' ?
+          'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' :
+          'space-y-4'
+        }>
+          {filteredProducts.map((product) => {
+            const stockStatus = getStockStatus(product.stock);
+
+            if (viewMode === 'grid') {
+              return (
+                <div key={product.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    <img
+                      src={getProductImage(product)}
+                      alt={product.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
+                        {stockStatus.text}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-4">
+                    <div className="mb-2">
+                      <h3 className="font-semibold text-gray-900 truncate">{product.title || t('vendor.products.untitled')}</h3>
+                      <p className="text-sm text-gray-500">{product.category?.title}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-3">
+                      {product.sale ? (
+                        <>
+                          <span className="text-lg font-bold text-indigo-600">{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar} </span>
+                          <span className="text-sm text-gray-400 line-through">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar} </span>
+                        </>
+                      ) : (
+                        <span className="text-lg font-bold text-gray-900">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
+                      )}
+                    </div>
+
+                    <div className="text-sm text-gray-600 mb-4">
+                      {t('vendor.products.stock', 'Stock')}: {product.stock || 0}
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 text-sm">
+                        <FiEye size={16} />
+                        {t('vendor.products.view', 'View')}
+                      </button>
+                      <Link href={`/vendor/products/edit/${product.id}`} className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 text-sm">
+                        <FiEdit size={16} />
+                        {t('vendor.products.edit', 'Edit')}
+                      </Link>
+
+                      <button
+                        onClick={() => handleDeleteProduct(product.id)}
+                        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 text-sm"
+                      >
+                        <FiTrash2 size={16} />
+                        {t('vendor.products.delete', 'Delete')}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            } else {
+              return (
+                <div key={product.id} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div className="flex gap-6">
+                    <img
+                      src={getProductImage(product)}
+                      alt={product.title || 'Product'}
+                      className="w-24 h-24 object-cover rounded-lg"
+                    />
+
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h3 className="font-semibold text-gray-900">{product.title || t('vendor.products.untitled')}</h3>
+                          <p className="text-sm text-gray-500">{product.category?.title}</p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
                           {stockStatus.text}
                         </span>
                       </div>
-                    </div>
-                    
-                    <div className="p-4">
-                      <div className="mb-2">
-                        <h3 className="font-semibold text-gray-900 truncate">{product.title || t('vendor.products.untitled')}</h3>
-                        <p className="text-sm text-gray-500">{product.category?.title}</p>
-                      </div>
-                      
-                      <div className="flex items-center gap-2 mb-3">
-                        {product.sale ? (
-                          <>
-                            <span className="text-lg font-bold text-indigo-600">{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar} </span>
-                            <span className="text-sm text-gray-400 line-through">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar} </span>
-                          </>
-                        ) : (
-                          <span className="text-lg font-bold text-gray-900">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
-                        )}
-                      </div>
-                      
-                      <div className="text-sm text-gray-600 mb-4">
-                        {t('vendor.products.stock', 'Stock')}: {product.stock || 0}
-                      </div>
-                      
-                      <div className="flex gap-2">
-                        <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 text-sm">
-                          <FiEye size={16} />
-                          {t('vendor.products.view', 'View')}
-                        </button>
-                        <Link href={`/vendor/products/edit/${product.id}`} className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 text-sm">
-                          <FiEdit size={16} />
-                          {t('vendor.products.edit', 'Edit')}
-                        </Link>
-                        
-                        <button 
-                          onClick={() => handleDeleteProduct(product.id)}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 text-sm"
-                        >
-                          <FiTrash2 size={16} />
-                          {t('vendor.products.delete', 'Delete')}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={product.id} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                    <div className="flex gap-6">
-                      <img
-                        src={getProductImage(product)}
-                        alt={product.title || 'Product'}
-                        className="w-24 h-24 object-cover rounded-lg"
-                      />
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <h3 className="font-semibold text-gray-900">{product.title || t('vendor.products.untitled')}</h3>
-                            <p className="text-sm text-gray-500">{product.category?.title}</p>
+
+                      <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description || t('vendor.products.noDescription')}</p>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-2">
+                            {product.sale ? (
+                              <>
+                                <span className="text-lg font-bold text-indigo-600">{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
+                                <span className="text-sm text-gray-400 line-through">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
+                              </>
+                            ) : (
+                              <span className="text-lg font-bold text-gray-900">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
+                            )}
                           </div>
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
-                            {stockStatus.text}
-                          </span>
+                          <div className="text-sm text-gray-600">
+                            {t('vendor.products.stock', 'Stock')}: {product.stock || 0}
+                          </div>
                         </div>
-                        
-                        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description || t('vendor.products.noDescription')}</p>
-                        
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-2">
-                              {product.sale ? (
-                                <>
-                                  <span className="text-lg font-bold text-indigo-600">{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
-                                  <span className="text-sm text-gray-400 line-through">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
-                                </>
-                              ) : (
-                                <span className="text-lg font-bold text-gray-900">{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</span>
-                              )}
-                            </div>
-                            <div className="text-sm text-gray-600">
-                              {t('vendor.products.stock', 'Stock')}: {product.stock || 0}
-                            </div>
-                          </div>
-                          
-                          <div className="flex gap-2">
-                            <button className="p-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100">
-                              <FiEye size={16} />
-                            </button>
-                            <button className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100">
-                              <FiEdit size={16} />
-                            </button>
-                            <button 
-                              onClick={() => handleDeleteProduct(product.id)}
-                              className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100"
-                            >
-                              <FiTrash2 size={16} />
-                            </button>
-                          </div>
+
+                        <div className="flex gap-2">
+                          <button className="p-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100">
+                            <FiEye size={16} />
+                          </button>
+                          <button className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100">
+                            <FiEdit size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteProduct(product.id)}
+                            className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100"
+                          >
+                            <FiTrash2 size={16} />
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                );
-              }
-            })}
-          </div>
-        )}
-      </div>
-    
+                </div>
+              );
+            }
+          })}
+        </div>
+      )}
+    </div>
+
   );
 }

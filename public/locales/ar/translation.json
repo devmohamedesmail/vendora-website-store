@@ -153,7 +153,8 @@
 		"shop": "المتجر",
 		"cart": "السلة",
 		"wishlist": "الأمنيات",
-		"account": "الحساب"
+		"account": "الحساب",
+		"vendor_dashboard": "لوحة تحكم البائع"
 	},
 	"banner": {
 		"slides": {
@@ -864,7 +865,10 @@
 		"manageProducts": "إدارة المنتجات",
 		"editExistingProducts": "تعديل المنتجات الموجودة",
 		"storeSettings": "إعدادات المتجر",
-		"configureStore": "تكوين متجرك"
+		"configureStore": "تكوين متجرك",
+		"accountUnderReview": " حسابك قيد المراجعة"
+		
+
 	},
 	"pwa": {
 		"install": {

@@ -112,11 +112,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
             </h3>
           </Link>
 
-          {/* {!isListView && (
-            <p className="text-gray-500 text-sm mb-3 line-clamp-2">{getLimitedWords(product.description, 5)}</p>
-          )} */}
-
-
+      
         </div>
 
         {/* Price and Actions */}
@@ -124,7 +120,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
           <div className={`flex flex-col items-center justify-between ${isListView ? 'mb-3' : 'mb-2'}`}>
 
 
-            {product.sale ? (
+            {product.sale && product.isSimple === true ? (
               <div className="flex items-center  w-full">
                 <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
                 <p className='line-through text-red-600 font-bold text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
@@ -132,7 +128,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
               </div>
             ) : (
               <div className="flex items-center w-full">
-                <p className='text-second font-extrabold text-md  mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                <p className='text-second font-extrabold text-md  mx-2'>{product.price}  {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
               </div>
             )}
 

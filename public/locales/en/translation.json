@@ -155,7 +155,8 @@
 		"shop": "Shop",
 		"cart": "Cart",
 		"wishlist": "Wishlist",
-		"account": "Account"
+		"account": "Account",
+		"vendor_dashboard": "Vendor Dashboard"
 	},
 	"banner": {
 		"slides": {
@@ -866,7 +867,9 @@
 		"manageProducts": "Manage Products",
 		"editExistingProducts": "Edit existing products",
 		"storeSettings": "Store Settings",
-		"configureStore": "Configure your store"
+		"configureStore": "Configure your store",
+		"accountUnderReview": "Your account is currently under review by our team. You will be notified once it is approved."
+		
 	},
 	"pwa": {
 		"install": {
