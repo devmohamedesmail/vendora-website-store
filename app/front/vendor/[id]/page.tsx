@@ -5,21 +5,6 @@ import axios from 'axios'
 import { config } from '../../../config/api'
 import { AuthContext } from '../../../context/auth_context'
 import { useTranslation } from 'react-i18next'
-import {
-    FiStar,
-    FiMapPin,
-    FiPhone,
-    FiMail,
-    FiClock,
-    FiShoppingBag,
-    FiHeart,
-    FiShare2,
-    FiGrid,
-    FiList,
-    FiShield,
-    FiAward
-} from 'react-icons/fi'
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
 import Vendor_Store_Info from '../../../components/user_components/vendor_store_info'
 import ProductItem from '../../../items/ProductItem'
 import Vendor_Products_Section from '../../../components/user_components/vendor_products_section'
@@ -56,7 +41,7 @@ export default function Vendor_Store({ params }: { params: Promise<{ id: number 
 
     const fetch_vendor_products = async () => {
         try {
-            const response = await axios.get(`https://ecommerce-strapi-x4e8.onrender.com/api/products?filters[vendor_id][$eq]=44&populate=*`, {
+            const response = await axios.get(`https://ecommerce-strapi-x4e8.onrender.com/api/products?filters[vendor_id][$eq]=${vendor?.id}&populate=*`, {
                 headers: {
                     Authorization: `Bearer ${config.token}`,
                 }

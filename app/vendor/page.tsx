@@ -11,6 +11,7 @@ function VendorDashboard() {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { vendor } = useContext(VendorContext);
+  console.log('Vendor Context:', vendor);
 
 
   const statsCards = [
@@ -65,8 +66,9 @@ function VendorDashboard() {
           </div>
         </div>
       </div>
+    
 
-      {vendor?.isActive && vendor?.isVerified ? (<>
+      {vendor?.isActive == true && vendor?.isVarified == true ? (<>
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {statsCards.map((stat, index) => (
@@ -154,13 +156,7 @@ function VendorDashboard() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {t('vendorDashboard.accountUnderReview')}
             </h2>
-            
-         
-            
-           
-            
- 
-           
+             
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IoCheckmarkCircle } from "react-icons/io5";
 
 interface AttributeValue {
   id: number
@@ -71,27 +72,17 @@ export default function Product_Attributes_Selection({ product }: ProductAttribu
                   key={value.id}
                   onClick={() => handleAttributeSelect(attribute.id, value.id)}
                   className={`
-                    relative p-1 rounded-lg border-2 transition-all duration-200 text-left
+                    relative p-1 rounded-lg border transition-all duration-200 text-left
                     ${isSelected 
-                      ? 'border-main bg-main-50 text-main shadow-md transform scale-105' 
+                      ? 'border-main  text-main shadow-md transform scale-105' 
                       : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
                     }
                   `}
                 >
                   {/* Selection Indicator */}
                   {isSelected && (
-                    <div className="absolute top-2 right-2 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                      <svg 
-                        className="w-2.5 h-2.5 text-white" 
-                        fill="currentColor" 
-                        viewBox="0 0 20 20"
-                      >
-                        <path 
-                          fillRule="evenodd" 
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
-                          clipRule="evenodd" 
-                        />
-                      </svg>
+                    <div className="absolute top-2 right-2 w-4 h-4 rounded-full flex items-center justify-center">
+                      <IoCheckmarkCircle color='white' className='w-4 h-4 bg-red-500 overflow-hidden p-0 rounded-full' />
                     </div>
                   )}
 
@@ -109,7 +100,7 @@ export default function Product_Attributes_Selection({ product }: ProductAttribu
                     )}
                     
                     <p className={`text-sm font-medium truncate text-center ${
-                      isSelected ? 'text-blue-700' : 'text-gray-900'
+                      isSelected ? 'text-main text-xs' : 'text-gray-900'
                     }`}>
                       {value.value}
                     </p>
