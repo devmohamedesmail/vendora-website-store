@@ -9,7 +9,11 @@ interface AttributeValue {
   createdAt: string
   updatedAt: string
   publishedAt: string
-  image: string | null
+  image: {
+    id: number
+    url: string
+    name: string
+  }
 }
 
 interface Attribute {
@@ -67,7 +71,7 @@ export default function Product_Attributes_Selection({ product }: ProductAttribu
                   key={value.id}
                   onClick={() => handleAttributeSelect(attribute.id, value.id)}
                   className={`
-                    relative p-3 rounded-lg border-2 transition-all duration-200 text-left
+                    relative p-1 rounded-lg border-2 transition-all duration-200 text-left
                     ${isSelected 
                       ? 'border-main bg-main-50 text-main shadow-md transform scale-105' 
                       : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
@@ -92,18 +96,19 @@ export default function Product_Attributes_Selection({ product }: ProductAttribu
                   )}
 
                   {/* Value Content */}
-                  <div className="space-y-1">
+                  <div className="space-y-1 ">
                     {value.image && (
                       <div className="w-full h-12 bg-gray-100 rounded-md overflow-hidden mb-2">
                         <img 
-                          src={value.image} 
+                       
+                          src={value.image.url} 
                           alt={value.value}
-                          className="w-full h-full object-cover"
+                          className="w-16 h-16 m-auto"
                         />
                       </div>
                     )}
                     
-                    <p className={`text-sm font-medium truncate ${
+                    <p className={`text-sm font-medium truncate text-center ${
                       isSelected ? 'text-blue-700' : 'text-gray-900'
                     }`}>
                       {value.value}

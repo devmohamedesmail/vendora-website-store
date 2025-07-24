@@ -277,6 +277,7 @@ function AddProduct() {
             price: hasVariations ? 0 : Number(values.price),
             stock: hasVariations ? 0 : Number(values.stock),
             sale: values.sale && !hasVariations ? Number(values.sale) : null,
+            isSimple: formik.values.isSimple,
             vendor_id: vendor?.id,
             vendor: vendor?.id,
             category: Number(values.category),
@@ -730,6 +731,7 @@ function AddProduct() {
             <button
               type="button"
               onClick={() => {
+                formik.setFieldValue('isSimple', !formik.values.isSimple);
                 setHasVariations(!hasVariations);
                 if (!hasVariations) {
                   // Switching to variable product - keep existing data

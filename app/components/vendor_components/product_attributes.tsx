@@ -1,5 +1,5 @@
 import React from 'react'
-import { FiUpload, FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiFileText, FiSettings, FiPlus, FiTrash2 } from 'react-icons/fi'
+import {  FiX, FiImage, FiTag, FiDollarSign, FiPackage, FiPercent, FiSettings, FiPlus, FiTrash2 } from 'react-icons/fi'
 import CustomInput from '../../custom/custom_input';
 export default function Product_Attributes(
     { t, attributes, addAttribute, variations, updateAttributeName, removeAttribute, updateAttributeValue, removeAttributeValue, addAttributeValue, updateVariation }: any) {
@@ -23,7 +23,7 @@ export default function Product_Attributes(
                 </div>
 
                 <div className="space-y-6">
-                    {attributes.map((attribute) => (
+                    {attributes.map((attribute:any) => (
                         <div key={attribute.id} className="border border-gray-200 rounded-lg p-4">
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="flex-1">
