@@ -146,47 +146,7 @@ export default function Store_Settings() {
         },
     });
 
-    // const fetchStoreSettings = async () => {
-    //     try {
-    //         setLoading(true);
-    //         const response = await axios.get(
-    //             `${config.url}/api/vendors?filters[user_id][$eq]=${auth?.id}&populate[logo]=true&populate[banner]=true`,
-    //             {
-    //                 headers: {
-    //                     Authorization: `Bearer ${config.token}`,
-    //                 }
-    //             }
-    //         );
-
-    //         const storeData = response.data.data[0];
-
-    //         setStore(storeData);
-
-    //         // Update formik values
-    //         formik.setValues({
-    //             store_name: storeData.store_name || '',
-    //             phone: storeData.phone || '',
-    //             description: storeData.description || '',
-    //             facebook: storeData.facebook || '',
-    //             instagram: storeData.instagram || '',
-    //             tiktok: storeData.tiktok || '',
-    //             address: storeData.address || '',
-
-    //         });
-
-    //         // Set image previews
-    //         if (storeData.logo?.url) {
-    //             setLogoPreview(storeData.logo.url);
-    //         }
-    //         if (storeData.banner?.url) {
-    //             setBannerPreview(storeData.banner.url);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching store settings:', error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
+ 
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>, type: 'logo' | 'banner') => {
         const file = event.target.files?.[0];
