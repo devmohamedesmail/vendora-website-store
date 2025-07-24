@@ -96,7 +96,10 @@
 		"emailLabel": "عنوان البريد الإلكتروني",
 		"emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
 		"notifyMe": "إشعاري",
-		"privacyNotice": "نحترم خصوصيتك. لا بريد مزعج، إشعارات التوفر فقط."
+		"privacyNotice": "نحترم خصوصيتك. لا بريد مزعج، إشعارات التوفر فقط.",
+		"selectOption": "اختر خيارًا",
+		"options": "خيارات",
+		"selectedAttributes": "السمات المحددة"
 	},
 	"cart": {
 		"yourCart": "سلة التسوق",

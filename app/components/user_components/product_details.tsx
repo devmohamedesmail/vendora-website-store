@@ -49,7 +49,7 @@ export default function Product_Details({ product }: any) {
                 maxQuantity: product.stock
             });
         }
-        setQuantity(1); 
+        setQuantity(1);
         toast.success(t('productDetails.addedToCart'));
     };
 
@@ -70,8 +70,15 @@ export default function Product_Details({ product }: any) {
         } else {
             toast.success(t('productDetails.addedToWishlist'));
         }
-       
+
     };
+
+
+    const variantPrices = product?.product_variants?.map((variant: any) => variant.price) || [];
+    const minPrice = variantPrices.length ? Math.min(...variantPrices) : null;
+    const maxPrice = variantPrices.length ? Math.max(...variantPrices) : null;
+
+
     return (
         <div className="w-full flex flex-col justify-between bg-white rounded-xl shadow-lg p-6">
             <div>
@@ -122,7 +129,7 @@ export default function Product_Details({ product }: any) {
                     <div className="flex items-baseline gap-4 mb-2">
 
 
-                        {product.sale ? (
+                        {/* {product.sale ? (
                             <div className="flex items-center">
                                 <p className='text-second font-bold text-2xl  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
                                 <p className='line-through text-red-600 text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
@@ -132,7 +139,33 @@ export default function Product_Details({ product }: any) {
                             <div className="flex items-center">
                                 <p className='text-second font-bold text-2xl  mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
                             </div>
-                        )}
+                        )} */}
+
+
+                        {product.isSimple ? (<>
+                            {product.sale ? (
+                                <div className="flex items-center  w-full">
+                                    <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                                    <p className='line-through text-red-600 font-bold text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+
+                                </div>
+                            ) : (
+                                <div className="flex items-center w-full">
+                                    <p className='text-second font-extrabold text-md  mx-2'>{product.price}  {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                                </div>
+                            )}</>) : (
+                            <>
+                                {product.product_variants && product.product_variants.length > 0 ? (<>
+
+                                    <div className="flex items-center w-full">
+                                        <p className="text-second font-extrabold text-md mx-2">
+                                            {minPrice === maxPrice
+                                                ? `${minPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`
+                                                : `${minPrice} - ${maxPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`}
+                                        </p>
+                                    </div>
+                                </>) : null}
+                            </>)}
 
 
                         {product.sale && (
@@ -158,10 +191,10 @@ export default function Product_Details({ product }: any) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex items-center">
                             <span className="font-medium text-gray-700 mr-2">{t('productDetails.store')}</span>
-                           
+
                             <Link href={`/front/vendor/${product.vendor?.id}`} className="text-indigo-600 font-semibold">{product.vendor?.store_name}</Link>
                         </div>
-                       
+
                     </div>
                 </div>
 
@@ -182,7 +215,7 @@ export default function Product_Details({ product }: any) {
                     <div className="mb-6 p-6  rounded-2xl  relative overflow-hidden">
                         {/* Background decoration */}
                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-indigo-100/30 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
-                        
+
                         <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center relative z-10">
                             {/* <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-lg mr-3 shadow-lg">
                                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -193,7 +226,7 @@ export default function Product_Details({ product }: any) {
                                 {t('productDetails.quantity')}
                             </span>
                         </h3>
-                        
+
                         <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/50 shadow-inner relative z-10">
                             <div className="flex items-center gap-4">
                                 <button
@@ -202,10 +235,10 @@ export default function Product_Details({ product }: any) {
                                     className="bg-main p-2 rounded-full w-8 h-8 "
                                 >
                                     <FiMinus color='white' />
-                                    
+
                                     {/* <span className="group-hover:scale-125 transition-transform duration-200 text-white">−</span> */}
                                 </button>
-                                
+
                                 {/* <div className="bg-gradient-to-r from-gray-100 to-gray-200  px-6 rounded-xl min-w-[80px] text-center font-bold text-2xl text-gray-800 shadow-inner relative">
                                     <div className="absolute inset-0 l"></div>
                                     <span className="relative text-sm z-10">{quantity}</span>
@@ -220,7 +253,7 @@ export default function Product_Details({ product }: any) {
                                     <FaPlus color='white' />
                                 </button>
                             </div>
-                            
+
                             {/* Cart Status Badge */}
                             <div className="flex items-center gap-3">
                                 {isInCart && (
@@ -233,7 +266,7 @@ export default function Product_Details({ product }: any) {
                                         </div>
                                     </div>
                                 )}
-                                
+
                                 {/* Stock indicator */}
                                 <div className="text-right">
                                     <div className="text-xs text-gray-500 font-medium">Available</div>
@@ -241,7 +274,7 @@ export default function Product_Details({ product }: any) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* Enhanced Total Price Display */}
                         {quantity > 1 && (
                             <div className="mt-4 p-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl text-white relative overflow-hidden">
@@ -303,8 +336,8 @@ export default function Product_Details({ product }: any) {
                     <button
                         onClick={handleWishlistToggle}
                         className={`w-full font-semibold py-3 px-8 rounded-xl border transition flex items-center justify-center ${isInWishlist
-                                ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'
-                                : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300'
+                            ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'
+                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300'
                             }`}
                     >
                         <svg className="w-5 h-5 mr-2" fill={isInWishlist ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">

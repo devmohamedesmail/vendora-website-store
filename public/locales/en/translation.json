@@ -96,7 +96,10 @@
 		"emailLabel": "Email Address",
 		"emailPlaceholder": "Enter your email address",
 		"notifyMe": "Notify Me",
-		"privacyNotice": "We respect your privacy. No spam, just stock notifications."
+		"privacyNotice": "We respect your privacy. No spam, just stock notifications.",
+		"selectOption": "Select an option",
+		"options": "Options",
+		"selectedAttributes": "Selected Attributes"
 		
 		
 	},

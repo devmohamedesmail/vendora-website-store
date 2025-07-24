@@ -21,7 +21,7 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
 
   const fetch_product_details = async () => {
     try {
-      const response = await axios.get(`${config.url}/api/products?filters[id][$eq]=${unwrappedParams.id}&populate[category]=true&populate[vendor]=true&populate[images]=true&populate[attributes][populate][values][populate]=image`, {
+      const response = await axios.get(`${config.url}/api/products?filters[id][$eq]=${unwrappedParams.id}&populate[category]=true&populate[vendor]=true&populate[images]=true&populate[attributes][populate][values][populate]=image&populate[product_variants]=true`, {
         headers: {
           Authorization: `Bearer ${config.token}`,
         }
@@ -37,6 +37,23 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
   useEffect(() => {
     fetch_product_details()
   }, [unwrappedParams.id])
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div>
 

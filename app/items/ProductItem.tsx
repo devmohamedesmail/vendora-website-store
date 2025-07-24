@@ -48,6 +48,19 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
     toast.success(t('productDetails.addedToWishlist'));
   };
 
+
+
+
+
+
+  const variantPrices = product?.product_variants?.map((variant: any) => variant.price) || [];
+  const minPrice = variantPrices.length ? Math.min(...variantPrices) : null;
+  const maxPrice = variantPrices.length ? Math.max(...variantPrices) : null;
+
+
+
+
+
   return (
     <div
       key={product.id}
@@ -69,8 +82,8 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
           <button
             onClick={handleToggleWishlist}
             className={`p-2 rounded-full shadow-lg transition-colors ${isWishlisted
-                ? 'bg-red-500 text-white'
-                : 'bg-white text-gray-600 hover:bg-red-50 hover:text-red-500'
+              ? 'bg-red-500 text-white'
+              : 'bg-white text-gray-600 hover:bg-red-50 hover:text-red-500'
               }`}
           >
             <FiHeart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
@@ -86,8 +99,8 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
         {/* Stock Badge */}
         <div className="absolute top-3 left-3">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${product.stock > 0
-              ? "bg-green-500 text-white"
-              : "bg-red-500 text-white"
+            ? "bg-green-500 text-white"
+            : "bg-red-500 text-white"
             }`}>
             {product.stock > 0 ? t('productDetails.inStock') : t('productDetails.outOfStock')}
           </span>
@@ -107,12 +120,12 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
       <div className={`p-2 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
         <div>
           <Link href={`/front/product/${product.id}`}>
-            <h3 className="text-sm md:text-sm font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
+            <h3 className="text-sm md:text-sm mb-2 text-gray-900 line-clamp-2 hover:text-indigo-600 transition-colors">
               {getLimitedWords(product.title, 5)}
             </h3>
           </Link>
 
-      
+
         </div>
 
         {/* Price and Actions */}
@@ -120,7 +133,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
           <div className={`flex flex-col items-center justify-between ${isListView ? 'mb-3' : 'mb-2'}`}>
 
 
-            {product.sale && product.isSimple === true ? (
+            {/* {product.sale ? (
               <div className="flex items-center  w-full">
                 <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
                 <p className='line-through text-red-600 font-bold text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
@@ -130,7 +143,33 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
               <div className="flex items-center w-full">
                 <p className='text-second font-extrabold text-md  mx-2'>{product.price}  {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
               </div>
-            )}
+            )} */}
+
+            {product.isSimple ? (<>
+              {product.sale ? (
+                <div className="flex items-center  w-full">
+                  <p className='text-second font-bold text-md  mx-2'>{product.sale} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                  <p className='line-through text-red-600 font-bold text-xs mx-2'>{product.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+
+                </div>
+              ) : (
+                <div className="flex items-center w-full">
+                  <p className='text-second font-extrabold text-md  mx-2'>{product.price}  {i18n.language === 'en' ? config.currency_en : config.currency_ar}</p>
+                </div>
+              )}</>) : (
+              <>
+                {product.product_variants && product.product_variants.length > 0 ? (<>
+
+                  <div className="flex items-center w-full">
+                    <p className="text-second font-extrabold text-md mx-2">
+                      {minPrice === maxPrice
+                        ? `${minPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`
+                        : `${minPrice} - ${maxPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`}
+                    </p>
+                  </div>
+                </>) : null}
+              </>)}
+
 
 
 
@@ -144,11 +183,14 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
                 <span className='text-sm font-semibold'>{t('productDetails.addToCart')}</span>
               </button>
             )}
+
+
+
           </div>
 
-          {!isListView && (
-            <>
-              <button
+          {product.isSimple ? (<> 
+          
+          <button
                 onClick={product.stock === 0 ? () => (document.getElementById(`notify_modal_${product.id}`) as HTMLDialogElement)?.showModal() : handleAddToCart}
                 className="w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={false}
@@ -157,8 +199,31 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
                 {product.stock === 0 ? <IoIosNotificationsOutline className="w-4 h-4" /> : <FiShoppingCart className="w-4 h-4" />}
                 <span className='text-sm'>{product.stock === 0 ? t('productDetails.notifyme') : t('productDetails.addToCart')}</span>
               </button>
+          </>):(<>
+          
+          
+          <Link  href={`/front/product/${product.id}`} className='w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2'>
+             
+             <FiShoppingCart className="w-4 h-4 mx-2" />
+             {t('productDetails.selectOption')}
+          
+          </Link>
+          
+          </>)}
 
-              {/* Notify Me Modal */}
+          {/* {!isListView && (
+            <>
+              <button
+                onClick={product.stock === 0 ? () => (document.getElementById(`notify_modal_${product.id}`) as HTMLDialogElement)?.showModal() : handleAddToCart}
+                className="w-full py-2 bg-main text-white rounded-lg hover:bg-second transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={false}
+              >
+   
+                {product.stock === 0 ? <IoIosNotificationsOutline className="w-4 h-4" /> : <FiShoppingCart className="w-4 h-4" />}
+                <span className='text-sm'>{product.stock === 0 ? t('productDetails.notifyme') : t('productDetails.addToCart')}</span>
+              </button>
+
+              
               <dialog id={`notify_modal_${product.id}`} className="modal">
                 <div className="modal-box max-w-md mx-auto bg-white rounded-2xl shadow-2xl">
                   <div className="flex items-center mb-6">
@@ -228,7 +293,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
                 </form>
               </dialog>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>
