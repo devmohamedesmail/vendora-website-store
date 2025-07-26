@@ -5,6 +5,7 @@ import Address_User_Tab from '../../components/user_components/address_user_tab'
 import { AuthContext } from '../../context/auth_context';
 import Profile_User_Tab from '../../components/user_components/profile_user_tab';
 import Setting_User_Tab from '../../components/user_components/setting_user_tab';
+import { useTranslation } from 'react-i18next';
 
 const mockUser = {
   name: "Ahmed Hassan",
@@ -37,12 +38,7 @@ const statusConfig = {
   Cancelled: { color: "bg-red-100 text-red-700 border-red-200", icon: FiX },
 };
 
-const tabs = [
-  { id: 'profile', label: 'Profile', icon: FiUser },
-  { id: 'addresses', label: 'Addresses', icon: FiMapPin },
-  { id: 'orders', label: 'All Orders', icon: FiPackage },
-  { id: 'settings', label: 'Settings', icon: FiSettings },
-];
+
 
 export default function Account() {
   const [user, setUser] = useState(mockUser);
@@ -52,6 +48,7 @@ export default function Account() {
   const [showAddAddress, setShowAddAddress] = useState(false);
   const [orderFilter, setOrderFilter] = useState('all');
   const {auth}=useContext(AuthContext)
+  const {t}=useTranslation();
 
   const handleUpdateProfile = (e) => {
     e.preventDefault();
@@ -60,7 +57,12 @@ export default function Account() {
   };
 
  
-
+const tabs = [
+  { id: 'profile', label: t('common.profile'), icon: FiUser },
+  { id: 'addresses', label: t('common.addresses'), icon: FiMapPin },
+  { id: 'orders', label: t('common.orders'), icon: FiPackage },
+  { id: 'settings', label: t('common.settings'), icon: FiSettings },
+];
  
 
   const handleLogout = () => {

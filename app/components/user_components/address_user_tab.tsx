@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React , { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FiEdit, FiLogOut, FiPlus, FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiSave, FiPackage, FiPhone, FiMail, FiHome } from "react-icons/fi";
 import { config } from '../../config/api';
 import { AuthContext } from '../../context/auth_context';
@@ -8,10 +8,11 @@ import { useFormik } from 'formik';
 import Custom_Input from '../../custom/custom_input';
 import { toast } from 'react-toastify';
 
-export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any) {
+export default function Address_User_Tab({ showAddAddress, setShowAddAddress }: any) {
     const { t } = useTranslation();
     const [addresses, setAddresses] = useState([]);
-    const {auth}:any=useContext(AuthContext)
+    const { auth }: any = useContext(AuthContext)
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
     const formik = useFormik({
@@ -19,10 +20,12 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
             address_line1: '',
             address_line2: '',
             city: '',
-            type: 'home', 
+            type: 'home',
         },
         onSubmit: async (values) => {
             try {
+                setIsSubmitting(true);
+
                 if (!values.address_line1 || !values.city) {
                     alert(t('address.fillRequiredFields', 'Please fill all required fields'));
                     return;
@@ -33,7 +36,7 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                         address_line1: values.address_line1,
                         address_line2: values.address_line2,
                         city: values.city,
-                        type: values.type, 
+                        type: values.type,
                         user_id: auth?.id,
                         // isDefault: addresses.length === 0 // Make first address default
                     }
@@ -53,28 +56,30 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
             } catch (error) {
                 console.log("Error adding address:", error);
                 alert(t('address.failedToAdd', 'Failed to add address'));
+            } finally {
+                setIsSubmitting(false);
             }
         }
     });
-   
+
     const fetchUserAddresses = async () => {
         try {
-              const response = await axios.get(`${config.url}/api/addresses?filters[user_id][$eq]=${auth?.id}`,{
-                    headers:{
-                        Authorization: `Bearer ${config.token}`,
-                    }
-                });
+            const response = await axios.get(`${config.url}/api/addresses?filters[user_id][$eq]=${auth?.id}`, {
+                headers: {
+                    Authorization: `Bearer ${config.token}`,
+                }
+            });
 
-                const addressess = response.data.data
-                console.log("Fetched addresses:", addressess);
-                setAddresses(addressess);
-           
+            const addressess = response.data.data
+            console.log("Fetched addresses:", addressess);
+            setAddresses(addressess);
+
         } catch (error) {
             console.log("Error fetching addresses:", error);
         }
     }
 
-   
+
 
     const toggleDefault = async (addressId: any) => {
         try {
@@ -106,19 +111,20 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchUserAddresses();
-    },[auth])
+    }, [auth])
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h2 className="text-2xl font-bold text-gray-800">{t('address.savedAddresses', 'Saved Addresses')}</h2>
                 <button
                     onClick={() => setShowAddAddress(true)}
-                    className="flex items-center gap-2 bg-main text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-semibold"
+                    className="flex text-xs items-center gap-2 bg-main text-white px-4 py-2 rounded-lg hover:bg-second font-semibold"
                 >
                     <FiPlus size={16} />
-                    {t('address.addAddress', 'Add Address')}
+                    {t('address.addAddress')}
                 </button>
             </div>
 
@@ -151,8 +157,8 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                             <button
                                 onClick={() => toggleDefault(address.documentId)}
                                 className={`text-xs font-medium px-3 py-2 rounded-lg ${address.isDefault
-                                        ? 'bg-green-100 text-green-800 cursor-not-allowed'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600'
+                                    ? 'bg-green-100 text-green-800 cursor-not-allowed'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600'
                                     }`}
                                 disabled={address.isDefault}
                             >
@@ -172,23 +178,22 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
             {showAddAddress && (
                 <div className="bg-white border border-gray-200 rounded-xl p-6">
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('address.addNewAddress', 'Add New Address')}</h3>
-                    
+
                     {/* Address Type Selection */}
                     <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-700 mb-3">
                             {t('address.addressType', 'Address Type')}
                         </label>
                         <div className="flex gap-4">
-                            <label className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
-                                formik.values.type === 'home' 
-                                    ? 'border-main bg-indigo-50 shadow-md' 
+                            <label className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${formik.values.type === 'home'
+                                    ? 'border-main bg-indigo-50 shadow-md'
                                     : 'border-gray-200 bg-white hover:border-gray-300'
-                            }`}>
-                                <input 
-                                    type='radio' 
-                                    name='type' 
-                                    value='home' 
-                                    checked={formik.values.type === 'home'} 
+                                }`}>
+                                <input
+                                    type='radio'
+                                    name='type'
+                                    value='home'
+                                    checked={formik.values.type === 'home'}
                                     onChange={formik.handleChange}
                                     className="text-indigo-600 focus:ring-indigo-500"
                                 />
@@ -197,16 +202,15 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                                     {t('address.home', 'Home')}
                                 </span>
                             </label>
-                            <label className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
-                                formik.values.type === 'work' 
-                                    ? 'border-main bg-indigo-50 shadow-md' 
+                            <label className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${formik.values.type === 'work'
+                                    ? 'border-main bg-indigo-50 shadow-md'
                                     : 'border-gray-200 bg-white hover:border-gray-300'
-                            }`}>
-                                <input 
-                                    type='radio' 
-                                    name='type' 
-                                    value='work' 
-                                    checked={formik.values.type === 'work'} 
+                                }`}>
+                                <input
+                                    type='radio'
+                                    name='type'
+                                    value='work'
+                                    checked={formik.values.type === 'work'}
                                     onChange={formik.handleChange}
                                     className="text-indigo-600 focus:ring-indigo-500"
                                 />
@@ -219,49 +223,55 @@ export default function Address_User_Tab({showAddAddress, setShowAddAddress}:any
                     </div>
 
                     <div className="space-y-4">
-                       
-                        <Custom_Input 
-                          label={t('address.addressLine1')} 
-                          name='address_line1' 
-                          placeholder={t('address.addressLine1Placeholder')}
-                          onChange={formik.handleChange} 
-                          value={formik.values.address_line1} />
 
-                        <Custom_Input 
-                          label={t('address.addressLine2')} 
-                          name='address_line2' 
-                          placeholder={t('address.addressLine2Placeholder')}
-                          onChange={formik.handleChange} 
-                          value={formik.values.address_line2} />
+                        <Custom_Input
+                            label={t('address.addressLine1')}
+                            name='address_line1'
+                            placeholder={t('address.addressLine1Placeholder')}
+                            onChange={formik.handleChange}
+                            value={formik.values.address_line1} />
 
-                        
+                        <Custom_Input
+                            label={t('address.addressLine2')}
+                            name='address_line2'
+                            placeholder={t('address.addressLine2Placeholder')}
+                            onChange={formik.handleChange}
+                            value={formik.values.address_line2} />
 
-                        
-                         <Custom_Input 
-                          label={t('address.city')} 
-                          name='city' 
-                          placeholder={t('address.cityPlaceholder')}
-                          onChange={formik.handleChange} 
-                          value={formik.values.city} />
+
+
+
+                        <Custom_Input
+                            label={t('address.city')}
+                            name='city'
+                            placeholder={t('address.cityPlaceholder')}
+                            onChange={formik.handleChange}
+                            value={formik.values.city} />
 
                         <div className="flex gap-4">
                             <button
-                                disabled={!formik.values.address_line1 || !formik.values.city}
+                                disabled={!formik.values.address_line1 || !formik.values.city || isSubmitting}
                                 type='submit'
                                 onClick={(e) => {
                                     e.preventDefault();
                                     formik.handleSubmit();
                                 }}
-                                className="flex items-center gap-2 bg-main text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold"
+                                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors ${(!formik.values.address_line1 || !formik.values.city || isSubmitting)
+                                        ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                        : 'bg-main text-white hover:bg-indigo-700'
+                                    }`}
                             >
-                                <FiSave size={16} />
-                                {t('address.saveAddress', 'Save Address')}
-                            </button>
-                            <button
-                                onClick={() => setShowAddAddress(false)}
-                                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-semibold"
-                            >
-                                {t('address.cancel', 'Cancel')}
+                                {isSubmitting ? (
+                                    <>
+                                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                        {t('address.saving', 'Saving...')}
+                                    </>
+                                ) : (
+                                    <>
+                                        <FiSave size={16} />
+                                        {t('address.saveAddress')}
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>

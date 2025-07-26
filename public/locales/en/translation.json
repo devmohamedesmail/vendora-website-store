@@ -770,7 +770,11 @@
 		"fastdelivery": "Fast Delivery",
 		"bestoffer": "Best Offer",
 		"easyreturn": "Easy Return",
-		"securepayment": "Secure Payment"
+		"securepayment": "Secure Payment",
+		"profile": "Profile",
+		"settings": "Settings",
+		"addresses": "Address",
+		"orders":"Orders"
 	},
 	"introModal": {
 		"welcome": "Welcome to Vendora!",
@@ -982,4 +986,5 @@
 			"storeCreationError": "Failed to create store. Please try again."
 		}
 	}
+	
 }

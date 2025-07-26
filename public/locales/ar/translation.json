@@ -768,7 +768,11 @@
 		"fastdelivery": "توصيل سريع",
 		"bestoffer": "أفضل عرض",
 		"easyreturn": "إرجاع سهل",
-		"securepayment": "دفع آمن"
+		"securepayment": "دفع آمن",
+		"profile": "الملف الشخصي",
+		"settings": "الإعدادات",
+		"addresses": "العناوين",
+		"orders":"الطلبات"
 	},
 	"introModal": {
 		"welcome": "أهلاً بك في فيندورا!",

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FiEdit, FiLogOut, FiPlus, FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiSave, FiPackage, FiPhone, FiMail } from "react-icons/fi";
 
 export default function Profile_User_Tab({auth}:any) {
-  console.log("auth", auth);
+  
   return (
      <div className="space-y-6">
                 {/* Profile Header */}

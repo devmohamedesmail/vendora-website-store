@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { FiBox, FiClipboard, FiPlus, FiSettings, FiX, FiHome, FiBarChart, FiTrendingUp } from 'react-icons/fi';
+import { FiBox, FiClipboard, FiPlus, FiSettings, FiX, FiHome, FiBarChart, FiTrendingUp ,FiUser} from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,14 @@ function Vendor_Sidebar(
             label: t('vendor.sidebar.storeSettings', 'Store Settings'),
             link: '/vendor/settings',
             icon: <FiSettings className="w-5 h-5" />,
+            badge: null,
+            disabled: false
+        },
+        {
+            key: 'account',
+            label: t('vendor.sidebar.account', 'Account'),
+            link: '/front/account',
+            icon: <FiUser className="w-5 h-5" />,
             badge: null,
             disabled: false
         },
