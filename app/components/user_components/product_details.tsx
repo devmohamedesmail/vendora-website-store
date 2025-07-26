@@ -12,6 +12,8 @@ import { FiMinus } from "react-icons/fi";
 export default function Product_Details({ product }: any) {
     const { t, i18n } = useTranslation();
     const [quantity, setQuantity] = useState(1);
+    const [selectedAttributes, setSelectedAttributes] = useState<{ [key: number]: number }>({});
+    const [selectedVariant, setSelectedVariant] = useState<any>(null);
 
     // Redux hooks
     const { addItem: addToCart, isItemInCart, getItemQuantity } = useCart();
@@ -22,9 +24,52 @@ export default function Product_Details({ product }: any) {
     const cartQuantity = getItemQuantity(product.id);
     const isInWishlist = isItemInWishlist(product.id);
 
+    // Handle attribute changes from child component
+    const handleAttributeChange = (attributes: { [key: number]: number }, variant: any) => {
+        setSelectedAttributes(attributes);
+        setSelectedVariant(variant);
+    };
+
+    // Get current stock based on product type and variant selection
+    const getCurrentStock = () => {
+        if (!product.isSimple && selectedVariant) {
+            return selectedVariant.stock;
+        }
+        return product.stock || 0;
+    };
+
+    // Get current price based on product type and variant selection
+    const getCurrentPrice = () => {
+        if (!product.isSimple && selectedVariant) {
+            return selectedVariant.price;
+        }
+        return product.sale || product.price || 0;
+    };
+
+    // Check if add to cart should be disabled
+    const isAddToCartDisabled = () => {
+        if (product.isSimple) {
+            return product.stock === 0;
+        } else {
+            // For variable products, check if all required attributes are selected
+            if (product.attributes && product.attributes.length > 0) {
+                const requiredAttributes = product.attributes.length;
+                const selectedAttributesCount = Object.keys(selectedAttributes).length;
+                
+                if (selectedAttributesCount < requiredAttributes) {
+                    return true;
+                }
+            }
+            
+            // Also check if variant is selected and has stock
+            return !selectedVariant || selectedVariant.stock === 0;
+        }
+    };
+
     // Quantity controls
     const increaseQuantity = () => {
-        if (quantity < (product.stock || 999)) {
+        const currentStock = getCurrentStock();
+        if (quantity < currentStock) {
             setQuantity(quantity + 1);
         }
     };
@@ -37,16 +82,37 @@ export default function Product_Details({ product }: any) {
 
     // Handle add to cart
     const handleAddToCart = () => {
+        const currentPrice = getCurrentPrice();
+        const currentStock = getCurrentStock();
+        
+        if (currentStock === 0) {
+            toast.error(t('productDetails.outOfStock'));
+            return;
+        }
+
+        // Validate attribute selection for variable products
+        if (!product.isSimple && product.attributes && product.attributes.length > 0) {
+            const requiredAttributes = product.attributes.length;
+            const selectedAttributesCount = Object.keys(selectedAttributes).length;
+            
+            if (selectedAttributesCount < requiredAttributes) {
+                toast.error(t('productDetails.selectAllOptions') || 'Please select all required options');
+                return;
+            }
+        }
+
         for (let i = 0; i < quantity; i++) {
             addToCart({
                 id: product.id,
                 title: product.title,
-                price: product.price,
+                price: currentPrice,
                 sale: product.sale,
                 images: product.images,
                 vendor: product.vendor,
-                stock: product.stock,
-                maxQuantity: product.stock
+                stock: currentStock,
+                maxQuantity: currentStock,
+                selectedAttributes: Object.keys(selectedAttributes).length > 0 ? selectedAttributes : undefined,
+                selectedVariant: selectedVariant
             });
         }
         setQuantity(1);
@@ -155,16 +221,30 @@ export default function Product_Details({ product }: any) {
                                 </div>
                             )}</>) : (
                             <>
-                                {product.product_variants && product.product_variants.length > 0 ? (<>
-
+                                {/* Show variant price if selected, otherwise show price range */}
+                                {selectedVariant ? (
                                     <div className="flex items-center w-full">
-                                        <p className="text-second font-extrabold text-md mx-2">
-                                            {minPrice === maxPrice
-                                                ? `${minPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`
-                                                : `${minPrice} - ${maxPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`}
+                                        <p className="text-second font-extrabold text-lg mx-2">
+                                            {selectedVariant.price} {i18n.language === 'en' ? config.currency_en : config.currency_ar}
                                         </p>
+                                        <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full ml-2">
+                                            {t('productDetails.selected') || 'Selected'}
+                                        </span>
                                     </div>
-                                </>) : null}
+                                ) : (
+                                    product.product_variants && product.product_variants.length > 0 ? (
+                                        <div className="flex items-center w-full">
+                                            <p className="text-second font-extrabold text-md mx-2">
+                                                {minPrice === maxPrice
+                                                    ? `${minPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`
+                                                    : `${minPrice} - ${maxPrice} ${i18n.language === 'en' ? config.currency_en : config.currency_ar}`}
+                                            </p>
+                                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full ml-2">
+                                                {t('productDetails.priceRange') || 'Price Range'}
+                                            </span>
+                                        </div>
+                                    ) : null
+                                )}
                             </>)}
 
 
@@ -178,7 +258,10 @@ export default function Product_Details({ product }: any) {
                 </div>
 
 
-                <Product_Attributes_Selection product={product} />
+                <Product_Attributes_Selection 
+                    product={product} 
+                    onAttributeChange={handleAttributeChange}
+                />
 
                 {/* Vendor Information */}
                 <div className="mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
@@ -198,20 +281,10 @@ export default function Product_Details({ product }: any) {
                     </div>
                 </div>
 
-                {/* Product Info */}
-                <div className="mb-6 text-sm text-gray-500 flex items-center">
-                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                    </svg>
-                    {t('productDetails.listedOn')} {new Date(product.createdAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    })}
-                </div>
+                
 
                 {/* Professional Quantity Selector */}
-                {product.stock > 0 && (
+                {getCurrentStock() > 0 && (
                     <div className="mb-6 p-6  rounded-2xl  relative overflow-hidden">
                         {/* Background decoration */}
                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-indigo-100/30 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
@@ -246,7 +319,7 @@ export default function Product_Details({ product }: any) {
                                 <span className="relative text-sm z-10">{quantity}</span>
                                 <button
                                     onClick={increaseQuantity}
-                                    disabled={quantity >= (product.stock || 999)}
+                                    disabled={quantity >= getCurrentStock()}
                                     className="bg-main p-2 rounded-full w-8 h-8"
                                 >
                                     {/* <span className="group-hover:scale-125 transition-transform duration-200 text-white">+</span> */}
@@ -270,7 +343,7 @@ export default function Product_Details({ product }: any) {
                                 {/* Stock indicator */}
                                 <div className="text-right">
                                     <div className="text-xs text-gray-500 font-medium">Available</div>
-                                    <div className="text-sm font-bold text-indigo-600">{product.stock} units</div>
+                                    <div className="text-sm font-bold text-indigo-600">{getCurrentStock()} units</div>
                                 </div>
                             </div>
                         </div>
@@ -290,14 +363,14 @@ export default function Product_Details({ product }: any) {
                                         <div>
                                             <div className="text-sm opacity-90">{t('productDetails.totalPrice')}</div>
                                             <div className="text-xl font-bold">
-                                                {((product.sale || product.price) * quantity).toFixed(2)} {config.currency_en}
+                                                {(getCurrentPrice() * quantity).toFixed(2)} {config.currency_en}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="text-right">
                                         <div className="text-sm opacity-90">Per item</div>
                                         <div className="text-lg font-semibold">
-                                            {(product.sale || product.price).toFixed(2)} {config.currency_en}
+                                            {getCurrentPrice().toFixed(2)} {config.currency_en}
                                         </div>
                                     </div>
                                 </div>
@@ -310,18 +383,20 @@ export default function Product_Details({ product }: any) {
                 <div className="space-y-3">
                     <button
                         onClick={handleAddToCart}
-                        className="w-full bg-gradient-to-r from-main to-main/80 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition hover:scale-105 hover:shadow-xl flex items-center justify-center text-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                        disabled={product.stock === 0}
+                        className="w-full bg-gradient-to-r from-main to-main/80 hover:from-main/80 hover:to-main/70 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition hover:scale-105 hover:shadow-xl flex items-center justify-center text-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        disabled={isAddToCartDisabled()}
                     >
                         <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6m0 0h4.5M16 16a1 1 0 100 2 1 1 0 000-2zm-6 0a1 1 0 100 2 1 1 0 000-2z" />
                         </svg>
-                        {product.stock > 0 ? (
+                        {getCurrentStock() > 0 ? (
+                            !product.isSimple && (!selectedVariant || (product.attributes && Object.keys(selectedAttributes).length < product.attributes.length)) ? 
+                            t('productDetails.selectOptions') || 'Select Options' :
                             quantity > 1 ? `${t('productDetails.addToCart')} (${quantity})` : t('productDetails.addToCart')
                         ) : t('productDetails.outOfStock')}
                     </button>
 
-                    {product.stock > 0 && (
+                    {getCurrentStock() > 0 && (product.isSimple || selectedVariant) && (
                         <Link
                             href={`/front/checkout`}
                             className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition hover:scale-105 hover:shadow-xl flex items-center justify-center text-lg"

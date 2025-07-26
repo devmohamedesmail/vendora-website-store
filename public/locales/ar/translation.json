@@ -99,7 +99,12 @@
 		"privacyNotice": "نحترم خصوصيتك. لا بريد مزعج، إشعارات التوفر فقط.",
 		"selectOption": "اختر خيارًا",
 		"options": "خيارات",
-		"selectedAttributes": "السمات المحددة"
+		"selectedAttributes": "السمات المحددة",
+		"selectAllOptions": "يرجى تحديد جميع الخيارات المطلوبة",
+		"selectOptions": "تحديد الخيارات",
+		"selected": "محدد",
+		"priceRange": "نطاق السعر",
+		"variantsAvailable": "متغيرات متاحة"
 	},
 	"cart": {
 		"yourCart": "سلة التسوق",

@@ -99,7 +99,12 @@
 		"privacyNotice": "We respect your privacy. No spam, just stock notifications.",
 		"selectOption": "Select an option",
 		"options": "Options",
-		"selectedAttributes": "Selected Attributes"
+		"selectedAttributes": "Selected Attributes",
+		"selectAllOptions": "Please select all required options",
+		"selectOptions": "Select Options",
+		"selected": "Selected",
+		"priceRange": "Price Range",
+		"variantsAvailable": "variants available"
 		
 		
 	},

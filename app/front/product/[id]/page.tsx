@@ -42,14 +42,6 @@ function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
 
 
 
- 
-
-
-
-
-
-
-
 
 
 

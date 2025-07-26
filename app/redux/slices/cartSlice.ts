@@ -12,6 +12,12 @@ export interface CartItem {
   };
   stock?: number;
   maxQuantity?: number;
+  selectedAttributes?: { [key: number]: number };
+  selectedVariant?: {
+    id: number;
+    price: number;
+    stock: number;
+  };
 }
 
 interface CartState {

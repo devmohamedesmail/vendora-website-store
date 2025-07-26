@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoCheckmarkCircle } from "react-icons/io5";
 
@@ -27,25 +27,97 @@ interface Attribute {
   values: AttributeValue[]
 }
 
+interface ProductVariant {
+  id: number
+  documentId: string
+  price: number
+  stock: number
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
 interface ProductAttributesSelectionProps {
   product: {
     attributes?: Attribute[]
+    product_variants?: ProductVariant[]
+    isSimple?: boolean
+    stock?: number
+    price?: number
   }
+  onAttributeChange?: (selectedAttributes: { [key: number]: number }, selectedVariant: ProductVariant | null) => void
 }
 
-export default function Product_Attributes_Selection({ product }: ProductAttributesSelectionProps) {
+export default function Product_Attributes_Selection({ product, onAttributeChange }: ProductAttributesSelectionProps) {
   const { t } = useTranslation()
   const [selectedAttributes, setSelectedAttributes] = useState<{ [key: number]: number }>({})
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
 
   if (!product.attributes || product.attributes.length === 0) {
     return null
   }
+
+  // Effect to handle variant selection based on attributes
+  useEffect(() => {
+    if (product.product_variants && product.product_variants.length > 0) {
+      const attributeCount = Object.keys(selectedAttributes).length
+      
+      if (attributeCount > 0) {
+        // Improved variant mapping logic
+        // This maps each attribute value selection to a specific variant
+        
+        let variantIndex = 0
+        
+        if (product.attributes && product.attributes.length > 0) {
+          // Get the first attribute (assuming single attribute for now)
+          const firstAttribute = product.attributes[0]
+          const selectedValueId = selectedAttributes[firstAttribute.id]
+          
+          if (selectedValueId) {
+            // Find the index of the selected value in the attribute values array
+            const selectedValueIndex = firstAttribute.values.findIndex(v => v.id === selectedValueId)
+            
+            // Map attribute value index to variant index
+            // This assumes variants are ordered the same as attribute values
+            if (selectedValueIndex !== -1 && selectedValueIndex < product.product_variants.length) {
+              variantIndex = selectedValueIndex
+            }
+          }
+        }
+        
+        const variant = product.product_variants[variantIndex]
+        if (variant) {
+          setSelectedVariant(variant)
+          onAttributeChange?.(selectedAttributes, variant)
+        }
+      } else {
+        setSelectedVariant(null)
+        onAttributeChange?.(selectedAttributes, null)
+      }
+    }
+  }, [selectedAttributes, product.product_variants, product.attributes, onAttributeChange])
 
   const handleAttributeSelect = (attributeId: number, valueId: number) => {
     setSelectedAttributes(prev => ({
       ...prev,
       [attributeId]: valueId
     }))
+  }
+
+  // Get current price based on variant or product price
+  const getCurrentPrice = () => {
+    if (selectedVariant) {
+      return selectedVariant.price
+    }
+    return product.price || 0
+  }
+
+  // Get current stock based on variant or product stock
+  const getCurrentStock = () => {
+    if (selectedVariant) {
+      return selectedVariant.stock
+    }
+    return product.stock || 0
   }
 
   return (
@@ -124,9 +196,24 @@ export default function Product_Attributes_Selection({ product }: ProductAttribu
       {/* Selected Summary */}
       {Object.keys(selectedAttributes).length > 0 && (
         <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <h4 className="text-sm font-semibold text-gray-900 mb-2">
-            {t('productDetails.selectedAttributes') || 'Selected Options'}
-          </h4>
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-semibold text-gray-900">
+              {t('productDetails.selectedAttributes') || 'Selected Options'}
+            </h4>
+            {selectedVariant && (
+              <div className="text-right">
+                <p className="text-lg font-bold text-main">
+                  {getCurrentPrice()} {t('currency.symbol') || 'AED'}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {getCurrentStock() > 0 
+                    ? `${getCurrentStock()} ${t('productDetails.inStock') || 'in stock'}` 
+                    : t('productDetails.outOfStock') || 'Out of stock'
+                  }
+                </p>
+              </div>
+            )}
+          </div>
           <div className="space-y-1">
             {product.attributes.map((attribute) => {
               const selectedValueId = selectedAttributes[attribute.id]
