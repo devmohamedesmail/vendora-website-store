@@ -281,7 +281,8 @@
 			"storeManagement": "إدارة المتجر",
 			"thisMonth": "هذا الشهر",
 			"storePerformance": "أداء المتجر",
-			"complete": "مكتمل 78%"
+			"complete": "مكتمل 78%",
+			"account": " الحساب "
 		},
 		"addProduct": {
 			"title": "إضافة منتج جديد",

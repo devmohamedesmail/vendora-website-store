@@ -8,13 +8,14 @@ import { toast } from 'react-toastify';
 import Product_Attributes_Selection from './product_attributes_selection';
 import { FaPlus } from "react-icons/fa6";
 import { FiMinus } from "react-icons/fi";
+import ProductVendorInfo from './product_vendor_info';
 
 export default function Product_Details({ product }: any) {
     const { t, i18n } = useTranslation();
     const [quantity, setQuantity] = useState(1);
     const [selectedAttributes, setSelectedAttributes] = useState<{ [key: number]: number }>({});
     const [selectedVariant, setSelectedVariant] = useState<any>(null);
-
+console.log('selectedAttributes from details' ,selectedAttributes )
     // Redux hooks
     const { addItem: addToCart, isItemInCart, getItemQuantity } = useCart();
     const { toggleItem: toggleWishlist, isItemInWishlist } = useWishlist();
@@ -111,7 +112,8 @@ export default function Product_Details({ product }: any) {
                 vendor: product.vendor,
                 stock: currentStock,
                 maxQuantity: currentStock,
-                selectedAttributes: Object.keys(selectedAttributes).length > 0 ? selectedAttributes : undefined,
+                // selectedAttributes: Object.keys(selectedAttributes).length > 0 ? selectedAttributes : undefined,
+                selectedAttributes: selectedAttributes,
                 selectedVariant: selectedVariant
             });
         }
@@ -153,8 +155,8 @@ export default function Product_Details({ product }: any) {
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
                         {product.title}
                     </h1>
-                    <div className="flex items-center gap-2 mb-2">
-                        {/* Star Rating Placeholder */}
+                    {/* <div className="flex items-center gap-2 mb-2">
+                        
                         <div className="flex items-center">
                             {[...Array(5)].map((_, i) => (
                                 <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
@@ -163,7 +165,7 @@ export default function Product_Details({ product }: any) {
                             ))}
                             <span className="ml-2 text-sm text-gray-600">(4.5) • 24 {t('productDetails.reviews')}</span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Status Badges */}
@@ -174,7 +176,7 @@ export default function Product_Details({ product }: any) {
                         </svg>
                         {product.category?.title}
                     </span>
-                    <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${product.stock > 0
+                    {/* <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${product.stock > 0
                         ? 'bg-gradient-to-r from-green-100 to-green-200 text-green-800 border-green-300'
                         : 'bg-gradient-to-r from-red-100 to-red-200 text-red-800 border-red-300'
                         }`}>
@@ -182,7 +184,7 @@ export default function Product_Details({ product }: any) {
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                         {product.stock > 0 ? `${t('productDetails.inStock')} (${product.stock})` : t('productDetails.outOfStock')}
-                    </span>
+                    </span> */}
                 </div>
 
                 {/* Description */}
@@ -260,26 +262,15 @@ export default function Product_Details({ product }: any) {
 
                 <Product_Attributes_Selection 
                     product={product} 
+                    selectedAttributes={selectedAttributes}
+                    setSelectedAttributes={setSelectedAttributes}
+                    selectedVariant={selectedVariant}
+                    setSelectedVariant={setSelectedVariant}
                     onAttributeChange={handleAttributeChange}
                 />
 
                 {/* Vendor Information */}
-                <div className="mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-6a1 1 0 00-1-1H9a1 1 0 00-1 1v6a1 1 0 01-1 1H4a1 1 0 110-2V4z" clipRule="evenodd" />
-                        </svg>
-                        {t('productDetails.vendorInformation')}
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex items-center">
-                            <span className="font-medium text-gray-700 mr-2">{t('productDetails.store')}</span>
-
-                            <Link href={`/front/vendor/${product.vendor?.id}`} className="text-indigo-600 font-semibold">{product.vendor?.store_name}</Link>
-                        </div>
-
-                    </div>
-                </div>
+                <ProductVendorInfo product={product} t={t} />
 
                 
 

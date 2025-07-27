@@ -48,10 +48,15 @@ interface ProductAttributesSelectionProps {
   onAttributeChange?: (selectedAttributes: { [key: number]: number }, selectedVariant: ProductVariant | null) => void
 }
 
-export default function Product_Attributes_Selection({ product, onAttributeChange }: ProductAttributesSelectionProps) {
+export default function Product_Attributes_Selection({ 
+  product, 
+  onAttributeChange , 
+  selectedAttributes , 
+  setSelectedAttributes, 
+  selectedVariant, 
+  setSelectedVariant }: any) {
   const { t } = useTranslation()
-  const [selectedAttributes, setSelectedAttributes] = useState<{ [key: number]: number }>({})
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
+ 
 
   if (!product.attributes || product.attributes.length === 0) {
     return null
@@ -63,22 +68,17 @@ export default function Product_Attributes_Selection({ product, onAttributeChang
       const attributeCount = Object.keys(selectedAttributes).length
       
       if (attributeCount > 0) {
-        // Improved variant mapping logic
-        // This maps each attribute value selection to a specific variant
-        
         let variantIndex = 0
         
         if (product.attributes && product.attributes.length > 0) {
           // Get the first attribute (assuming single attribute for now)
           const firstAttribute = product.attributes[0]
-          const selectedValueId = selectedAttributes[firstAttribute.id]
+          const selectedAttributeValue = selectedAttributes[firstAttribute.name]
           
-          if (selectedValueId) {
-            // Find the index of the selected value in the attribute values array
-            const selectedValueIndex = firstAttribute.values.findIndex(v => v.id === selectedValueId)
+          if (selectedAttributeValue) {
+            // Find the index of the selected value by value name
+            const selectedValueIndex = firstAttribute.values.findIndex(v => v.value === selectedAttributeValue)
             
-            // Map attribute value index to variant index
-            // This assumes variants are ordered the same as attribute values
             if (selectedValueIndex !== -1 && selectedValueIndex < product.product_variants.length) {
               variantIndex = selectedValueIndex
             }
@@ -97,10 +97,11 @@ export default function Product_Attributes_Selection({ product, onAttributeChang
     }
   }, [selectedAttributes, product.product_variants, product.attributes, onAttributeChange])
 
-  const handleAttributeSelect = (attributeId: number, valueId: number) => {
+  const handleAttributeSelect = (attribute: any, value: any) => {
+  
     setSelectedAttributes(prev => ({
       ...prev,
-      [attributeId]: valueId
+      [attribute.name]: value.value
     }))
   }
 
@@ -137,12 +138,12 @@ export default function Product_Attributes_Selection({ product, onAttributeChang
           {/* Attribute Values */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {attribute.values.map((value) => {
-              const isSelected = selectedAttributes[attribute.id] === value.id
+              const isSelected = selectedAttributes[attribute.name] === value.value
               
               return (
                 <button
                   key={value.id}
-                  onClick={() => handleAttributeSelect(attribute.id, value.id)}
+                  onClick={() => handleAttributeSelect(attribute, value)}
                   className={`
                     relative p-1 rounded-lg border transition-all duration-200 text-left
                     ${isSelected 
@@ -215,19 +216,12 @@ export default function Product_Attributes_Selection({ product, onAttributeChang
             )}
           </div>
           <div className="space-y-1">
-            {product.attributes.map((attribute) => {
-              const selectedValueId = selectedAttributes[attribute.id]
-              const selectedValue = attribute.values.find(v => v.id === selectedValueId)
-              
-              if (!selectedValue) return null
-              
-              return (
-                <div key={attribute.id} className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">{attribute.name}:</span>
-                  <span className="font-medium text-gray-900">{selectedValue.value}</span>
-                </div>
-              )
-            })}
+            {Object.entries(selectedAttributes).map(([attributeName, attributeValue]) => (
+              <div key={attributeName} className="flex items-center justify-between text-sm">
+                <span className="text-gray-600">{attributeName}:</span>
+                <span className="font-medium text-gray-900">{String(attributeValue)}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}

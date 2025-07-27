@@ -283,7 +283,8 @@
 			"storeManagement": "Store Management",
 			"thisMonth": "This Month",
 			"storePerformance": "Store Performance",
-			"complete": "78% Complete"
+			"complete": "78% Complete",
+			"account": "Account"
 		},
 		"addProduct": {
 			"title": "Add New Product",

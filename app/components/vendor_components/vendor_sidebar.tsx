@@ -18,7 +18,7 @@ function Vendor_Sidebar(
         // Settings is always available
         {
             key: 'settings',
-            label: t('vendor.sidebar.storeSettings', 'Store Settings'),
+            label: t('vendor.sidebar.storeSettings'),
             link: '/vendor/settings',
             icon: <FiSettings className="w-5 h-5" />,
             badge: null,
@@ -26,7 +26,7 @@ function Vendor_Sidebar(
         },
         {
             key: 'account',
-            label: t('vendor.sidebar.account', 'Account'),
+            label: t('vendor.sidebar.account'),
             link: '/front/account',
             icon: <FiUser className="w-5 h-5" />,
             badge: null,
