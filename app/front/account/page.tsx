@@ -1,11 +1,12 @@
 'use client'
 import React, { useContext, useState } from 'react';
-import { FiEdit, FiLogOut, FiPlus, FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiSave, FiPackage, FiPhone, FiMail } from "react-icons/fi";
+import {  FiUser, FiMapPin, FiClock, FiSettings, FiTruck, FiCheckCircle, FiX, FiPackage } from "react-icons/fi";
 import Address_User_Tab from '../../components/user_components/address_user_tab';
 import { AuthContext } from '../../context/auth_context';
 import Profile_User_Tab from '../../components/user_components/profile_user_tab';
-import Setting_User_Tab from '../../components/user_components/setting_user_tab';
+import SettingUserTab from '../../components/user_components/setting_user_tab';
 import { useTranslation } from 'react-i18next';
+import OrdersUserTab from '../../components/user_components/orders_user_tab';
 
 const mockUser = {
   name: "Ahmed Hassan",
@@ -44,17 +45,12 @@ export default function Account() {
   const [user, setUser] = useState(mockUser);
   const [activeTab, setActiveTab] = useState('profile');
   const [editProfile, setEditProfile] = useState(false);
-
   const [showAddAddress, setShowAddAddress] = useState(false);
   const [orderFilter, setOrderFilter] = useState('all');
   const {auth}=useContext(AuthContext)
-  const {t}=useTranslation();
+  const {t , i18n}=useTranslation();
 
-  const handleUpdateProfile = (e) => {
-    e.preventDefault();
-    setEditProfile(false);
-    // Here you would typically make an API call to update the profile
-  };
+
 
  
 const tabs = [
@@ -65,16 +61,9 @@ const tabs = [
 ];
  
 
-  const handleLogout = () => {
-    alert("Logged out successfully!");
-  };
+  
 
-  const updatePreference = (key, value) => {
-    setUser({
-      ...user,
-      preferences: { ...user.preferences, [key]: value }
-    });
-  };
+ 
 
   const getFilteredOrders = () => {
     if (orderFilter === 'all') return user.orders;
@@ -109,148 +98,29 @@ const tabs = [
         const filteredOrders = getFilteredOrders();
         
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Order History</h2>
-            
-            {/* Order Statistics */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div 
-                className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                  orderFilter === 'all' ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 bg-white hover:bg-gray-50'
-                }`}
-                onClick={() => setOrderFilter('all')}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-800">{stats.total}</div>
-                  <div className="text-sm text-gray-600">All Orders</div>
-                </div>
-              </div>
-              
-              <div 
-                className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                  orderFilter === 'pending' ? 'border-yellow-500 bg-yellow-50' : 'border-gray-200 bg-white hover:bg-gray-50'
-                }`}
-                onClick={() => setOrderFilter('pending')}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-700">{stats.pending}</div>
-                  <div className="text-sm text-gray-600">Pending</div>
-                </div>
-              </div>
-              
-              <div 
-                className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                  orderFilter === 'shipped' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:bg-gray-50'
-                }`}
-                onClick={() => setOrderFilter('shipped')}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-700">{stats.shipped}</div>
-                  <div className="text-sm text-gray-600">Shipped</div>
-                </div>
-              </div>
-              
-              <div 
-                className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                  orderFilter === 'delivered' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white hover:bg-gray-50'
-                }`}
-                onClick={() => setOrderFilter('delivered')}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-700">{stats.delivered}</div>
-                  <div className="text-sm text-gray-600">Delivered</div>
-                </div>
-              </div>
-              
-              <div 
-                className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                  orderFilter === 'cancelled' ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white hover:bg-gray-50'
-                }`}
-                onClick={() => setOrderFilter('cancelled')}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-red-700">{stats.cancelled}</div>
-                  <div className="text-sm text-gray-600">Cancelled</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Orders List */}
-            <div className="space-y-4">
-              {filteredOrders.length === 0 ? (
-                <div className="text-center py-12 bg-gray-50 rounded-xl">
-                  <FiPackage size={48} className="mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-600">No orders found for the selected filter.</p>
-                </div>
-              ) : (
-                filteredOrders.map((order) => {
-                  const StatusIcon = statusConfig[order.status].icon;
-                  return (
-                    <div key={order.id} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition">
-                      <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                        <div className="flex-1">
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-                            <h3 className="font-semibold text-gray-800">Order #{order.id}</h3>
-                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border ${statusConfig[order.status].color} w-fit`}>
-                              <StatusIcon size={14} />
-                              {order.status}
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-500 mb-3">{order.date}</p>
-                          
-                          <div>
-                            <h4 className="font-medium text-gray-700 mb-2">Items:</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {order.items.map((item, index) => (
-                                <span key={index} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
-                                  {item}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="text-right">
-                          <div className="text-2xl font-bold text-gray-800 mb-2">{user.preferences.currency} {order.total}</div>
-                          <div className="space-y-2">
-                            <button className="block w-full text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                              View Details
-                            </button>
-                            {order.status === 'Shipped' && (
-                              <button className="block w-full text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                Track Order
-                              </button>
-                            )}
-                            {order.status === 'Delivered' && (
-                              <button className="block w-full text-green-600 hover:text-green-800 text-sm font-medium">
-                                Reorder
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {order.status === 'Shipped' && (
-                        <div className="mt-4 pt-4 border-t bg-blue-50 border border-blue-200 rounded-lg p-3">
-                          <p className="text-blue-800 text-sm font-medium">📦 Your order is on the way!</p>
-                          <p className="text-blue-600 text-sm">Expected delivery: 2-3 business days</p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
+         
+          <OrdersUserTab 
+             orderFilter={orderFilter} 
+             setOrderFilter={setOrderFilter} 
+             filteredOrders={filteredOrders} 
+             stats={stats} 
+             statusConfig={statusConfig} 
+             user={user}
+             t={t}
+             i18n={i18n}
+             />
         );
 
       case 'settings':
         return (
-        <Setting_User_Tab />
+        <SettingUserTab
+        t={t}
+        
+        />
         );
 
       default:
-        return <div>Select a tab to view content</div>;
+        return <div>{t('setting.selectTab')}</div>;
     }
   };
 
@@ -259,8 +129,8 @@ const tabs = [
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">My Account</h1>
-          <p className="text-gray-600">Manage your profile, orders, addresses, and preferences</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">{t('setting.myAccount')}</h1>
+          <p className="text-gray-600">{t('setting.manageProfile')}</p>
         </div>
 
         {/* Main Container */}
@@ -276,12 +146,12 @@ const tabs = [
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-3 px-6 py-4 font-semibold transition whitespace-nowrap min-w-fit ${
                       activeTab === tab.id
-                        ? 'border-b-2 border-indigo-600 text-indigo-600 bg-white'
+                        ? 'border-b-2 border-main text-indigo-600 bg-white'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
                     }`}
                   >
                     <Icon size={20} />
-                    <span className="hidden sm:inline">{tab.label}</span>
+                    <span className="hidden sm:inline text-main">{tab.label}</span>
                   </button>
                 );
               })}

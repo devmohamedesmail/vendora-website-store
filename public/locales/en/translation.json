@@ -990,6 +990,33 @@
 			"storeCreated": "Store created successfully!",
 			"storeCreationError": "Failed to create store. Please try again."
 		}
+	},
+	"orders":{
+		"orderHistory": "Order History",
+		"noOrdersFound": "No orders found for the selected filter.",
+		"items": "Items",
+		"viewDetails": "View Details",
+		"trackOrder": "Track Order",
+		"reorder": "Reorder",
+		"onTheWay": "Your order is on the way!",
+		"expectedDelivery": "Expected delivery",
+		"businessDays": "business days",
+		"allOrders": "All Orders",
+		"pending": "Pending",
+		"processing": "Processing",
+		"shipped": "Shipped",
+		"delivered": "Delivered",
+		"cancelled": "Cancelled",
+		"orderDetails": "Order Details"
+	},
+	"setting":{
+		"title": "Account Settings",
+		"languageCurrency": "Language & Currency",
+		"notifications": "Notifications",
+		"accountManagement": "Account Management",
+		"myAccount": "My Account",
+		"manageProfile": "Manage your profile information",
+		"selectTab": "Select a tab to view content"
 	}
 	
 }

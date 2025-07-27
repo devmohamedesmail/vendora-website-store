@@ -989,5 +989,32 @@
 			"storeCreated": "تم إنشاء المتجر بنجاح!",
 			"storeCreationError": "فشل في إنشاء المتجر. حاول مرة أخرى."
 		}
+	},
+	"orders":{
+		"orderHistory": "تاريخ الطلب",
+		"noOrdersFound": "لا توجد طلبات للفلتر المحدد.",
+		"items": "العناصر",
+		"viewDetails": "عرض التفاصيل",
+		"trackOrder": "تتبع الطلب",
+		"reorder": "إعادة الطلب",
+		"onTheWay": "طلبك في الطريق!",
+		"expectedDelivery": "تاريخ التسليم المتوقع",
+		"businessDays": "أيام العمل",
+		"allOrders": "جميع الطلبات",
+		"pending": "قيد الانتظار",
+		"processing": "قيد المعالجة",
+		"shipped": "تم الشحن",
+		"delivered": "تم التوصيل",
+		"cancelled": "ملغى",
+		"orderDetails": "تفاصيل الطلب"
+	},
+	"setting":{
+		"title": "إعدادات الحساب",
+		"languageCurrency": "اللغة والعملة",
+		"notifications": "الإشعارات",
+		"accountManagement": "إدارة الحساب",
+		"myAccount": "حسابي",
+		"manageProfile": "إدارة معلومات الملف الشخصي",
+		"selectTab": "اختر علامة لعرض المحتوى"
 	}
 }

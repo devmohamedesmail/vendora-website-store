@@ -6,14 +6,14 @@ export default function Profile_User_Tab({auth}:any) {
   return (
      <div className="space-y-6">
                 {/* Profile Header */}
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white">
+                <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-2xl p-6 text-white">
                   <div className="flex flex-col sm:flex-row items-center gap-6">
                     <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
-                      <FiUser size={32} />
+                      <FiUser size={32} color='black' />
                     </div>
                     <div className="text-center sm:text-left">
-                      <h2 className="text-2xl font-bold">{auth?.username}</h2>
-                      <p className="opacity-90">{auth?.email}</p>
+                      <h2 className="text-2xl font-bold text-main">{auth?.username}</h2>
+                      <p className="opacity-90 text-main">{auth?.email}</p>
                       {/* <p className="text-sm opacity-75">Member since {new Date(user.joinDate).getFullYear()}</p> */}
                     </div>
                   </div>
