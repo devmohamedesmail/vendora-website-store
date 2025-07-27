@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoCheckmarkCircle } from "react-icons/io5";
+import { config } from '../../config/api'
 
 interface AttributeValue {
   id: number
@@ -55,7 +56,7 @@ export default function Product_Attributes_Selection({
   setSelectedAttributes, 
   selectedVariant, 
   setSelectedVariant }: any) {
-  const { t } = useTranslation()
+  const { t,i18n } = useTranslation()
  
 
   if (!product.attributes || product.attributes.length === 0) {
@@ -199,12 +200,12 @@ export default function Product_Attributes_Selection({
         <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <h4 className="text-sm font-semibold text-gray-900">
-              {t('productDetails.selectedAttributes') || 'Selected Options'}
+              {t('productDetails.selectedAttributes')}
             </h4>
             {selectedVariant && (
               <div className="text-right">
                 <p className="text-lg font-bold text-main">
-                  {getCurrentPrice()} {t('currency.symbol') || 'AED'}
+                  {getCurrentPrice()} {i18n.language === 'en' ? config.currency_en : config.currency_ar}
                 </p>
                 <p className="text-xs text-gray-500">
                   {getCurrentStock() > 0 

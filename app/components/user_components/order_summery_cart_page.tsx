@@ -6,7 +6,7 @@ export default function Order_Summery_Cart_Page({ cartItems, total, t, i18n, con
         <div className="lg:col-span-4 mt-8 lg:mt-0">
             <div className="bg-white rounded-2xl  overflow-hidden sticky top-8">
                 {/* Summary Header */}
-                <div className="bg-gradient-to-r from-sky-500 to-sky-600 px-6 py-4">
+                <div className="bg-gradient-to-r from-main to-main/80 px-6 py-4">
                     <h2 className="text-xl font-bold text-white">{t('cart.orderSummary')}</h2>
                 </div>
 
@@ -40,7 +40,7 @@ export default function Order_Summery_Cart_Page({ cartItems, total, t, i18n, con
                     {/* Checkout Button */}
                     <Link
                         href="/front/checkout"
-                        className="w-full bg-gradient-to-r from-sky-500 to-sky-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-center block text-lg"
+                        className="w-full bg-gradient-to-r from-main to-main/90 hover:from-second hover:to-second/90 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-center block text-lg"
                     >
                         <div className="flex items-center justify-center gap-2">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

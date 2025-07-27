@@ -1,4 +1,6 @@
 import React from 'react'
+import { FaPlus,FaMinus} from "react-icons/fa6";
+
 
 export default function Cart_Item({ item, removeItem, increaseItemQuantity, decreaseItemQuantity, t, i18n, config }: any) {
    
@@ -16,20 +18,32 @@ export default function Cart_Item({ item, removeItem, increaseItemQuantity, decr
                         {t('cart.soldBy')} {item.vendor.store_name}
                     </div>
                 )}
+
+                {/* Display selected attributes if they exist */}
+                {item.selectedAttributes && Object.keys(item.selectedAttributes).length > 0 && (
+                    <div className="mt-2">
+                        {Object.entries(item.selectedAttributes).map(([key, value]) => (
+                            <div key={key} className="text-sm text-gray-500">
+                                {key}: {value}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                 <div className="flex items-center gap-2 mt-3">
                     <button
                         onClick={() => decreaseItemQuantity(item.id)}
-                        className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 font-bold text-lg flex items-center justify-center transition"
+                        className="w-8 h-8 rounded-full bg-indigo-100 text-main hover:bg-indigo-200 font-bold text-lg flex items-center justify-center transition"
                         disabled={item.quantity === 1}
                         aria-label="Decrease quantity"
-                    >-</button>
+                    ><FaMinus size={14} /></button>
                     <span className="px-3 text-lg font-medium">{item.quantity}</span>
                     <button
                         onClick={() => increaseItemQuantity(item.id)}
-                        className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 font-bold text-lg flex items-center justify-center transition"
+                        className="w-8 h-8 rounded-full bg-indigo-100 text-main hover:bg-indigo-200 font-bold text-lg flex items-center justify-center transition"
                         disabled={item.quantity >= (item.stock || 999)}
                         aria-label="Increase quantity"
-                    >+</button>
+                    ><FaPlus size={14} /></button>
                 </div>
             </div>
             <div className="flex flex-col items-end gap-2">
