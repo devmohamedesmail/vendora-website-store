@@ -3,8 +3,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { config } from '../../config/api';
-import { FiSearch, FiMapPin, FiPhone, FiCheckCircle, FiClock, FiStar, FiEye } from 'react-icons/fi';
+import { FiSearch, FiCheckCircle, FiClock } from 'react-icons/fi';
 import Link from 'next/link';
+import Vendors_Header from '../../components/user_components/vendors_header';
+import Vendors_Stats from '../../components/user_components/vendors_stats';
 
 export default function Vendors() {
   const { t } = useTranslation();
@@ -24,7 +26,7 @@ export default function Vendors() {
       setVendors(response.data.data);
       setFilteredVendors(response.data.data);
     } catch (error) {
-      console.error('Error fetching vendors:', error);
+      console.log('Error fetching vendors:', error);
     } finally {
       setLoading(false);
     }
@@ -50,59 +52,11 @@ export default function Vendors() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {t('vendors.title') || 'Our Vendors'}
-            </h1>
-            <p className="text-xl md:text-2xl opacity-90 mb-8">
-              {t('vendors.subtitle') || 'Discover trusted partners offering quality vaping products'}
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto relative">
-              <div className="relative">
-                <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder={t('vendors.searchPlaceholder') || 'Search vendors by name or description...'}
-                  value={searchTerm}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl text-gray-900 text-lg focus:outline-none focus:ring-4 focus:ring-white/30 transition-all"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+     <Vendors_Header t={t} searchTerm={searchTerm} handleSearch={handleSearch} />
 
       {/* Stats Section */}
-      <div className="container mx-auto px-4 -mt-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FiCheckCircle className="w-8 h-8 text-blue-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">{vendors.filter(v => v.isVarified).length}</h3>
-            <p className="text-gray-600">{t('vendors.verifiedVendors') || 'Verified Vendors'}</p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FiStar className="w-8 h-8 text-green-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">{vendors.filter(v => v.isActive).length}</h3>
-            <p className="text-gray-600">{t('vendors.activeVendors') || 'Active Vendors'}</p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FiEye className="w-8 h-8 text-purple-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">{vendors.length}</h3>
-            <p className="text-gray-600">{t('vendors.totalVendors') || 'Total Vendors'}</p>
-          </div>
-        </div>
-      </div>
+
+      <Vendors_Stats t={t} vendors={vendors} />
 
       {/* Vendors Grid */}
       <div className="container mx-auto px-4 pb-16">

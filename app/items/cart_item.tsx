@@ -24,7 +24,7 @@ export default function Cart_Item({ item, removeItem, increaseItemQuantity, decr
                     <div className="mt-2">
                         {Object.entries(item.selectedAttributes).map(([key, value]) => (
                             <div key={key} className="text-sm text-gray-500">
-                                {key}: {value}
+                                {key}: {String(value)}
                             </div>
                         ))}
                     </div>

@@ -97,14 +97,16 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
         </div>
 
         {/* Stock Badge */}
-        <div className="absolute top-3 left-3">
+       
+
+        {product.isSimple === true ? ( <div className="absolute top-3 left-3">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${product.stock > 0
             ? "bg-green-500 text-white"
             : "bg-red-500 text-white"
             }`}>
             {product.stock > 0 ? t('productDetails.inStock') : t('productDetails.outOfStock')}
           </span>
-        </div>
+        </div>):(<></>)}
 
         {/* Discount Badge */}
         {product.discount && (
