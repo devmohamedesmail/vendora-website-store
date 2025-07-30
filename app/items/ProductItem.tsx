@@ -64,7 +64,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
   return (
     <div
       key={product.id}
-      className={`bg-white rounded-xl  hover:shadow-2xl transition-all duration-300 border border-gray-100 group ${isListView ? 'flex flex-row' : 'flex flex-col'
+      className={`bg-white rounded-xl  hover:shadow-sm transition-all duration-300 border border-gray-100 group ${isListView ? 'flex flex-row' : 'flex flex-col'
         }`}
     >
       {/* Image Section */}
@@ -175,7 +175,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
 
 
 
-            {isListView && (
+            {/* {isListView && (
               <button
                 onClick={handleAddToCart}
                 className="px-4 py-2 bg-main text-white rounded-lg hover:bg-secondtransition-colors flex items-center space-x-2"
@@ -184,7 +184,7 @@ function ProductItem({ product, viewMode = 'grid' }: any) {
                 <FiShoppingCart className="w-4 h-4" />
                 <span className='text-sm font-semibold'>{t('productDetails.addToCart')}</span>
               </button>
-            )}
+            )} */}
 
 
 

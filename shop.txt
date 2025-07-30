@@ -167,7 +167,7 @@ export default function Shop() {
             />
 
             {/* Hero Section */}
-            {/* <Shop_Hero
+            <Shop_Hero
                 searchQuery ={ searchQuery }
                 setSearchQuery = { setSearchQuery }
                 products = { products }
@@ -175,21 +175,21 @@ export default function Shop() {
                 brands ={ brands }
                 t={t}
 
-            /> */}
+            />
 
             {/* Shop Stats */}
-            {/* <ShopStats
+            <ShopStats
                 totalProducts={products?.length || 0}
                 totalCategories={categories?.length || 0}
                 totalBrands={brands.length}
                 happyCustomers={15000}
-            /> */}
+            />
 
             {/* Features Section */}
-            {/* <ShopFeatures /> */}
+            <ShopFeatures />
 
             {/* Categories Section */}
-            {/* <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto px-4 py-12">
                 <CustomSectionTitle title={t('shop.shopByCategory', 'Shop by Category')} />
 
                 {categories && !isLoading ? (
@@ -204,7 +204,7 @@ export default function Shop() {
                                     rating: 4.2 + (index * 0.1),
                                     productCount: Math.floor(Math.random() * 50) + 10
                                 }}
-                            
+                            // onClick={() => setSelectedCategory(category.title)}
                             />
                         ))}
                     </div>
@@ -215,7 +215,7 @@ export default function Shop() {
                         ))}
                     </div>
                 )}
-            </div> */}
+            </div>
 
             {/* Main Content */}
             <div className="container mx-auto px-4 pb-12">
@@ -364,7 +364,7 @@ export default function Shop() {
                                 <div className="flex items-center space-x-4">
                                     <button
                                         onClick={() => setShowFilters(!showFilters)}
-                                        className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-main text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                                        className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                                     >
                                         <FiFilter className="w-4 h-4" />
                                         <span>{t('shop.filters', 'Filters')}</span>
@@ -374,7 +374,7 @@ export default function Shop() {
                                         <button
                                             onClick={() => setViewMode('grid')}
                                             className={`p-2 rounded-lg transition-colors ${viewMode === 'grid'
-                                                    ? 'bg-main text-white'
+                                                    ? 'bg-indigo-600 text-white'
                                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                                 }`}
                                         >
@@ -383,7 +383,7 @@ export default function Shop() {
                                         <button
                                             onClick={() => setViewMode('list')}
                                             className={`p-2 rounded-lg transition-colors ${viewMode === 'list'
-                                                    ? 'bg-main text-white'
+                                                    ? 'bg-indigo-600 text-white'
                                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                                 }`}
                                         >
