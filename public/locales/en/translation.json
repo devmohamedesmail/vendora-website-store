@@ -1018,6 +1018,13 @@
 		"myAccount": "My Account",
 		"manageProfile": "Manage your profile information",
 		"selectTab": "Select a tab to view content"
+	},
+	"banners":{
+		"banner1_title": " VapeHub Exclusive Deals",
+		"banner1_content": " Discover our latest offers and discounts on premium vaping products.",
+		"banner2_title": " VapeHub New Arrivals",
+		"banner2_content": "Explore the latest additions to our collection.",
+		"shop_now": "Shop Now"
 	}
 	
 }

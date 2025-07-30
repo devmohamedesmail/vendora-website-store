@@ -15,6 +15,7 @@ import { config } from './config/api';
 import Home_Featured_Products from './components/user_components/hero_featured_products';
 import Store_Features from './components/user_components/store_features';
 import PWAInstallPrompt from './components/user_components/pwa_install_prompt';
+import Banners from './components/user_components/banners';
 
 
 
@@ -65,6 +66,7 @@ export default function Home() {
       
       <Vendors_Section />
       <Products_Slideshow_Section />
+      <Banners />
       <Products_Section />
       <Footer />
       <BottomNavbar />

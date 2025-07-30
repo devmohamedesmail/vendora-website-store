@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FiStar, FiMapPin, FiPhone, FiMail, FiExternalLink, FiShoppingBag } from 'react-icons/fi'
+import { FiStar} from 'react-icons/fi'
 import { FaStore } from 'react-icons/fa'
 import Link from 'next/link'
-import Image from 'next/image'
-import { getLimitedWords } from '../ultilites/ultitites'
+
 export default function Vendor_Item({ vendor }: any) {
   const { t } = useTranslation()
 
@@ -43,21 +42,8 @@ export default function Vendor_Item({ vendor }: any) {
           <h3 className="text-sm md:text-md  text-gray-800 group-hover:text-second transition-colors">
             {vendor.store_name}
           </h3>
-          {/* <div className="flex items-center gap-1">
-            {renderStars(vendor.rating)}
-            <span className="text-sm text-gray-600 ml-1">
-              ({vendor.reviewCount})
-            </span>
-          </div> */}
+          
         </div>
-
-        {/* Description */}
-        {/* <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-
-          {getLimitedWords(vendor.description, 7)}
-        </p> */}
-
-
         {/* Action Buttons */}
         <div className="flex gap-2">
           <Link

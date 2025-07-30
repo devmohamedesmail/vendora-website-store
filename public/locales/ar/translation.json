@@ -1017,5 +1017,12 @@
 		"myAccount": "حسابي",
 		"manageProfile": "إدارة معلومات الملف الشخصي",
 		"selectTab": "اختر علامة لعرض المحتوى"
+	},
+	"banners":{
+		"banner1_title": " VapeToon عروض حصرية",
+		"banner1_content": " اكتشف أحدث عروضنا وخصوماتنا على منتجات الفيب عالية الجودة.",
+		"banner2_title": " VapeToon وصولات جديدة",
+		"banner2_content": "استكشف أحدث الإضافات إلى مجموعتنا.",
+		"shop_now": "تسوق الآن"
 	}
 }
